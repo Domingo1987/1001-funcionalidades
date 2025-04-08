@@ -13,7 +13,7 @@ $tendencia       = get_tendencia_porcentual($user_id);
 $comentarios     = get_cantidad_comentarios($user_id);
 $ia_posts        = get_ia_publicadas($user_id);
 $medallas        = get_cantidad_medallas($user_id);
-$tiempo          = get_tiempo_total_plataforma($user_id);
+$tiempo          = get_preguntas_creadas($user_id);
 $actividad       = get_actividad_semanal($user_id);
 
 // Variables derivadas
