@@ -75,11 +75,18 @@
 
 /* Estilos para el dashboard */
 
-.progreso-matriz {
+.contenedor-progreso {
     display: flex;
+    justify-content: center;
+}
+
+
+.progreso-matriz {
+    display: inline-flex; /* cambio clave */
     flex-direction: column;
     gap: 4px;
     margin-top: 1rem;
+    align-items: flex-start; /* alineamos a la izquierda */
 }
 
 .fila {
@@ -87,26 +94,21 @@
     align-items: center;
 }
 
-.fila.header {
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: #555;
-}
-
 .celda-etiqueta {
     width: 70px;
-    font-size: 0.85rem;
+    min-width: 70px;
     text-align: right;
     padding-right: 8px;
-    color: #333;
 }
 
-.celda-mes, .celda-progreso {
-    width: 18px;
+.celda-mes,
+.celda-progreso {
+    width: 25px;
     height: 18px;
     border-radius: 3px;
     margin: 1px;
 }
+
 
 /* Escala de progreso tipo GitHub */
 .nivel-0 { background-color: #ebedf0; }
