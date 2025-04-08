@@ -76,22 +76,21 @@
 /* Estilos para el dashboard */
 
 .contenedor-progreso {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    /* place-items: center;
 }
 
 
 .progreso-matriz {
-    display: inline-flex; /* cambio clave */
+    display: flex;
+    /* place-items: center; */
     flex-direction: column;
-    gap: 4px;
-    margin-top: 1rem;
-    align-items: flex-start; /* alineamos a la izquierda */
 }
 
 .fila {
-    display: flex;
-    align-items: center;
+    display: inline-flex;
+    place-items: center;
+    place-content: center;
 }
 
 .celda-etiqueta {
