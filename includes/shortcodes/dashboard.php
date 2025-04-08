@@ -27,6 +27,8 @@ function shortcode_dashboard() {
     <?php
     return ob_get_clean();
 }
+add_shortcode('dashboard', 'shortcode_dashboard');
+
     
 // Módulos (secciones del dashboard)
 function render_resumen_general() {
