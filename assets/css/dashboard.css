@@ -72,3 +72,29 @@
     width: 0;
     transition: width 1s ease-in-out;
 }
+
+.heatmap-github {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin-top: 1rem;
+}
+.heatmap-github .semana {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.heatmap-github .dia {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+/* Niveles de actividad */
+.actividad-0 { background-color: #eee; }
+.actividad-1 { background-color: #c6e48b; }
+.actividad-2 { background-color: #7bc96f; }
+.actividad-3 { background-color: #239a3b; }
+.actividad-4 { background-color: #196127; }

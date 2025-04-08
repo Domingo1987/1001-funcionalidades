@@ -128,13 +128,270 @@ function shortcode_dashboard() {
                         </div>
                     </div>
                 </article>
-
-
-
-
-
-
             </section>
+        </details>
+        
+        <!-- 🧩 Actividad por tipo de contenido -->
+        <details>
+            <summary>🔍 Actividad por tipo de contenido</summary>
+
+            <!-- Problemas por categoría -->
+            <h4 style="margin-top: 1rem;">📚 Problemas por categoría</h4>
+            <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                <?php
+                $categorias = [
+                    ['nombre' => 'Secuenciales', 'icono' => '📘', 'color' => '#00bcd4', 'total' => 40, 'resueltos' => 28],
+                    ['nombre' => 'Condicionales', 'icono' => '📙', 'color' => '#ff9800', 'total' => 30, 'resueltos' => 22],
+                    ['nombre' => 'Bucles', 'icono' => '📗', 'color' => '#4caf50', 'total' => 20, 'resueltos' => 15],
+                ];
+
+                foreach ($categorias as $cat) {
+                    $porcentaje = $cat['total'] > 0 ? round(($cat['resueltos'] / $cat['total']) * 100) : 0;
+                    ?>
+                    <article class="card-1001" style="--color: <?php echo $cat['color']; ?>;">
+                        <div class="barra-color"></div>
+                        <div class="contenido-card">
+                            <div class="icono"><?php echo $cat['icono']; ?></div>
+                            <div class="texto">
+                                <p><?php echo $cat['nombre']; ?></p>
+                                <strong><?php echo $cat['resueltos'] . ' / ' . $cat['total']; ?></strong>
+                                <div class="barra">
+                                    <div class="relleno" style="width: <?php echo $porcentaje; ?>%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                <?php } ?>
+            </section>
+
+            <!-- Lenguajes -->
+            <h4 style="margin-top: 2rem;">💻 Lenguajes utilizados</h4>
+            <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                <?php
+                $lenguajes = [
+                    ['nombre' => 'Python', 'icono' => '🐍', 'color' => '#4caf50', 'porcentaje' => 65],
+                    ['nombre' => 'Java', 'icono' => '☕', 'color' => '#f44336', 'porcentaje' => 25],
+                    ['nombre' => 'C', 'icono' => '🔧', 'color' => '#2196f3', 'porcentaje' => 10],
+                ];
+
+                foreach ($lenguajes as $lang) {
+                    ?>
+                    <article class="card-1001" style="--color: <?php echo $lang['color']; ?>;">
+                        <div class="barra-color"></div>
+                        <div class="contenido-card">
+                            <div class="icono"><?php echo $lang['icono']; ?></div>
+                            <div class="texto">
+                                <p><?php echo $lang['nombre']; ?></p>
+                                <strong><?php echo $lang['porcentaje']; ?>%</strong>
+                                <div class="barra">
+                                    <div class="relleno" style="width: <?php echo $lang['porcentaje']; ?>%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                <?php } ?>
+            </section>
+        </details>
+
+        <details>
+            <summary>📡 Publicaciones de IA</summary>
+
+            <!-- IA por tipo creado -->
+            <h4 style="margin-top: 1rem;">🧠 Tipos de publicaciones IA</h4>
+            <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                <?php
+                $tipos_ia = [
+                    ['tipo' => 'Imagen', 'icono' => '🖼️', 'color' => '#3f51b5', 'cantidad' => 4],
+                    ['tipo' => 'Chatbot', 'icono' => '💬', 'color' => '#009688', 'cantidad' => 2],
+                    ['tipo' => 'Música', 'icono' => '🎵', 'color' => '#e91e63', 'cantidad' => 1],
+                ];
+
+                foreach ($tipos_ia as $ia) {
+                    ?>
+                    <article class="card-1001" style="--color: <?php echo $ia['color']; ?>;">
+                        <div class="barra-color"></div>
+                        <div class="contenido-card">
+                            <div class="icono"><?php echo $ia['icono']; ?></div>
+                            <div class="texto">
+                                <p><?php echo $ia['tipo']; ?></p>
+                                <strong><span class="contador-animado" data-valor="<?php echo $ia['cantidad']; ?>">0</span></strong>
+                            </div>
+                        </div>
+                    </article>
+                <?php } ?>
+            </section>
+
+            <!-- Likes propios y dados -->
+            <h4 style="margin-top: 2rem;">👍 Interacciones con publicaciones</h4>
+            <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                <article class="card-1001" style="--color: #4caf50;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono">❤️</div>
+                        <div class="texto">
+                            <p>Likes Recibidos</p>
+                            <strong><span class="contador-animado" data-valor="28">0</span></strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card-1001" style="--color: #f44336;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono">🤝</div>
+                        <div class="texto">
+                            <p>Likes Dados</p>
+                            <strong><span class="contador-animado" data-valor="15">0</span></strong>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </details>
+
+        <details>
+            <summary>🏆 Medallas logradas y pendientes</summary>
+
+            <!-- Medallas logradas -->
+            <h4 style="margin-top: 1rem;">✨ Logros obtenidos</h4>
+            <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                <?php
+                $medallas_logradas = [
+                    ['nombre' => 'Primer Problema', 'icono' => '🥇', 'color' => '#ffd700'],
+                    ['nombre' => '5 Comentarios', 'icono' => '💬', 'color' => '#4caf50'],
+                    ['nombre' => 'IA Inicial', 'icono' => '🤖', 'color' => '#9c27b0'],
+                ];
+
+                foreach ($medallas_logradas as $medalla) {
+                    ?>
+                    <article class="card-1001" style="--color: <?php echo $medalla['color']; ?>;">
+                        <div class="barra-color"></div>
+                        <div class="contenido-card">
+                            <div class="icono"><?php echo $medalla['icono']; ?></div>
+                            <div class="texto">
+                                <p><?php echo $medalla['nombre']; ?></p>
+                                <strong>✔️</strong>
+                            </div>
+                        </div>
+                    </article>
+                <?php } ?>
+            </section>
+
+            <!-- Medallas pendientes -->
+            <h4 style="margin-top: 2rem;">🕓 En camino</h4>
+            <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                <?php
+                $medallas_pendientes = [
+                    ['nombre' => '50 Problemas', 'icono' => '🎯'],
+                    ['nombre' => '10 IA Publicadas', 'icono' => '🤖'],
+                    ['nombre' => '100 Comentarios', 'icono' => '💬'],
+                ];
+
+                foreach ($medallas_pendientes as $medalla) {
+                    ?>
+                    <article class="card-1001" style="--color: #ccc;">
+                        <div class="barra-color"></div>
+                        <div class="contenido-card">
+                            <div class="icono"><?php echo $medalla['icono']; ?></div>
+                            <div class="texto">
+                                <p><?php echo $medalla['nombre']; ?></p>
+                                <strong>❌</strong>
+                            </div>
+                        </div>
+                    </article>
+                <?php } ?>
+            </section>
+        </details>
+
+
+
+
+        <!-- 💬 Interacciones sociales -->
+        <details>
+            <summary>💬 Interacciones sociales</summary>
+
+            <section style="margin-top: 1rem;">
+                <h4>👍 Likes</h4>
+                <div class="resumen-general-cards" style="display: flex; gap: 1rem;">
+                <article class="card-1001" style="--color: #00bcd4;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                    <div class="icono">❤️</div>
+                    <div class="texto">
+                        <p>Dado</p>
+                        <strong>19</strong>
+                    </div>
+                    </div>
+                </article>
+                <article class="card-1001" style="--color: #e91e63;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                    <div class="icono">🎯</div>
+                    <div class="texto">
+                        <p>Recibido</p>
+                        <strong>11</strong>
+                    </div>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+            <section style="margin-top: 2rem;">
+                <h4>🗨️ Comentarios</h4>
+                <div class="resumen-general-cards" style="display: flex; gap: 1rem;">
+                <article class="card-1001" style="--color: #03a9f4;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                    <div class="icono">💬</div>
+                    <div class="texto">
+                        <p>Hechos</p>
+                        <strong>22</strong>
+                    </div>
+                    </div>
+                </article>
+                <article class="card-1001" style="--color: #8bc34a;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                    <div class="icono">📨</div>
+                    <div class="texto">
+                        <p>Recibidos</p>
+                        <strong>8</strong>
+                    </div>
+                    </div>
+                </article>
+                </div>
+            </section>
+        </details>
+
+        <!-- 🎯 Progreso por competencias -->
+        <details>
+            <summary>🎯 Progreso por competencias</summary>
+            <p style="margin: 1rem;">Próximamente se habilitará esta sección para visualizar avances según las competencias evaluadas.</p>
+        </details>
+
+        <!-- ⏳ Evolución temporal -->
+        <details>
+            <summary>⏳ Evolución temporal</summary>
+
+            <div style="margin-top: 1rem;">
+                <p>Simulación de actividad diaria (últimos 84 días):</p>
+                <div class="heatmap-github">
+                    <?php
+                    // Simular 12 semanas (7 días por semana)
+                    for ($semana = 0; $semana < 12; $semana++) {
+                        echo '<div class="semana">';
+                        for ($dia = 0; $dia < 7; $dia++) {
+                            // Simular nivel de actividad (0 a 4)
+                            $nivel = rand(0, 4);
+                            echo "<div class='dia actividad-$nivel'></div>";
+                        }
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+                <p style="font-size: 0.8rem; color: #777; margin-top: 0.5rem;">*Actividad simulada. Pronto conectada a tus interacciones reales.</p>
+            </div>
+
+
         </details>
     </section>
     <?php
