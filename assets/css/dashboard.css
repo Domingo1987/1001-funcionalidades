@@ -73,28 +73,46 @@
     transition: width 1s ease-in-out;
 }
 
-.heatmap-github {
-    display: flex;
-    flex-direction: row;
-    gap: 2px;
-    flex-wrap: wrap;
-    max-width: 100%;
-    margin-top: 1rem;
-}
-.heatmap-github .semana {
+/* Estilos para el dashboard */
+
+.progreso-matriz {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-}
-.heatmap-github .dia {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
+    gap: 4px;
+    margin-top: 1rem;
 }
 
-/* Niveles de actividad */
-.actividad-0 { background-color: #eee; }
-.actividad-1 { background-color: #c6e48b; }
-.actividad-2 { background-color: #7bc96f; }
-.actividad-3 { background-color: #239a3b; }
-.actividad-4 { background-color: #196127; }
+.fila {
+    display: flex;
+    align-items: center;
+}
+
+.fila.header {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.celda-etiqueta {
+    width: 70px;
+    font-size: 0.85rem;
+    text-align: right;
+    padding-right: 8px;
+    color: #333;
+}
+
+.celda-mes, .celda-progreso {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    margin: 1px;
+}
+
+/* Escala de progreso tipo GitHub */
+.nivel-0 { background-color: #ebedf0; }
+.nivel-1 { background-color: #c6e48b; }
+.nivel-2 { background-color: #7bc96f; }
+.nivel-3 { background-color: #239a3b; }
+.nivel-4 { background-color: #196127; }
+.nivel-5 { background-color: #0f3d19; }
+
