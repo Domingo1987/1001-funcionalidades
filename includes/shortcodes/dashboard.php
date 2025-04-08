@@ -31,6 +31,8 @@ function shortcode_dashboard() {
         ?>
     </section>
     <?php
+    error_log('🔚 Final del shortcode_dashboard() alcanzado.');
+
     return ob_get_clean();
 }
 add_shortcode('dashboard', 'shortcode_dashboard');
