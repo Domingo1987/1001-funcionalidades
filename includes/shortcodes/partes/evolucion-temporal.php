@@ -41,6 +41,5 @@ $meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 
         </div>
     </div>
 
-    <p style="font-size: 0.8rem; color: #777; margin-top: 0.5rem;">*Progreso simulado. Pronto se basará en tus datos reales.</p>
 </details>
 

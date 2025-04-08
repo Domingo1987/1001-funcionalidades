@@ -5,57 +5,160 @@ if (!defined('ABSPATH')) exit;
  * Devuelve la cantidad total de problemas resueltos por el usuario.
  */
 function get_problemas_resueltos($user_id) {
-    return 145; // Simulado
+    global $wpdb;
+
+    $sql = $wpdb->prepare("
+        SELECT COUNT(DISTINCT p.ID)
+        FROM {$wpdb->posts} p
+        INNER JOIN {$wpdb->comments} c ON p.ID = c.comment_post_ID
+        INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+        WHERE c.user_id = %d
+        AND pm.meta_key = 'num_problema'
+        AND p.post_status = 'publish'
+    ", $user_id);
+
+    return (int) $wpdb->get_var($sql);
 }
 
 /**
  * Devuelve el puntaje promedio del usuario.
  */
 function get_puntaje_promedio($user_id) {
-    return 17.8; // Simulado
+    global $wpdb;
+
+    $tabla = "{$wpdb->prefix}evaluaciones";
+
+    $sql = $wpdb->prepare("
+        SELECT AVG(total_puntos)
+        FROM $tabla
+        WHERE user_id = %d
+    ", $user_id);
+
+    return round((float) $wpdb->get_var($sql), 2); // Devuelve por ejemplo 17.85
 }
+
 
 /**
  * Devuelve la mejora o retroceso porcentual del usuario (últimas vs anteriores).
  */
 function get_tendencia_porcentual($user_id) {
-    return 12.5; // Simulado (positivo)
+    global $wpdb;
+
+    $tabla = "{$wpdb->prefix}evaluaciones";
+
+    // Obtener los últimos 5 IDs de evaluaciones del usuario
+    $ultimos_ids = $wpdb->get_col($wpdb->prepare("
+        SELECT id FROM $tabla
+        WHERE user_id = %d
+        ORDER BY fecha_evaluacion DESC
+        LIMIT 5
+    ", $user_id));
+
+    if (empty($ultimos_ids)) return 0;
+
+    $ids_str = implode(',', array_map('intval', $ultimos_ids));
+
+    // Calcular promedio de esas últimas evaluaciones
+    $prom_ultimas = (float) $wpdb->get_var("SELECT AVG(total_puntos) FROM $tabla WHERE id IN ($ids_str)");
+
+    // Calcular promedio del resto (histórico anterior)
+    $prom_restante = (float) $wpdb->get_var("
+        SELECT AVG(total_puntos) 
+        FROM $tabla 
+        WHERE user_id = %d
+        AND id NOT IN ($ids_str)
+    ", $user_id);
+
+    // Si no hay datos previos suficientes
+    if ($prom_restante <= 0) return 0;
+
+    // Cálculo de la tendencia
+    $tendencia = (($prom_ultimas - $prom_restante) / $prom_restante) * 100;
+    return round($tendencia, 2);
 }
+
+
 
 /**
  * Devuelve la cantidad total de comentarios hechos por el usuario.
  */
 function get_cantidad_comentarios($user_id) {
-    return 62; // Simulado
+    global $wpdb;
+
+    // Cuenta todos los comentarios hechos por el usuario (estatus aprobados o en moderación)
+    $cantidad = $wpdb->get_var($wpdb->prepare("
+        SELECT COUNT(*) 
+        FROM {$wpdb->comments}
+        WHERE user_id = %d
+    ", $user_id));
+
+    return (int) $cantidad;
 }
+
 
 /**
  * Devuelve la cantidad de publicaciones de IA realizadas por el usuario.
  */
 function get_ia_publicadas($user_id) {
-    return 7; // Simulado
+    global $wpdb;
+
+    $cantidad = $wpdb->get_var($wpdb->prepare("
+        SELECT COUNT(*) 
+        FROM {$wpdb->posts}
+        WHERE post_type = 'inteligen_artificial'
+        AND post_status = 'publish'
+        AND post_author = %d
+    ", $user_id));
+
+    return (int) $cantidad;
 }
+
 
 /**
  * Devuelve la cantidad de medallas logradas por el usuario.
  */
 function get_cantidad_medallas($user_id) {
-    return 3; // Simulado
+    return 1001; // Simulado
 }
 
 /**
  * Devuelve la cantidad de horas que el usuario ha estado activo en la plataforma.
  */
-function get_tiempo_total_plataforma($user_id) {
-    return 29; // Simulado (en horas)
+function get_preguntas_creadas($user_id) {
+    return 1001; // Simulado (en horas)
 }
 
 /**
  * Devuelve la cantidad de interacciones/acciones del usuario en la última semana.
  */
 function get_actividad_semanal($user_id) {
-    return 18; // Simulado
+    global $wpdb;
+
+    $hoy = current_time('mysql');
+    $hace_7_dias = date('Y-m-d H:i:s', strtotime('-7 days', strtotime($hoy)));
+
+    // Comentarios hechos en los últimos 7 días
+    $comentarios = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$wpdb->comments} 
+         WHERE user_id = %d AND comment_date >= %s",
+        $user_id,
+        $hace_7_dias
+    ));
+
+    // Publicaciones IA en los últimos 7 días
+    $posts_ia = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$wpdb->posts} 
+         WHERE post_author = %d 
+         AND post_type = 'inteligen_artificial'
+         AND post_status = 'publish'
+         AND post_date >= %s",
+        $user_id,
+        $hace_7_dias
+    ));
+
+    return intval($comentarios) + intval($posts_ia);
 }
+
 
 
 /**

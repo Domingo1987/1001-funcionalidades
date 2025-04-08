@@ -98,11 +98,11 @@ $tendencia_valor = abs($tendencia);
     <article class="card-1001" style="--color: #ff9800;">
       <div class="barra-color"></div>
       <div class="contenido-card">
-        <div class="icono">⏱️</div>
-        <div class="texto">
-          <p>Tiempo (h)</p>
-          <strong><span class="contador-animado" data-valor="<?php echo $tiempo; ?>">0</span></strong>
-        </div>
+          <div class="icono">❓</div>
+          <div class="texto">
+            <p>Preguntas creadas</p>
+            <strong><span class="contador-animado" data-valor="<?php echo $preguntas_creadas; ?>">0</span></strong>
+          </div>
       </div>
     </article>
 
