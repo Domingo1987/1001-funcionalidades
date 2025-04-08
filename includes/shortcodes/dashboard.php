@@ -30,16 +30,24 @@ function shortcode_dashboard() {
         <details open>
             <summary>📌 Resumen general</summary>
             <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem;">
-                <article class="card-progreso" style="--color: #00c2ff;">
-                    <div class="card-top">
-                        <div class="valor">278</div>
-                        <div class="icono">📘</div>
-                    </div>
-                    <p class="titulo">New Posts</p>
-                    <div class="barra">
-                        <div class="relleno" style="width: 70%;"></div>
-                    </div>
-                </article>
+            <article class="card-progreso" style="--color: #00c2ff;">
+  <div class="barra-lateral"></div> <!-- Barra vertical a la izquierda -->
+
+  <div class="contenido-card">
+    <div class="encabezado">
+      <div class="icono-texto">
+        <span class="icono">💻</span>
+        <p class="titulo">Problemas</p>
+      </div>
+      <div class="valor"><?php echo $problemas; ?></div>
+    </div>
+
+    <div class="barra">
+      <div class="relleno" style="width: <?php echo min(100, ($problemas / 1000) * 100); ?>%;"></div>
+    </div>
+  </div>
+</article>
+
 
             
                 <article class="card-resumen">
