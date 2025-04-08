@@ -1,6 +1,6 @@
 /* Estilos para el dashboard */
 .contador-animado {
-    font-size: 2rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: #333;
 }
@@ -11,11 +11,12 @@
     display: flex;
     align-items: stretch;
     border-radius: 8px;
+    padding: 0 1rem 0 0;
     background-color: white;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    min-width: 220px;
-    flex: 1 1 250px;
+    min-width: 100px;
+    flex: 1 1 200px;
 }
 
 .card-1001 .barra-color {
@@ -38,7 +39,9 @@
 }
 
 .card-1001 .texto {
+    align-items: center;
     flex-grow: 1;
+    text-align: center;
 }
 
 .card-1001 .texto p {

@@ -105,6 +105,35 @@ function shortcode_dashboard() {
                     </div>
                 </article>
 
+                <!-- TIEMPO EN PLATAFORMA -->
+                <article class="card-1001" style="--color: #ff9800;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono">⏱️</div>
+                        <div class="texto">
+                            <p>Tiempo (h)</p>
+                            <strong><span class="contador-animado" data-valor="<?php echo $tiempo; ?>">0</span></strong>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ACTIVIDAD SEMANAL -->
+                <article class="card-1001" style="--color: #795548;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono">📅</div>
+                        <div class="texto">
+                            <p>Actividad Semanal</p>
+                            <strong><span class="contador-animado" data-valor="<?php echo $actividad; ?>">0</span></strong>
+                        </div>
+                    </div>
+                </article>
+
+
+
+
+
+
             </section>
         </details>
     </section>
