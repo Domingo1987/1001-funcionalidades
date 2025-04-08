@@ -24,9 +24,9 @@ jobs:
         STAGING_USER=${{ secrets.STAGING_USER }}
         STAGING_SERVER_IP=${{ secrets.STAGING_SERVER_IP }} 
         STAGING_PATH=${{ secrets.STAGING_PATH }}
-
-        # Conectar al servidor de staging y desplegar el código
-        rsync -avz --delete --exclude='.git*' ./ $STAGING_USER@$STAGING_SERVER_IP:$STAGING_PATH
+    
+        # Conectar al servidor de staging y desplegar el código usando el puerto 65002
+        rsync -avz --delete --exclude='.git*' -e "ssh -p 65002" ./ $STAGING_USER@$STAGING_SERVER_IP:$STAGING_PATH
 
     - name: Install Composer Dependencies (if needed)
       run: |
