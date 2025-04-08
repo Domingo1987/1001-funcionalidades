@@ -52,3 +52,53 @@
     font-weight: bold;
     color: #333;
 }
+
+
+/* card progress */
+
+.card-progreso {
+    background: var(--pico-card-background, #fff);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    width: 200px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .card-progreso .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-progreso .valor {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color, #00c2ff);
+  }
+  
+  .card-progreso .icono {
+    font-size: 1.5rem;
+  }
+  
+  .card-progreso .titulo {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .card-progreso .barra {
+    background-color: #e0f4ff;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .card-progreso .barra .relleno {
+    height: 100%;
+    background-color: var(--color, #00c2ff);
+    transition: width 0.3s ease-in-out;
+  }
+  
