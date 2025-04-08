@@ -32,8 +32,4 @@ jobs:
         # Conectar al servidor de staging y desplegar el código usando el puerto 65002
         rsync -avz --delete --exclude='.git*' -e "ssh -p 65002" ./ $STAGING_USER@$STAGING_SERVER_IP:$STAGING_PATH
 
-    
-
-    - name: Clear Cache (if using a cache or something similar)
-      run: |
-        ssh $STAGING_USER@$STAGING_SERVER_IP "cd $STAGING_PATH && wp cache flush"
+ 
