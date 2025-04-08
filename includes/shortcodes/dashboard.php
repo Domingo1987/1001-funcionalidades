@@ -30,55 +30,79 @@ function shortcode_dashboard() {
         <details open>
             <summary>📌 Resumen general</summary>
             <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem;">
-                <article class="card-progreso" style="--color: #00c2ff;">
-                    <div class="barra-lateral"></div> <!-- Barra vertical a la izquierda -->
-
+                <!-- PROBLEMAS -->
+                <article class="card-1001" style="--color: #00c2ff;">
+                    <div class="barra-color"></div>
                     <div class="contenido-card">
-                        <div class="encabezado">
-                        <div class="icono-texto">
-                            <span class="icono">💻</span>
-                            <p class="titulo">Problemas</p>
-                        </div>
-                        <div class="valor"><?php echo $problemas; ?></div>
-                        </div>
-
-                        <div class="barra">
-                        <div class="relleno" style="width: <?php echo min(100, ($problemas / 1000) * 100); ?>%;"></div>
+                        <div class="icono">💻</div>
+                        <div class="texto">
+                            <p>Problemas</p>
+                            <strong><span class="contador-animado" data-valor="<?php echo $problemas; ?>">0</span></strong>
+                            <div class="barra">
+                                <div class="relleno" style="width: <?php echo min(100, ($problemas / 1000) * 100); ?>%;"></div>
+                            </div>
                         </div>
                     </div>
                 </article>
 
-
-                <article class="card-resumen">
-                    <h3>📊</h3>
-                    <p>Puntaje Promedio</p>
-                    <strong class="contador-animado" data-valor="<?php echo $puntaje; ?>">0</strong>
+                <!-- PUNTAJE PROMEDIO -->
+                <article class="card-1001" style="--color: #4caf50;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono">📊</div>
+                        <div class="texto">
+                            <p>Puntaje Promedio</p>
+                            <strong><span class="contador-animado" data-valor="<?php echo $puntaje; ?>">0</span></strong>
+                        </div>
+                    </div>
                 </article>
 
-                <article class="card-resumen">
-                    <h3 style="color: <?php echo $color; ?>;"><?php echo $icono; ?></h3>
-                    <p>Tendencia</p>
-                    <strong style="color: <?php echo $color; ?>;">
-                        <span class="contador-animado" data-valor="<?php echo $tendencia_valor; ?>">0</span>%
-                    </strong>
+                <!-- TENDENCIA -->
+                <article class="card-1001" style="--color: <?php echo $color; ?>;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono"><?php echo $icono; ?></div>
+                        <div class="texto">
+                            <p>Tendencia</p>
+                            <strong style="color: <?php echo $color; ?>;"><span class="contador-animado" data-valor="<?php echo $tendencia_valor; ?>">0</span>%</strong>
+                        </div>
+                    </div>
                 </article>
 
-                <article class="card-resumen">
-                    <h3>💬</h3>
-                    <p>Comentarios</p>
-                    <strong class="contador-animado" data-valor="<?php echo $comentarios; ?>">0</strong>
+                <!-- COMENTARIOS -->
+                <article class="card-1001" style="--color: #2196f3;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono">💬</div>
+                        <div class="texto">
+                            <p>Comentarios</p>
+                            <strong><span class="contador-animado" data-valor="<?php echo $comentarios; ?>">0</span></strong>
+                        </div>
+                    </div>
                 </article>
 
-                <article class="card-resumen">
-                    <h3>🤖</h3>
-                    <p>Post IA</p>
-                    <strong class="contador-animado" data-valor="<?php echo $ia_posts; ?>">0</strong>
+                <!-- POST IA -->
+                <article class="card-1001" style="--color: #9c27b0;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono">🤖</div>
+                        <div class="texto">
+                            <p>Post IA</p>
+                            <strong><span class="contador-animado" data-valor="<?php echo $ia_posts; ?>">0</span></strong>
+                        </div>
+                    </div>
                 </article>
 
-                <article class="card-resumen">
-                    <h3>🏅</h3>
-                    <p>Medallas</p>
-                    <strong class="contador-animado" data-valor="<?php echo $medallas; ?>">0</strong>
+                <!-- MEDALLAS -->
+                <article class="card-1001" style="--color: #fbc02d;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card">
+                        <div class="icono">🏅</div>
+                        <div class="texto">
+                            <p>Medallas</p>
+                            <strong><span class="contador-animado" data-valor="<?php echo $medallas; ?>">0</span></strong>
+                        </div>
+                    </div>
                 </article>
 
             </section>

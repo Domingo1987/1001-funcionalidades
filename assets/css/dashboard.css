@@ -1,52 +1,4 @@
-.card-resumen {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin: 10px;
-    width: 100%;
-    max-width: 300px;
-    flex-direction: row;
-}
-
-.card-resumen .bar {
-    width: 10px;
-    height: 80px; /* Ajusta el alto de la barra según el tamaño */
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.card-resumen .card-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-}
-
-.card-resumen .icon {
-    font-size: 1.5rem;
-}
-
-.card-resumen .text-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.card-resumen p {
-    font-size: 1rem;
-    color: #666;
-}
-
-.card-resumen strong {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-}
-
+/* Estilos para el dashboard */
 .contador-animado {
     font-size: 2rem;
     font-weight: bold;
@@ -55,64 +7,65 @@
 
 
 /* card progress */
-.card-progreso {
+.card-1001 {
     display: flex;
-    align-items: center;
-    background: #fff;
+    align-items: stretch;
     border-radius: 8px;
-    box-shadow: 0 0 4px rgba(0,0,0,0.05);
-    padding: 1rem;
-    gap: 0.8rem;
-    position: relative;
+    background-color: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-  }
-  
-  .card-progreso .barra-lateral {
+    min-width: 220px;
+    flex: 1 1 250px;
+}
+
+.card-1001 .barra-color {
     width: 6px;
-    height: 100%;
-    background-color: var(--color, #00c2ff);
-    border-radius: 8px 0 0 8px;
-  }
-  
-  
-  .card-progreso .contenido-card {
-    padding: 1rem;
-    flex: 1;
+    background-color: var(--color, #007bff);
+}
+
+.card-1001 .contenido-card {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .card-progreso .encabezado {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
-  }
-  
-  .card-progreso .icono-texto {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 1rem;
-    color: #444;
-  }
-  
-  .card-progreso .valor {
+    padding: 0.75rem 1rem;
+    width: 100%;
+}
+
+.card-1001 .icono {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.card-1001 .texto {
+    flex-grow: 1;
+}
+
+.card-1001 .texto p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.card-1001 .texto strong {
+    display: block;
     font-size: 1.6rem;
     font-weight: bold;
     color: #222;
-  }
-  
-  .card-progreso .barra {
-    height: 6px;
-    background-color: #e0f4ff;
-    border-radius: 3px;
+}
+
+/* Barra de progreso (solo si se incluye) */
+.card-1001 .barra {
+    margin-top: 0.3rem;
+    background-color: #eee;
+    border-radius: 4px;
+    height: 8px;
     overflow: hidden;
-  }
-  
-  .card-progreso .barra .relleno {
+}
+
+.card-1001 .barra .relleno {
+    background-color: var(--color, #007bff);
     height: 100%;
-    background-color: var(--color, #00c2ff);
-    transition: width 0.4s ease-in-out;
-  }
-  
+    width: 0;
+    transition: width 1s ease-in-out;
+}
