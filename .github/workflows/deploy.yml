@@ -18,6 +18,10 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    - name: Add server to known hosts
+      run: |
+        ssh-keyscan -p 65002 ${{ secrets.STAGING_SERVER_IP }} >> ~/.ssh/known_hosts
+
     - name: Copy files to server
       run: |
         # Definir variables
@@ -35,4 +39,3 @@ jobs:
     - name: Clear Cache (if using a cache or something similar)
       run: |
         ssh $STAGING_USER@$STAGING_SERVER_IP "cd $STAGING_PATH && wp cache flush"
-
