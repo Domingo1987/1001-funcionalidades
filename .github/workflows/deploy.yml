@@ -1,0 +1,38 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto a la rama que prefieras
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Copy files to server
+      run: |
+        # Definir variables
+        STAGING_USER=${{ secrets.STAGING_USER }}
+        STAGING_SERVER_IP=${{ secrets.STAGING_SERVER_IP }} 
+        STAGING_PATH=${{ secrets.STAGING_PATH }}
+
+        # Conectar al servidor de staging y desplegar el código
+        rsync -avz --delete --exclude='.git*' ./ $STAGING_USER@$STAGING_SERVER_IP:$STAGING_PATH
+
+    - name: Install Composer Dependencies (if needed)
+      run: |
+        ssh $STAGING_USER@$STAGING_SERVER_IP "cd $STAGING_PATH && composer install"
+
+    - name: Clear Cache (if using a cache or something similar)
+      run: |
+        ssh $STAGING_USER@$STAGING_SERVER_IP "cd $STAGING_PATH && wp cache flush"
+

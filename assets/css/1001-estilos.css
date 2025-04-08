@@ -1,0 +1,174 @@
+.estadisticas-usuario {
+    margin: 2em 0;
+    font-family: sans-serif;
+}
+
+.estadisticas-titulo {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 1em;
+}
+
+.estadisticas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1em;
+}
+
+.stat-card {
+    background: #f1f1f1;
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.hidden-comments {
+    background: #ffecec;
+    padding: 10px;
+    border-left: 4px solid #cc0000;
+    font-style: italic;
+}
+
+/* Sobrescribir color solo para los elementos del footer */
+/* ✅ Restaurar estilos del footer sin que Pico los afecte */
+.problema-card {
+  background: #444;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  text-align: center;
+  color: #fff;
+  width: fit-content;
+  max-width: 100%;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.problema-numero {
+  padding-bottom: 10px;
+  color: inherit;
+  font-size: 50px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.problema-descripcion {
+  font-size: 18px;
+  margin: 5px 0 0;
+  text-transform: uppercase;
+  color: #ccc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* 📱 Si la pantalla es angosta, achicamos texto */
+@media (max-width: 400px) {
+  .problema-descripcion {
+      font-size: 14px;
+  }
+}
+
+
+
+
+
+
+/* grid problemas */
+/* Contenedor principal */
+.grid-problemas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+/* Hexágono */
+.problema-item {
+  background-color: #f0f0f0;
+  width: 150px;
+  height: 173.2px;
+  background-size: cover;
+  background-position: center;
+  clip-path: polygon(    50% 0%,  96.3% 20%,  96.3% 67%,  50% 88%,  4.7% 68%,  4.7% 20%  );
+  position: relative;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Hover visual */
+.problema-item:hover {
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+.problema-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 10px;
+  text-align: center;
+}
+
+.problema-item:hover .problema-info {
+  opacity: 1;
+}
+
+/* Colores de botones */
+.btn-cap1 { background-color: #3b4cc0 !important; }
+.btn-cap2 { background-color: #994635 !important; }
+.btn-cap3 { background-color: #4caf50 !important; }
+.btn-cap4 { background-color: #2ca8a8 !important; }
+.btn-cap5 { background-color: #9c27b0 !important; }
+.btn-cap6 { background-color: #9e9d24 !important; }
+.btn-cap7 { background-color: #ff9800 !important; }
+.btn-cap8 { background-color: #f44336 !important; }
+.btn-cap9 { background-color: #8d6e63 !important; }
+
+.barra-problemas button:hover {
+  opacity: 0.9;
+}
+
+
+/* Eliminado por pico
+.boton-ver-mas {
+  font-weight: 500;
+  background-color: #7066e0;
+  color: white;
+  border: none;
+  border-radius: 0.25em;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(112, 102, 224, 0.4);
+  transition: background-color 0.3s ease;
+}
+
+.boton-ver-mas:hover {
+  background-color: #5b53c7;
+}*/
+
+
+/* Fin grid problemas */
+
+
+.no-click > a {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}
+
