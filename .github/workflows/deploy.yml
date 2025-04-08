@@ -30,6 +30,6 @@ jobs:
         STAGING_PATH=${{ secrets.STAGING_PATH }}
     
         # Conectar al servidor de staging y desplegar el código usando el puerto 65002
-        rsync -avz --delete --exclude='.git*' -e "ssh -p 65002" ./ $STAGING_USER@$STAGING_SERVER_IP:$STAGING_PATH
+        rsync -avz --exclude='.git*' -e "ssh -p 65002" ./ $STAGING_USER@$STAGING_SERVER_IP:$STAGING_PATH
 
  
