@@ -11,11 +11,17 @@ function shortcode_dashboard() {
         return '<article class="contrast"><p>Debes estar logueado para ver tu tablero personalizado.</p></article>';
     }
 
+    error_log('✅ Entró al shortcode_dashboard()');
+
     ob_start();
+    echo '<!-- Dashboard cargado -->';
+
     ?>
     <section class="container">
         <?php
         render_resumen_general();
+        error_log('✅ render_resumen_general ejecutado');
+
         render_actividad_por_tipo();
         render_publicaciones_ia();
         render_medallas();
@@ -32,6 +38,7 @@ add_shortcode('dashboard', 'shortcode_dashboard');
     
 // Módulos (secciones del dashboard)
 function render_resumen_general() {
+    error_log('➡️ Sección render_x cargada');
     include plugin_dir_path(__FILE__) . '../partes/resumen-general.php';
 }
 
