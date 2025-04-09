@@ -7,7 +7,7 @@ class Admin {
     public function enqueue_styles($hook) {
         if (strpos($hook, 'users1001') !== false) {
             wp_enqueue_style(
-                'admin-1001',
+                'users1001-admin',
                 FUNC_URL . 'assets/css/admin.css',
                 array(),
                 '1.0.0',
@@ -19,11 +19,11 @@ class Admin {
     public function enqueue_scripts($hook) {
         if (strpos($hook, 'users1001') !== false) {
             wp_enqueue_script(
-                'admin-1001',
+                'users1001-admin',
                 FUNC_URL . 'assets/js/admin.js',
                 array('jquery'),
                 '1.0.0',
-                true
+                false
             );
     
             // Pasar variables al script
