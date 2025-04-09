@@ -69,7 +69,9 @@ jQuery(document).ready(function($) {
                 url: ajaxurl,
                 type: 'POST',
                 data: {
-                    action: 'users1001_save_curso',
+                    //action: 'users1001_save_curso',
+                    action: 'guardar_curso',
+
                     nonce: users1001_vars.nonce,
                     curso: cursoProp
                 },
@@ -116,7 +118,8 @@ jQuery(document).ready(function($) {
                 url: ajaxurl,
                 type: 'POST',
                 data: {
-                    action: 'users1001_delete_curso',
+                    //action: 'users1001_delete_curso',
+                    action: 'eliminar_curso',
                     nonce: users1001_vars.nonce,
                     curso: curso
                 },
