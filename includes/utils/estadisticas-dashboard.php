@@ -205,6 +205,7 @@ function get_problemas_por_categoria($user_id) {
               AND p.post_status = 'publish'
               AND pm.meta_key = 'num_problema'
               AND c.user_id = %d
+            ORDER BY tr.term_taxonomy_id ASC
         ", $cat->term_id, $user_id));
 
         $icono = '📂'; // por defecto

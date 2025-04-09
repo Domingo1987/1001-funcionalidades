@@ -13,7 +13,7 @@ $lenguajes = get_porcentaje_lenguajes($user_id);
 
     <!-- Problemas por categoría -->
     <h4 style="margin-top: 1rem;">📚 Problemas por categoría</h4>
-    <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+    <section class="resumen-general-cards">
         <?php foreach ($categorias as $cat): 
             $porcentaje = $cat['total'] > 0 ? round(($cat['resueltos'] / $cat['total']) * 100) : 0;
         ?>

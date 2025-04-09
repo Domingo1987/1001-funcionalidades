@@ -73,6 +73,15 @@
     transition: width 1s ease-in-out;
 }
 
+/* Estilos para el resumen general de tarjetas para section de pico.css*/
+section.resumen-general-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    justify-content: center;
+}
+
+
 /* Estilos para el dashboard */
 
 .contenedor-progreso {
