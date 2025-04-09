@@ -246,28 +246,48 @@ function get_problemas_por_categoria($user_id) {
  * @return array Arreglo de lenguajes con nombre, icono, color y porcentaje
  */
 function get_porcentaje_lenguajes($user_id) {
-    // 🔧 Datos simulados — reemplazar con consulta a BD en el futuro
-    return [
-        [
-            'nombre'     => 'Python',
-            'icono'      => '🐍',
-            'color'      => '#4caf50',
-            'porcentaje' => 65
-        ],
-        [
-            'nombre'     => 'Java',
-            'icono'      => '☕',
-            'color'      => '#f44336',
-            'porcentaje' => 25
-        ],
-        [
-            'nombre'     => 'C',
-            'icono'      => '🔧',
-            'color'      => '#2196f3',
-            'porcentaje' => 10
-        ]
+    global $wpdb;
+
+    // Contar la cantidad de comentarios por lenguaje
+    $resultados = $wpdb->get_results($wpdb->prepare("
+        SELECT cm.meta_value AS lenguaje, COUNT(*) AS cantidad
+        FROM {$wpdb->comments} c
+        INNER JOIN {$wpdb->commentmeta} cm ON c.comment_ID = cm.comment_id
+        WHERE c.user_id = %d
+          AND cm.meta_key = 'lenguaje_usado'
+        GROUP BY cm.meta_value
+    ", $user_id), OBJECT_K);
+
+    // Total de todos los comentarios con lenguaje registrado
+    $total = array_sum(array_map(fn($r) => $r->cantidad, $resultados));
+    if ($total === 0) return [];
+
+    // Definir íconos y colores por lenguaje
+    $info_lenguajes = [
+        'python' => ['nombre' => 'Python', 'icono' => '🐍', 'color' => '#4caf50'],
+        'java'   => ['nombre' => 'Java',   'icono' => '☕', 'color' => '#f44336'],
+        'c'      => ['nombre' => 'C',      'icono' => '🔧', 'color' => '#2196f3'],
     ];
+
+    // Armar el resultado
+    $resultado = [];
+    foreach ($resultados as $lenguaje => $datos) {
+        $clave = strtolower($lenguaje);
+        if (!isset($info_lenguajes[$clave])) continue;
+
+        $porcentaje = round(($datos->cantidad / $total) * 100);
+
+        $resultado[] = [
+            'nombre'     => $info_lenguajes[$clave]['nombre'],
+            'icono'      => $info_lenguajes[$clave]['icono'],
+            'color'      => $info_lenguajes[$clave]['color'],
+            'porcentaje' => $porcentaje
+        ];
+    }
+
+    return $resultado;
 }
+
 
 /**
  * ********************************************************************************
