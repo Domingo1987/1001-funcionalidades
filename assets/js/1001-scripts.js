@@ -103,19 +103,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     div.className = 'problema-item';
                     div.style.backgroundImage = `url('${problema.imagen}')`;
                     div.setAttribute('data-num', problema.num);
-                    div.setAttribute('data-term-id', problema.term_taxonomy_id);
+                    div.setAttribute('data-letra', problema.letra_completa || '');
 
                     if (problema.comentado) div.classList.add('comentado');
 
                     div.innerHTML = `
-                        <a href="${problema.url}" class="problema-link" style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center; color: white; text-decoration: none;">
-                            <h4 style="margin: 0; font-size: 1.2rem; font-weight: bold;">${problema.titulo}</h4>
+                        <a href="${problema.url}" class="problema-link">
+                            <div class="overlay-num">
+                                <h4>Problema ${problema.num}</h4>
+                            </div>
                         </a>
                     `;
 
-
                     contenedor.appendChild(div);
                 });
+
 
                 offset += respuesta.data.length;
                 cargandoDatos = false;

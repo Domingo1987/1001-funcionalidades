@@ -27,19 +27,16 @@ function obtener_ids_problemas_aleatorios() {
 
 // ✅ 2. Función AJAX
 function ajax_cargar_mas_problemas() {
-    session_start(); // Primero activamos la sesión
-
-    // ⚠️ Solo para test: limpiar y regenerar mezcla
+    session_start();
     unset($_SESSION['ids_problemas_aleatorios']);
 
     $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 0;
     $limite = 100;
 
-    $ids_aleatorios = obtener_ids_problemas_aleatorios(); // Aquí se vuelve a generar
+    $ids_aleatorios = obtener_ids_problemas_aleatorios();
     $ids_para_mostrar = array_slice($ids_aleatorios, $offset, $limite);
 
     error_log("🔀 IDs seleccionados para mostrar (offset $offset): " . json_encode($ids_para_mostrar));
-
 
     if (empty($ids_para_mostrar)) {
         wp_send_json_success([]);
@@ -50,25 +47,18 @@ function ajax_cargar_mas_problemas() {
     $placeholders = implode(',', array_fill(0, count($ids_para_mostrar), '%d'));
 
     $sql = "
-        SELECT p.ID, p.post_title, p.post_content, pm.meta_value AS num_problema,
-               t.name AS categoria, tt.term_taxonomy_id
+        SELECT p.ID, pm.meta_value AS num_problema, p.post_content, tt.term_taxonomy_id
         FROM {$wpdb->posts} p
         INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = 'num_problema'
         INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
         INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-        INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
         WHERE p.ID IN ($placeholders)
           AND tt.taxonomy = 'categorias_problemas'
- 
     ";
 
     $query = $wpdb->prepare($sql, ...$ids_para_mostrar);
-
-
     $resultados = $wpdb->get_results($query);
-
-    shuffle($resultados); // Mezclar resultados aleatoriamente
-
+    shuffle($resultados);
 
     $comentados = get_user_comments_problems();
     $comentados_nums = array_column($comentados, 'number');
@@ -81,20 +71,14 @@ function ajax_cargar_mas_problemas() {
         $imagen = FUNC_URL . 'assets/img/cap' . $img_index . '-v5' . ($comentado ? '-gris' : '') . '.png';
 
         $problemas[] = [
-            'id' => $fila->ID,
-            'num' => $num,
-            'titulo' => $fila->post_title,
-            'texto' => wp_trim_words(strip_tags($fila->post_content), 12, '...'),
-            'categoria' => $fila->categoria,
-            'comentado' => $comentado,
-            'term_taxonomy_id' => $fila->term_taxonomy_id,
-            'imagen' => $imagen,
-            'url' => get_permalink($fila->ID)
+            'num'            => $num,
+            'comentado'      => $comentado,
+            'imagen'         => $imagen,
+            'url'            => get_permalink($fila->ID),
+            'letra_completa' => strip_tags($fila->post_content),
         ];
     }
 
-    // 🔎 Mostramos los que realmente se cargan
     error_log('🟦 Problemas cargados: ' . json_encode(array_column($problemas, 'num')));
-
     wp_send_json_success($problemas);
 }
