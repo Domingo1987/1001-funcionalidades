@@ -85,7 +85,7 @@
 
 .overlay-num {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.596);
+  background-color: #ffffffcf;
   padding: 0.2rem 0.6rem;
   border-radius: 0.4rem;
   color: white;
@@ -205,6 +205,22 @@
 
 
 /* Fin grid problemas */
+
+
+/*Estrellas */
+.rating-group.solo-visual {
+  display: inline-flex;
+  font-size: 1.3rem;
+  color: orange;
+  pointer-events: none;
+  margin-top: 0.5rem;
+}
+
+.rating-group.solo-visual .fa-star,
+.rating-group.solo-visual .fa-star-half,
+.rating-group.solo-visual .fa-star-o {
+  margin: 0 2px;
+}
 
 
 .no-click > a {

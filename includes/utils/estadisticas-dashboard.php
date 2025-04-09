@@ -490,3 +490,18 @@ function get_progreso_mensual($user_id) {
   /**
  * ********************************************************************************
  */
+
+ function render_estrellas_promedio($promedio) {
+    $html = '<div class="rating-group solo-visual">';
+    for ($i = 1; $i <= 5; $i++) {
+        if ($promedio >= $i) {
+            $html .= '<i class="fa fa-star rating__icon rating__icon--star" aria-hidden="true"></i>';
+        } elseif ($promedio >= $i - 0.5) {
+            $html .= '<i class="fa fa-star-half rating__icon rating__icon--star" aria-hidden="true"></i>';
+        } else {
+            $html .= '<i class="fa fa-star-o rating__icon rating__icon--star" aria-hidden="true"></i>';
+        }
+    }
+    $html .= '</div>';
+    return $html;
+}

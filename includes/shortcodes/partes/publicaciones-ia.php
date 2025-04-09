@@ -32,7 +32,26 @@ $promedio  = $valoraciones['cantidad_valoraciones'] > 0
         <?php endforeach; ?>
     </section>
 
-    <!-- Likes propios  -->
+     <!-- Likes propios  -->
+    <h4 style="margin-top: 2rem;">👍 Interacciones con mis publicaciones</h4>
+    <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+        <article class="card-1001" style="--color: #ff9800;">
+            <div class="barra-color"></div>
+            <div class="contenido-card">
+                <div class="icono">⭐</div>
+                <div class="texto">
+                    <p>Valoraciones en IA</p>
+                    <strong>
+                        <span class="contador-animado" data-valor="<?php echo $valoraciones['estrellas_totales']; ?>">0</span>
+                        <span style="font-size: 0.9rem;"> / <?php echo $valoraciones['cantidad_valoraciones']; ?> votos</span>
+                    </strong>
+                    <?php echo render_estrellas_promedio($promedio); ?>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- Likes propios  
     <h4 style="margin-top: 2rem;">👍 Interacciones con mis publicaciones</h4>
     <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
         <article class="card-1001" style="--color: #ff9800;">
@@ -49,5 +68,5 @@ $promedio  = $valoraciones['cantidad_valoraciones'] > 0
                 </div>
             </div>
         </article>
-    </section>
+    </section>-->
 </details>
