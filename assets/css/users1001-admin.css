@@ -1,0 +1,134 @@
+/**
+ * Estilos de administración para el plugin Users1001
+ *
+ * @package    Users1001
+ * @author     Domingo Pérez
+ */
+
+/* Dashboard */
+.users1001-dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.users1001-dashboard-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.users1001-dashboard-card h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.users1001-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stats-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2271b1;
+}
+
+.stats-label {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #50575e;
+}
+
+.users1001-actions {
+    margin-top: 30px;
+}
+
+.users1001-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Gestión de Cursos y Centros */
+.users1001-cursos-container,
+.users1001-centros-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.users1001-form-container {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.users1001-lista-container {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    padding: 20px;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .users1001-cursos-container,
+    .users1001-centros-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Historial Académico */
+#historial_academico {
+    margin-bottom: 20px;
+}
+
+.anio-academico {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.anio-academico h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.anio-academico label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Notificaciones */
+.notice {
+    margin: 10px 0;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.notice-success {
+    background-color: #ecf7ed;
+    border-left: 4px solid #46b450;
+}
+
+.notice-error {
+    background-color: #fbeaea;
+    border-left: 4px solid #dc3232;
+}
