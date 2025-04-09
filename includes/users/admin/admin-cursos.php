@@ -1,14 +1,6 @@
 <?php
-/**
- * Proporciona una vista de administración para gestionar cursos
- *
- * @since      1.0.0
- * @package    Users1001
- * @author     Domingo Pérez
- */
-
 // Obtener todos los cursos
-$admin = new Users1001_Admin();
+$admin = new Admin();
 $cursos = $admin->get_all_cursos();
 ?>
 

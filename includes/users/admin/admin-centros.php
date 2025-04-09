@@ -8,7 +8,7 @@
  */
 
 // Obtener todos los centros
-$admin = new Users1001_Admin();
+$admin = new Admin();
 $centros = $admin->get_all_centros();
 ?>
 
