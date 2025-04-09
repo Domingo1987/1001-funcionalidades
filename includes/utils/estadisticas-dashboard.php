@@ -174,16 +174,18 @@ function get_actividad_semanal($user_id) {
 function get_problemas_por_categoria($user_id) {
     global $wpdb;
 
-    // Obtener todas las categorías de la taxonomía personalizada
+    // Obtener todas las categorías de la taxonomía personalizada ordenadas por term_id
     $categorias = get_terms([
         'taxonomy'   => 'categorias_problemas',
         'hide_empty' => false,
+        'orderby'    => 'term_id',
+        'order'      => 'ASC',
     ]);
 
     $resultado = [];
 
     foreach ($categorias as $cat) {
-        // Total de problemas en esta categoría
+        // Total de problemas publicados en esta categoría
         $total = $wpdb->get_var($wpdb->prepare("
             SELECT COUNT(DISTINCT p.ID)
             FROM {$wpdb->posts} p
@@ -193,7 +195,7 @@ function get_problemas_por_categoria($user_id) {
               AND p.post_status = 'publish'
         ", $cat->term_id));
 
-        // Resueltos por este usuario (comentó al menos una vez)
+        // Total resueltos por el usuario (si comentó al menos una vez)
         $resueltos = $wpdb->get_var($wpdb->prepare("
             SELECT COUNT(DISTINCT p.ID)
             FROM {$wpdb->posts} p
@@ -205,33 +207,24 @@ function get_problemas_por_categoria($user_id) {
               AND p.post_status = 'publish'
               AND pm.meta_key = 'num_problema'
               AND c.user_id = %d
-            ORDER BY tr.term_taxonomy_id ASC
         ", $cat->term_id, $user_id));
 
-        $icono = '📂'; // por defecto
+        // Íconos y colores por slug
+        $icono = '📂';
         $color = '#999';
-
         switch ($cat->slug) {
-            case 'capitulo-1':
-                $icono = '1️⃣'; $color = '#3B5BA0'; break;
-            case 'capitulo-2':
-                $icono = '2️⃣'; $color = '#A84537'; break;
-            case 'capitulo-3':
-                $icono = '3️⃣'; $color = '#3BAA57'; break;
-            case 'capitulo-4':
-                $icono = '4️⃣'; $color = '#3DA7B3'; break;
-            case 'capitulo-5':
-                $icono = '5️⃣'; $color = '#A15EB6'; break;
-            case 'capitulo-6':
-                $icono = '6️⃣'; $color = '#B6A946'; break;
-            case 'capitulo-7':
-                $icono = '7️⃣'; $color = '#FF8C32'; break;
-            case 'capitulo-8':
-                $icono = '8️⃣'; $color = '#E53935'; break;
-            case 'capitulo-9':
-                $icono = '9️⃣'; $color = '#B67C4A'; break;
+            case 'capitulo-1': $icono = '1️⃣'; $color = '#3B5BA0'; break;
+            case 'capitulo-2': $icono = '2️⃣'; $color = '#A84537'; break;
+            case 'capitulo-3': $icono = '3️⃣'; $color = '#3BAA57'; break;
+            case 'capitulo-4': $icono = '4️⃣'; $color = '#3DA7B3'; break;
+            case 'capitulo-5': $icono = '5️⃣'; $color = '#A15EB6'; break;
+            case 'capitulo-6': $icono = '6️⃣'; $color = '#B6A946'; break;
+            case 'capitulo-7': $icono = '7️⃣'; $color = '#FF8C32'; break;
+            case 'capitulo-8': $icono = '8️⃣'; $color = '#E53935'; break;
+            case 'capitulo-9': $icono = '9️⃣'; $color = '#B67C4A'; break;
         }
-        
+
+        // Armar el array de respuesta
         $resultado[] = [
             'nombre'    => $cat->name,
             'icono'     => $icono,
@@ -243,6 +236,7 @@ function get_problemas_por_categoria($user_id) {
 
     return $resultado;
 }
+
 
 
 /**
