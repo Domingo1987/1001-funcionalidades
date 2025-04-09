@@ -85,7 +85,7 @@
 
 .overlay-num {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 255, 255, 0.596);
   padding: 0.2rem 0.6rem;
   border-radius: 0.4rem;
   color: white;
@@ -169,24 +169,39 @@
   opacity: 0.9;
 }
 
-
-/* Eliminado por pico
-.boton-ver-mas {
-  font-weight: 500;
-  background-color: #7066e0;
-  color: white;
-  border: none;
-  border-radius: 0.25em;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 0 0 3px rgba(112, 102, 224, 0.4);
-  transition: background-color 0.3s ease;
+/* estrellas */
+.estrellas {
+  position: relative;
+  display: inline-block;
+  font-size: 1.2rem;
+  line-height: 1;
+  width: 6em; /* 5 estrellas + algo de espacio */
+  height: 1.2em;
+  background: #ccc;
+  -webkit-mask-image: linear-gradient(90deg, #000 0 100%);
+  mask-image: linear-gradient(90deg, #000 0 100%);
+  background-image: repeating-linear-gradient(90deg, gold 0 1em, #ccc 1em 1.2em);
 }
 
-.boton-ver-mas:hover {
-  background-color: #5b53c7;
-}*/
+.estrellas::before {
+  content: "★★★★★";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--estrella-promedio, 0) * 1em);
+  overflow: hidden;
+  color: gold;
+  z-index: 2;
+}
+
+.estrellas::after {
+  content: "★★★★★";
+  color: #ccc;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
 
 
 /* Fin grid problemas */

@@ -299,30 +299,79 @@ function get_porcentaje_lenguajes($user_id) {
  * @return array
  */
 function get_publicaciones_ia_por_tipo($user_id) {
-    // Datos simulados
-    return [
-        ['tipo' => 'Imagen', 'icono' => '🖼️', 'color' => '#3f51b5', 'cantidad' => 4],
-        ['tipo' => 'Chatbot', 'icono' => '💬', 'color' => '#009688', 'cantidad' => 2],
-        ['tipo' => 'Música', 'icono' => '🎵', 'color' => '#e91e63', 'cantidad' => 1],
+    global $wpdb;
+
+    $resultados = $wpdb->get_results("
+        SELECT t.name AS tipo, COUNT(p.ID) AS cantidad
+        FROM {$wpdb->posts} p
+        INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+        WHERE p.post_type = 'inteligen_artificial'
+          AND p.post_status = 'publish'
+          AND p.post_author = {$user_id}
+          AND tt.taxonomy = 'ia_categoria'
+        GROUP BY t.term_id
+    ");
+
+    $iconos_colores = [
+        'Generación de Imágenes'        => ['icono' => '🖼️', 'color' => '#3f51b5'],
+        'Modelos Conversacionales'      => ['icono' => '💬', 'color' => '#009688'],
+        'Generación de Audio'           => ['icono' => '🎵', 'color' => '#e91e63'],
+        'Generación de Video'           => ['icono' => '🎬', 'color' => '#607d8b'],
+        'Plataformas de Implementación' => ['icono' => '🛠️', 'color' => '#ff9800'],
+        'Flujo'                         => ['icono' => '🔁', 'color' => '#795548'],
+        'Inteligencia Artificial'       => ['icono' => '🤖', 'color' => '#673ab7'],
     ];
 
-    // En el futuro podrías hacer una consulta a la base de datos agrupando por tipo.
+    $salida = [];
+
+    foreach ($resultados as $fila) {
+        $tipo = $fila->tipo;
+        $cantidad = intval($fila->cantidad);
+        $icono = $iconos_colores[$tipo]['icono'] ?? '📁';
+        $color = $iconos_colores[$tipo]['color'] ?? '#999';
+
+        $salida[] = [
+            'tipo'     => $tipo,
+            'icono'    => $icono,
+            'color'    => $color,
+            'cantidad' => $cantidad,
+        ];
+    }
+
+    return $salida;
 }
+
 
 /**
  * Devuelve un array con la cantidad de likes recibidos y dados por el usuario.
  * @param int $user_id
  * @return array
  */
-function get_likes_ia($user_id) {
-    // Datos simulados
-    return [
-        'recibidos' => 28,
-        'dados' => 15,
-    ];
+function get_valoraciones_ia($user_id) {
+    global $wpdb;
 
-    // Luego podrías usar $wpdb para consultar en una tabla de likes o metadatos de posts.
+    $sql = "
+        SELECT 
+            SUM(CASE WHEN pm.meta_key = 'wpdiscuz_post_rating' THEN pm.meta_value * (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = pm.post_id AND meta_key = 'wpdiscuz_post_rating_count' LIMIT 1) ELSE 0 END) AS total_estrellas,
+            SUM(CASE WHEN pm.meta_key = 'wpdiscuz_post_rating_count' THEN pm.meta_value ELSE 0 END) AS cantidad_valoraciones
+        FROM {$wpdb->postmeta} pm
+        INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+        WHERE p.post_type = 'inteligen_artificial'
+          AND p.post_status = 'publish'
+          AND p.post_author = %d
+          AND pm.meta_key IN ('wpdiscuz_post_rating', 'wpdiscuz_post_rating_count')
+    ";
+
+    $datos = $wpdb->get_row($wpdb->prepare($sql, $user_id));
+
+    return [
+        'cantidad_valoraciones' => intval($datos->cantidad_valoraciones),
+        'estrellas_totales'     => intval($datos->total_estrellas)
+    ];
 }
+
 
 
 /**

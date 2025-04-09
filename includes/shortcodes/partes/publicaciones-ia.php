@@ -5,7 +5,11 @@ $user_id = get_current_user_id();
 
 // Datos simulados (futuros get_* reemplazables)
 $tipos_ia = get_publicaciones_ia_por_tipo($user_id);
-$likes = get_likes_ia($user_id);
+$valoraciones = get_valoraciones_ia($user_id);
+$promedio  = $valoraciones['cantidad_valoraciones'] > 0 
+    ? round($valoraciones['estrellas_totales'] / $valoraciones['cantidad_valoraciones'],1) 
+    : 0;
+
 ?>
 
 <details>
@@ -28,27 +32,20 @@ $likes = get_likes_ia($user_id);
         <?php endforeach; ?>
     </section>
 
-    <!-- Likes propios y dados -->
-    <h4 style="margin-top: 2rem;">👍 Interacciones con publicaciones</h4>
+    <!-- Likes propios  -->
+    <h4 style="margin-top: 2rem;">👍 Interacciones con mis publicaciones</h4>
     <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-        <article class="card-1001" style="--color: #4caf50;">
+        <article class="card-1001" style="--color: #ff9800;">
             <div class="barra-color"></div>
             <div class="contenido-card">
-                <div class="icono">❤️</div>
+                <div class="icono">⭐</div>
                 <div class="texto">
-                    <p>Likes Recibidos</p>
-                    <strong><span class="contador-animado" data-valor="<?php echo $likes['recibidos']; ?>">0</span></strong>
-                </div>
-            </div>
-        </article>
-
-        <article class="card-1001" style="--color: #f44336;">
-            <div class="barra-color"></div>
-            <div class="contenido-card">
-                <div class="icono">🤝</div>
-                <div class="texto">
-                    <p>Likes Dados</p>
-                    <strong><span class="contador-animado" data-valor="<?php echo $likes['dados']; ?>">0</span></strong>
+                    <p>Valoraciones en IA</p>
+                    <strong>
+                        <span class="contador-animado" data-valor="<?php echo $valoraciones['estrellas_totales']; ?>">0</span>
+                        <span style="font-size: 0.9rem;"> / <?php echo $valoraciones['cantidad_valoraciones']; ?> votos</span>
+                    </strong>
+                    <div class="estrellas" data-promedio="<?php echo $promedio; ?>"></div>
                 </div>
             </div>
         </article>

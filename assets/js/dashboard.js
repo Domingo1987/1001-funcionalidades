@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     animarContadores();
+
+    // Aplicar estrellas visuales
+    document.querySelectorAll('.estrellas').forEach(el => {
+        const promedio = parseFloat(el.dataset.promedio || 0);
+        el.style.setProperty('--estrella-promedio', promedio);
+    });
 });
 
 function animarContadores() {
