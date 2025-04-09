@@ -55,3 +55,12 @@ add_filter('rest_endpoints', function($endpoints) {
 // 🛡️ Ocultar links REST API del <head> y headers HTTP
 remove_action('wp_head', 'rest_output_link_wp_head', 10);
 remove_action('template_redirect', 'rest_output_link_header', 11);
+
+//
+add_action('comment_post', 'guardar_lenguaje_usado_meta_1001', 10, 2);
+function guardar_lenguaje_usado_meta_1001($comment_ID, $comment_approved) {
+    if (!empty($_POST['lenguaje_usado'])) {
+        $lenguaje = sanitize_text_field($_POST['lenguaje_usado']);
+        add_comment_meta($comment_ID, 'lenguaje_usado', $lenguaje);
+    }
+}

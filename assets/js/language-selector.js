@@ -7,6 +7,12 @@ jQuery(document).ready(function($) {
         $('.ls-button').removeClass('active');
         $(this).addClass('active');
         
+        // Actualizar input oculto con el lenguaje seleccionado
+        var lenguajeInput = $('#lenguaje_usado');
+        if (lenguajeInput.length) {
+            lenguajeInput.val(lang);
+        }
+
         // Ocultar todos los contenidos
         $('.problem-content-original, .problem-content-python, .problem-content-java').hide();
         
@@ -27,3 +33,5 @@ jQuery(document).ready(function($) {
         }
     });
 });
+
+
