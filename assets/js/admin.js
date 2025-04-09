@@ -1,9 +1,4 @@
-/**
- * JavaScript para la administración del plugin Users1001
- *
- * @package    Users1001
- * @author     Domingo Pérez
- */
+
 
 (function($) {
     'use strict';

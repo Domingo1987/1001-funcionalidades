@@ -26,10 +26,13 @@ class Admin {
                 true
             );
     
-            wp_localize_script('admin-1001', 'admin1001_vars', array(
+            // Pasar variables al script
+            wp_localize_script('users1001-admin', 'users1001_vars', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('admin1001_nonce')
+                'nonce' => wp_create_nonce('users1001_nonce')
             ));
+
+            
         }
     }
 
