@@ -3,7 +3,7 @@
  * Plugin Name:       1001 Funcionalidades
  * Plugin URI:        https://1001problemas.com/
  * Description:       Conjunto de funcionalidades personalizadas para el sitio 1001problemas.com: shortcodes, estadísticas de usuario, scripts interactivos, mejoras visuales y más.
- * Version:           5.7.2
+ * Version:           5.7.3
  * Requires at least: 5.5
  * Requires PHP:      7.4
  * Author:            Domingo Pérez
@@ -30,30 +30,22 @@ function cargar_recursos_1001_funcionalidades() {
     wp_enqueue_style('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css');
     wp_enqueue_script('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array(), null, true);
 
-    if (is_page('listado-problemas')) {
-        error_log('✅ PicoCSS cargado porque estamos en listar-problemas');
+    if (is_page('listado-problemas')||is_page('dashboard')) {
         wp_enqueue_style('pico', 'https://unpkg.com/@picocss/pico@latest/css/pico.min.css', [], null);
-    } else {
-        error_log('🛑 No estamos en listar-problemas');
-    }
+    } 
     
+    if (is_page('dashboard')) {
+        wp_enqueue_style('dashboard-css', FUNC_URL . 'assets/css/dashboard.css');
+        wp_enqueue_script('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js', array(), null, true);
+        wp_enqueue_script('dashboard-js', FUNC_URL . 'assets/js/dashboard.js', ['jquery', 'chart-js'], null, true);
+    }
+
     // ✅ Pasar la URL de admin-ajax.php al JS
     wp_localize_script('1001-scripts', 'cienuno', [
         'ajaxurl' => admin_url('admin-ajax.php')
     ]);
 }
 add_action('wp_enqueue_scripts', 'cargar_recursos_1001_funcionalidades');
-
-add_action('wp_enqueue_scripts', function () {
-    if (is_page('dashboard')) {
-        error_log('✅ PicoCSS cargado porque estamos en dashboard');
-        wp_enqueue_style('pico', 'https://unpkg.com/@picocss/pico@latest/css/pico.min.css', [], null);
- 
-        wp_enqueue_style('dashboard-css', FUNC_URL . 'assets/css/dashboard.css');
-        wp_enqueue_script('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js', array(), null, true);
-        wp_enqueue_script('dashboard-js', FUNC_URL . 'assets/js/dashboard.js', ['jquery', 'chart-js'], null, true);
-    }
-});
 
 // INCLUDES ORGANIZADOS
 

@@ -85,7 +85,6 @@
 
 .overlay-num {
   position: absolute;
-  bottom: 0.5rem;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 0.2rem 0.6rem;
   border-radius: 0.4rem;

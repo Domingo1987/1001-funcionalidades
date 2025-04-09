@@ -60,9 +60,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (inputBuscar) {
             inputBuscar.addEventListener('input', () => {
                 const texto = inputBuscar.value.toLowerCase();
-                document.querySelectorAll('.problema-item').forEach(div => {
-                    const contenido = div.textContent.toLowerCase();
-                    div.style.display = contenido.includes(texto) ? 'block' : 'none';
+                console.log('🔍 Texto de búsqueda:', texto);
+
+                const items = document.querySelectorAll('.problema-item');
+                console.log('📦 Problemas en DOM:', items.length);
+
+                items.forEach(div => {
+                    const contenido = div.textContent.toLowerCase() + ' ' + div.getAttribute('data-letra');
+                    const coincide = contenido.includes(texto);
+                    div.style.display = coincide ? 'block' : 'none';
+            
+                    if (coincide) {
+                        console.log(`✅ Coincidencia: ${div.textContent.trim()}`);
+                    }
                 });
             });
         }
@@ -103,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     div.className = 'problema-item';
                     div.style.backgroundImage = `url('${problema.imagen}')`;
                     div.setAttribute('data-num', problema.num);
-                    div.setAttribute('data-letra', problema.letra_completa || '');
+                    div.setAttribute('data-letra', problema.letra_completa.toLowerCase());
 
                     if (problema.comentado) div.classList.add('comentado');
 
