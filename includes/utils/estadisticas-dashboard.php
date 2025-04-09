@@ -172,31 +172,77 @@ function get_actividad_semanal($user_id) {
  * @return array Arreglo de categorías con nombre, icono, color, total y resueltos
  */
 function get_problemas_por_categoria($user_id) {
-    // 🔧 Datos simulados — reemplazar con consulta a BD en el futuro
-    return [
-        [
-            'nombre'    => 'Secuenciales',
-            'icono'     => '📘',
-            'color'     => '#00bcd4',
-            'total'     => 40,
-            'resueltos' => 28
-        ],
-        [
-            'nombre'    => 'Condicionales',
-            'icono'     => '📙',
-            'color'     => '#ff9800',
-            'total'     => 30,
-            'resueltos' => 22
-        ],
-        [
-            'nombre'    => 'Bucles',
-            'icono'     => '📗',
-            'color'     => '#4caf50',
-            'total'     => 20,
-            'resueltos' => 15
-        ]
-    ];
+    global $wpdb;
+
+    // Obtener todas las categorías de la taxonomía personalizada
+    $categorias = get_terms([
+        'taxonomy'   => 'categorias_problemas',
+        'hide_empty' => false,
+    ]);
+
+    $resultado = [];
+
+    foreach ($categorias as $cat) {
+        // Total de problemas en esta categoría
+        $total = $wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(DISTINCT p.ID)
+            FROM {$wpdb->posts} p
+            INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+            WHERE tr.term_taxonomy_id = %d
+              AND p.post_type = 'problema'
+              AND p.post_status = 'publish'
+        ", $cat->term_id));
+
+        // Resueltos por este usuario (comentó al menos una vez)
+        $resueltos = $wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(DISTINCT p.ID)
+            FROM {$wpdb->posts} p
+            INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+            INNER JOIN {$wpdb->comments} c ON p.ID = c.comment_post_ID
+            INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+            WHERE tr.term_taxonomy_id = %d
+              AND p.post_type = 'problema'
+              AND p.post_status = 'publish'
+              AND pm.meta_key = 'num_problema'
+              AND c.user_id = %d
+        ", $cat->term_id, $user_id));
+
+        $icono = '📂'; // por defecto
+        $color = '#999';
+
+        switch ($cat->slug) {
+            case 'capitulo-1':
+                $icono = '1️⃣'; $color = '#3B5BA0'; break;
+            case 'capitulo-2':
+                $icono = '2️⃣'; $color = '#A84537'; break;
+            case 'capitulo-3':
+                $icono = '3️⃣'; $color = '#3BAA57'; break;
+            case 'capitulo-4':
+                $icono = '4️⃣'; $color = '#3DA7B3'; break;
+            case 'capitulo-5':
+                $icono = '5️⃣'; $color = '#A15EB6'; break;
+            case 'capitulo-6':
+                $icono = '6️⃣'; $color = '#B6A946'; break;
+            case 'capitulo-7':
+                $icono = '7️⃣'; $color = '#FF8C32'; break;
+            case 'capitulo-8':
+                $icono = '8️⃣'; $color = '#E53935'; break;
+            case 'capitulo-9':
+                $icono = '9️⃣'; $color = '#B67C4A'; break;
+        }
+        
+        $resultado[] = [
+            'nombre'    => $cat->name,
+            'icono'     => $icono,
+            'color'     => $color,
+            'total'     => intval($total),
+            'resueltos' => intval($resueltos),
+        ];
+    }
+
+    return $resultado;
 }
+
 
 /**
  * Devuelve el porcentaje de problemas resueltos por lenguaje.
