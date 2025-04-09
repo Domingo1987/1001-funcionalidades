@@ -77,7 +77,7 @@ jQuery(document).ready(function($) {
                 url: ajaxurl,
                 type: 'POST',
                 data: {
-                    action: 'users1001_save_centro',
+                    action: 'guardar_centro',
                     nonce: users1001_vars.nonce,
                     centro: centroProp
                 },
@@ -124,7 +124,7 @@ jQuery(document).ready(function($) {
                 url: ajaxurl,
                 type: 'POST',
                 data: {
-                    action: 'users1001_delete_centro',
+                    action: 'eliminar_centro',
                     nonce: users1001_vars.nonce,
                     centro: centro
                 },
