@@ -1,7 +1,7 @@
 
 .grid-problemas {
   display: flex;
-  min-height: 500px;
+  min-height: 4000px; /* Similar al scroll estimado */
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
