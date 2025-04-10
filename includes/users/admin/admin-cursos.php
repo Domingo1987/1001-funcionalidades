@@ -22,7 +22,7 @@ $cursos = $admin->get_all_cursos();
                     </tr>
                 </table>
                 <p class="submit">
-                    <button type="submit" id="submit-curso" class="button button-primary">Agregar Curso</button>
+                    <button type="submit" id="submit-curso" class="btn btn-success">Agregar Curso</button>
                 </p>
             </form>
         </div>
@@ -43,7 +43,7 @@ $cursos = $admin->get_all_cursos();
                             <tr>
                                 <td><?php echo esc_html($curso); ?></td>
                                 <td>
-                                    <button type="button" class="button eliminar-curso" data-curso="<?php echo esc_attr($curso); ?>">Eliminar</button>
+                                    <button type="button" class="btn btn-error" data-curso="<?php echo esc_attr($curso); ?>">Eliminar</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -13,6 +13,14 @@ class Admin {
                 '1.0.0',
                 'all'
             );
+
+            // Incluir Spectre en todo el admin
+            wp_enqueue_style(
+                'spectre-css',
+                'https://unpkg.com/spectre.css/dist/spectre.min.css',
+                [],
+                '0.5.9'
+            );
         }
     }
 

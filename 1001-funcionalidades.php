@@ -3,7 +3,7 @@
  * Plugin Name:       1001 Funcionalidades
  * Plugin URI:        https://1001problemas.com/
  * Description:       Conjunto de funcionalidades personalizadas para el sitio 1001problemas.com: shortcodes, estadísticas de usuario, scripts interactivos, mejoras visuales y más.
- * Version:           5.8.6
+ * Version:           5.9.0
  * Requires at least: 5.5
  * Requires PHP:      7.4
  * Author:            Domingo Pérez
@@ -100,6 +100,7 @@ if (is_admin()) {
     add_action('admin_menu', [$admin, 'add_plugin_admin_menu']);
     add_action('admin_enqueue_scripts', [$admin, 'enqueue_scripts']);
     add_action('admin_enqueue_scripts', [$admin, 'enqueue_styles']);
+
 
     add_filter('manage_users_columns', [$admin, 'add_curso_columns']);
     add_filter('manage_users_custom_column', [$admin, 'display_curso_column_content'], 10, 3);
