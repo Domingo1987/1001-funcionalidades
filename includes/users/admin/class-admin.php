@@ -6,13 +6,13 @@ class Admin {
 
     public function enqueue_styles($hook) {
         if (strpos($hook, 'users1001') !== false) {
-            wp_enqueue_style(
+           /* wp_enqueue_style(
                 'users1001-admin',
                 FUNC_URL . 'assets/css/admin.css',
                 array(),
                 '1.0.0',
                 'all'
-            );
+            );*/
 
             // Incluir Spectre en todo el admin
             wp_enqueue_style(
