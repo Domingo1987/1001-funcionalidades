@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(res => res.json())
         .then(respuesta => {
             if (respuesta.success && respuesta.data.length > 0) {
-                console.log('📦 Problemas cargados:', respuesta.data.map(p => p.num));
+                //console.log('📦 Problemas cargados:', respuesta.data.map(p => p.num));
 
                 const categoriasVistas = new Set();
 

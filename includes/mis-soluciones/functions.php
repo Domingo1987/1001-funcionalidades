@@ -38,7 +38,7 @@ function get_user_problems_with_categories() {
 
     $results = $wpdb->get_results($sql);
 
-    console.log("Problemas con categorías: " . json_encode($results)); // Debugging
+    error_log("🎯 Problemas con categorías: " . json_encode($results)); // Debugging
 
     $problems_with_categories = [];
     foreach ($results as $row) {

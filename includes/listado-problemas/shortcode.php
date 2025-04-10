@@ -64,9 +64,9 @@ function problema_azar_shortcode($atts) {
     $join_taxonomy = '';
     $where_comments = '';
 
-    error_log('🔍 Shortcode [problema_azar] activado');
+    /*error_log('🔍 Shortcode [problema_azar] activado');
     error_log('👤 Usuario ID: ' . $user_id);
-    error_log('📘 Capítulo recibido: ' . $capitulo);
+    error_log('📘 Capítulo recibido: ' . $capitulo);*/
 
     // Filtrar por categoría (si se pasa el atributo)
     if ($capitulo > 0) {
@@ -101,16 +101,16 @@ function problema_azar_shortcode($atts) {
         LIMIT 1
     ";
 
-    error_log('🧠 SQL ejecutado: ' . $sql);
+    //error_log('🧠 SQL ejecutado: ' . $sql);
 
     $num_problema = $wpdb->get_var($sql);
 
     if ($num_problema) {
-        error_log('🎯 Redirigiendo a problema: ' . $num_problema);
+        //error_log('🎯 Redirigiendo a problema: ' . $num_problema);
         wp_redirect("https://pruebas.1001problemas.com/problema/problema-$num_problema");
         exit;
     } else {
-        error_log('😢 No se encontró ningún problema. Redirigiendo a /felicitaciones');
+        //error_log('😢 No se encontró ningún problema. Redirigiendo a /felicitaciones');
         wp_redirect('https://pruebas.1001problemas.com/felicitaciones');
         exit;
     }

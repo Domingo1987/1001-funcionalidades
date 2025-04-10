@@ -36,7 +36,7 @@ function ajax_cargar_mas_problemas() {
     $ids_aleatorios = obtener_ids_problemas_aleatorios();
     $ids_para_mostrar = array_slice($ids_aleatorios, $offset, $limite);
 
-    error_log("🔀 IDs seleccionados para mostrar (offset $offset): " . json_encode($ids_para_mostrar));
+    //error_log("🔀 IDs seleccionados para mostrar (offset $offset): " . json_encode($ids_para_mostrar));
 
     if (empty($ids_para_mostrar)) {
         wp_send_json_success([]);
@@ -82,6 +82,6 @@ function ajax_cargar_mas_problemas() {
         ];
     }
 
-    error_log('🟦 Problemas cargados: ' . json_encode(array_column($problemas, 'num')));
+    //error_log('🟦 Problemas cargados: ' . json_encode(array_column($problemas, 'num')));
     wp_send_json_success($problemas);
 }
