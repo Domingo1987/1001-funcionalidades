@@ -8,21 +8,19 @@
 }
 
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .problema-item {
-  width: 150px;
-  height: 173.2px;
-  position: relative;
-  transition: transform 0.3s ease;
-  cursor: pointer;
-  overflow: hidden;
-  clip-path: polygon(
-    50% 0%,
-    96.3% 20%,
-    96.3% 67%,
-    50% 88%,
-    4.7% 68%,
-    4.7% 20%
-  );
+  opacity: 0;
+  view-timeline-name: --problema-visible;
+  view-timeline-axis: block;
+  animation-timeline: --problema-visible;
+  animation-name: fadeIn;
+  animation-range: entry 20% cover 40%;
+  animation-fill-mode: both;
 }
 
 .problema-item:hover {
@@ -39,28 +37,10 @@
   position: relative;
   text-decoration: none;
 }
-  
-@keyframes show {
-  from {
-    opacity: 0;
-    scale: 25%;
-  }
 
-  to {
-    opacity: 1;
-    scale: 100%;
-  }
-}
 
 
 .problema-img {
-  view-timeline-name: --image;
-  view-timeline-axis: block;
-  animation-timeline: --image;
-  animation-name: show;
-  
-  animation-range: entry 25% cover 50%;
-  animation-fill-mode: both;
 
   width: 100%;
   aspect-ratio: 150 / 173.2;
