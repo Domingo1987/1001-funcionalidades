@@ -13,12 +13,20 @@ $centros = $admin->get_all_centros();
             <div id="mensaje-centro" class="notice" style="display: none;"></div>
             
             <form id="agregar-centro-form">
-                <div class="form-group">
-                    <label for="nuevo-centro" class="form-label">Nombre del centro</label>
-                    <input type="text" id="nuevo-centro" name="nuevo-centro" class="form-input" required>
-                </div>
-                <button type="submit" id="submit-centro" class="btn btn-success">Agregar Centro</button>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><label for="nuevo-centro">Nombre del centro</label></th>
+                        <td>
+                            <input type="text" id="nuevo-centro" name="nuevo-centro" class="regular-text" required>
+                        </td>
+                    </tr>
+                </table>
+                <p class="submit">
+                    <button type="submit" id="submit-centro" class="btn btn-success">Agregar Centro</button>
+                </p>
             </form>
+
+
         </div>
         
         <div class="users1001-lista-container">
