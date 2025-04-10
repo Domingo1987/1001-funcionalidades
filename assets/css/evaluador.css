@@ -40,7 +40,6 @@ body.evaluador-body {
 
 /* Estilos para input y textarea */
 .evaluador-form-group textarea {
-    width: 95%;
     border-radius: 5px;
     border: 2px solid #3333f8;   /* Borde más grueso */
     background-color: rgb(255, 255, 255);
@@ -49,10 +48,11 @@ body.evaluador-body {
     font-family: 'Courier New', monospace; /* Fuente monoespaciada mejor para código */
     line-height: 1.4;            /* Mejor espaciado entre líneas */
     padding: 12px;               /* Más padding para texto menos apretado */
-    resize: vertical;
-    min-height: 120px;           /* Altura mínima aumentada */
     transition: background-color 0.3s, border 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interior sutil */
+    resize: none;
+    min-height: min-content;
+    field-sizing: content
 }
 
 .evaluador-form-group textarea:focus {
