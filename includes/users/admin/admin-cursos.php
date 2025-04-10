@@ -161,7 +161,7 @@ jQuery(document).ready(function($) {
             $.each(cursos, function(index, curso) {
                 html += '<tr>' +
                     '<td>' + curso + '</td>' +
-                    '<td><button type="button" class="button eliminar-curso" data-curso="' + curso + '">Eliminar</button></td>' +
+                    '<td><button type="button" class="btn btn-error" data-curso="' + curso + '">Eliminar</button></td>' +
                     '</tr>';
             });
         } else {
