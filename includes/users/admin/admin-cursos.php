@@ -31,24 +31,27 @@ $cursos = $admin->get_all_cursos();
             <h2>Cursos Disponibles</h2>
             
             <?php if (!empty($cursos)) : ?>
-                <table class="widefat fixed striped">
-                    <thead>
+                <table class="table table-striped table-hover table-scroll">
+                    <thead style="background-color: #32b643; color: #ffffff;">
                         <tr>
-                            <th>Nombre del Curso</th>
-                            <th>Acciones</th>
+                            <th class="text-left">📚 Nombre del Curso</th>
+                            <th class="text-center">🛠️ Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="lista-cursos">
                         <?php foreach ($cursos as $curso) : ?>
                             <tr>
                                 <td><?php echo esc_html($curso); ?></td>
-                                <td>
-                                    <button class="btn btn-error btn-sm eliminar-curso" data-curso="<?php echo esc_attr($curso); ?>">Eliminar</button>
+                                <td class="text-center">
+                                    <button class="btn btn-error btn-sm eliminar-curso" data-curso="<?php echo esc_attr($curso); ?>">
+                                        Eliminar
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+
             <?php else : ?>
                 <p>No hay cursos disponibles.</p>
             <?php endif; ?>
