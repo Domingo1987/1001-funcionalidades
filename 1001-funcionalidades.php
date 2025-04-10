@@ -67,7 +67,6 @@ require_once FUNC_PATH . 'includes/hooks/redirecciones.php';
 
 // 🧩 SHORTCODES
 require_once FUNC_PATH . 'includes/shortcodes/ide.php';
-require_once FUNC_PATH . 'includes/shortcodes/soluciones.php';
 require_once FUNC_PATH . 'includes/shortcodes/dashboard.php';
 
 // 🧠 UTILS
