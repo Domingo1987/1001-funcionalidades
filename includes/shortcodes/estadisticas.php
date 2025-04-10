@@ -50,8 +50,6 @@ function estadisticas_usuario_shortcode() {
 }
 add_shortcode('estadisticas_usuario', 'estadisticas_usuario_shortcode');
 
-
-
 // Shortcode [cantidad_comentarios] - Cantidad total de comentarios realizados por usuarios registrados
 function mostrar_cant_comentarios_en_respuestas() {
     $cantidad = cant_comentarios_de_usuarios();
