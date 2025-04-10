@@ -1,0 +1,184 @@
+/* Estilos generales para el cuerpo */
+body.evaluador-body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://1001problemas.com/materialdidactico/img/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.evaluador-problemas-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 5% auto;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para los cuadros de texto */
+.evaluador-form-group {
+    margin-bottom: 10px;
+    text-align: center;  /* Centrar el contenido del grupo */
+}
+
+/* Mejora de los estilos de label para problema y solución */
+.evaluador-form-group label {
+    font-size: 20px;            /* Aumentado de 18px a 20px */
+    font-weight: bold;          
+    margin-bottom: 0.8rem;      /* Aumentado para más separación */
+    color: #ffffff;             /* Cambiado a blanco para mayor contraste en fondo oscuro */
+    display: block;
+    text-align: left;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Sombra para destacar sobre fondos */
+}
+
+/* Estilos para input y textarea */
+.evaluador-form-group textarea {
+    width: 95%;
+    border-radius: 5px;
+    border: 2px solid #3333f8;   /* Borde más grueso */
+    background-color: rgb(255, 255, 255);
+    color: #000000;              /* Negro para mejor contraste */
+    font-size: 18px;             /* Aumentado de 16px a 18px */
+    font-family: 'Courier New', monospace; /* Fuente monoespaciada mejor para código */
+    line-height: 1.4;            /* Mejor espaciado entre líneas */
+    padding: 12px;               /* Más padding para texto menos apretado */
+    resize: vertical;
+    min-height: 120px;           /* Altura mínima aumentada */
+    transition: background-color 0.3s, border 0.3s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interior sutil */
+}
+
+.evaluador-form-group textarea:focus {
+    border-color: #5555ff;
+    box-shadow: 0 0 8px rgba(51, 51, 248, 0.6); /* Resplandor al enfocar */
+    outline: none;
+}
+
+
+/* Estilo para los botones */
+.evaluador-button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #3333f8;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.evaluador-button:hover {
+    background-color: #4b4bff;
+}
+
+.evaluador-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Estilo para el contenedor de resultados de la evaluación */
+.evaluador-resultado {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95); /* Más opaco para mejor contraste */
+    border-radius: 5px;
+    max-width: 800px; /* Aumentado para permitir mejor legibilidad */
+    line-height: 1.2;
+    word-wrap: break-word;
+    font-family: Arial, sans-serif;
+    color: #000000; /* Negro puro para mejor contraste */
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+}
+
+/* Estilos para los criterios de evaluación */
+.evaluador-criterio {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #000000;  /* Cambiado a negro para mejor contraste */
+    background-color: rgba(255, 255, 255, 1.0); /* Completamente opaco */
+    padding: 15px;
+    border-radius: 8px;
+    text-align: left;
+    border-left: 4px solid #3333f8; /* Borde izquierdo para destacar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.evaluador-titulo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #3333f8;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+/* Estilo para el subtítulo, como Puntaje Asignado, Justificación, etc. */
+.evaluador-subtitulo {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #3333f8;
+    text-align: left;
+}
+
+/* Estilo para el puntaje asignado */
+.evaluador-puntaje {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+/* Estilo para el texto de justificación y retroalimentación */
+.evaluador-texto {
+    font-size: 16px;
+    color: #000000;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: justify;
+    white-space: pre-wrap;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Estilo para el total de puntos */
+.evaluador-total-puntos {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #01018d;
+}
+
+/* Estilo para los mensajes de evaluación en progreso */
+.evaluador-evaluando {
+    text-align: center;
+    font-style: italic;
+    color: white;
+}
+
+/* Estilo para los mensajes de error */
+.evaluador-error {
+    color: #ff0000;
+    font-weight: bold;
+}

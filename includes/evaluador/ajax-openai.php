@@ -1,9 +1,10 @@
 <?php
-// Archivo: openai.php
+// Acción AJAX para enviar prompt simple a OpenAI (no Assistant)
 
-// Acción AJAX: enviar un prompt a la API de OpenAI y devolver la respuesta
+add_action('wp_ajax_openai_request', 'handle_openai_request');
+
 function handle_openai_request() {
-    $api_key = "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"; // Reemplazá con un sistema seguro si se publica
+    $api_key = defined('OPENAI_API_KEY_SIMPLE') ? OPENAI_API_KEY_SIMPLE : '';
 
     if (empty($api_key)) {
         wp_send_json_error('API key is missing', 400);
@@ -15,16 +16,15 @@ function handle_openai_request() {
 
     $response = wp_remote_post('https://api.openai.com/v1/engines/davinci/completions', array(
         'headers' => array(
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer ' . $api_key
         ),
-        'body' => json_encode(array(
-            'prompt' => $prompt,
-            'max_tokens' => $max_tokens
-        ))
+        'body' => json_encode([
+            'prompt'     => $prompt,
+            'max_tokens' => (int) $max_tokens
+        ])
     ));
 
     $body = wp_remote_retrieve_body($response);
-    wp_send_json($body);
+    wp_send_json(json_decode($body, true)); // Devuelve JSON real
 }
-add_action('wp_ajax_openai_request', 'handle_openai_request');

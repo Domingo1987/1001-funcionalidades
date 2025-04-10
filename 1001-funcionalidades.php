@@ -3,7 +3,7 @@
  * Plugin Name:       1001 Funcionalidades
  * Plugin URI:        https://1001problemas.com/
  * Description:       Conjunto de funcionalidades personalizadas para el sitio 1001problemas.com: shortcodes, estadísticas de usuario, scripts interactivos, mejoras visuales y más.
- * Version:           5.11.3
+ * Version:           6.0.0
  * Requires at least: 5.5
  * Requires PHP:      7.4
  * Author:            Domingo Pérez
@@ -53,17 +53,17 @@ add_action('wp_enqueue_scripts', 'cargar_recursos_1001_funcionalidades');
 // INCLUDES ORGANIZADOS
 
 // 🔄 AJAX
-require_once FUNC_PATH . 'includes/ajax/openai.php';
 require_once FUNC_PATH . 'includes/ajax/problema-num.php';
 
 // 🎣 HOOKS
 require_once FUNC_PATH . 'includes/hooks/comentarios.php';
 require_once FUNC_PATH . 'includes/hooks/interfaz.php';
-require_once FUNC_PATH . 'includes/hooks/post-metadata.php';
-require_once FUNC_PATH . 'includes/hooks/page-intros.php';
 require_once FUNC_PATH . 'includes/hooks/language-selector.php';
-require_once FUNC_PATH . 'includes/hooks/wpdiscuz.php';
+require_once FUNC_PATH . 'includes/hooks/page-intros.php';
+require_once FUNC_PATH . 'includes/hooks/post-metadata.php';
 require_once FUNC_PATH . 'includes/hooks/redirecciones.php';
+require_once FUNC_PATH . 'includes/hooks/wpdiscuz.php';
+
 
 // 🧩 SHORTCODES
 require_once FUNC_PATH . 'includes/shortcodes/estadisticas.php';
@@ -84,3 +84,6 @@ require_once FUNC_PATH  . 'includes/users/init.php';
 
 // Modulo de mis-soluciones
 require_once FUNC_PATH  . 'includes/mis-soluciones/init.php';
+
+// Modulo de evaluador
+require_once FUNC_PATH  . 'includes/evaluador/init.php';
