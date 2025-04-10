@@ -33,8 +33,7 @@ function get_user_problems_with_categories() {
         JOIN wp_terms t ON tt.term_id = t.term_id
         WHERE pm.meta_key = 'num_problema' AND pm.meta_value IN ($problem_numbers_list)
         AND p.post_status != 'inherit'
-        AND tt.taxonomy = 'category'
-        AND t.name != 'Blog';
+        AND tt.taxonomy = 'categorias_problemas'
     ";
 
     $results = $wpdb->get_results($sql);
