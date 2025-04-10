@@ -88,7 +88,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     div.innerHTML = `
                         <a href="${problema.url}" class="problema-link">
-                            <img src="${problema.imagen}" alt="Problema ${problema.num}" class="problema-img" width="150" height="173" ${fetchPriority} />
+                            <img 
+                                class="problema-img" 
+                                src="${problema.imagen}" 
+                                alt="Problema ${problema.num}" 
+                                width="150" 
+                                height="173" 
+                                style="aspect-ratio: 150 / 173.2" 
+                                ${fetchPriority} 
+                                />                            
                             <div class="overlay-num">
                                 <h4>Problema ${problema.num}</h4>
                             </div>

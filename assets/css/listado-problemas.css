@@ -22,14 +22,14 @@
   animation-fill-mode: both;
   animation-duration: 0.6s;
   animation-timing-function: ease-out;
-  clip-path: polygon(
+  /*clip-path: polygon(
     50% 0%,
     96.3% 20%,
     96.3% 67%,
     50% 88%,
     4.7% 68%,
     4.7% 20%
-  );
+  );*/
 }
 
 .problema-item:hover {
@@ -48,8 +48,6 @@
 }
   
 .problema-img {
-  width: 100%;
-  aspect-ratio: 150 / 173.2;
   object-fit: cover;
   display: block;
   clip-path: inherit;
@@ -57,8 +55,6 @@
 
 .overlay-num {
   position: absolute;
-  top: 10px;
-  left: 10px;
   min-height: 2rem;
   background-color: #ffffffcf;
   padding: 0.2rem 0.6rem;
