@@ -68,7 +68,9 @@ function ajax_cargar_mas_problemas() {
         $num = intval($fila->num_problema);
         $comentado = in_array($num, $comentados_nums);
         $img_index = intval($fila->term_taxonomy_id) - 53;
-        $imagen = FUNC_URL . 'assets/img/cap' . $img_index . '-v5' . ($comentado ? '-gris' : '') . '.png';
+        $imagen = FUNC_URL . 'assets/img/cap' . $img_index . '-v5' . ($comentado ? '-gris' : '') . '.webp';
+        //        $imagen = FUNC_URL . 'assets/img/cap' . $img_index . '-v5' . ($comentado ? '-gris' : '') . '.png';
+
 
         $problemas[] = [
             'num'            => $num,
