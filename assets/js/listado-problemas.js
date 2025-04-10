@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (respuesta.success && respuesta.data.length > 0) {
                 console.log('📦 Problemas cargados:', respuesta.data.map(p => p.num));
 
+                const categoriasVistas = new Set();
+
                 respuesta.data.forEach(problema => {
                     const div = document.createElement('div');
                     div.className = 'problema-item';
@@ -75,21 +77,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if (problema.comentado) div.classList.add('comentado');
 
-                    //div.style.backgroundImage = `url('${problema.imagen}')`;
-                    
+                    // ✔️ Detectar si es el primer problema de ese capítulo
+                    const capitulo = problema.capitulo;
+                    const esPrimeraDeEstaCategoria = !categoriasVistas.has(capitulo);
+                    if (esPrimeraDeEstaCategoria) categoriasVistas.add(capitulo);
+
+                    const fetchPriority = esPrimeraDeEstaCategoria
+                        ? 'fetchpriority="high" loading="eager"'
+                        : 'loading="lazy"';
+
                     div.innerHTML = `
                         <a href="${problema.url}" class="problema-link">
-                            <img src="${problema.imagen}" alt="Problema ${problema.num}" class="problema-img" loading="lazy" width="150" height="173" />
+                            <img src="${problema.imagen}" alt="Problema ${problema.num}" class="problema-img" width="150" height="173" ${fetchPriority} />
                             <div class="overlay-num">
                                 <h4>Problema ${problema.num}</h4>
                             </div>
                         </a>
                     `;
 
-
                     contenedor.appendChild(div);
                 });
-
 
                 offset += respuesta.data.length;
                 cargandoDatos = false;

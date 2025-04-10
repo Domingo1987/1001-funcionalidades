@@ -76,6 +76,7 @@ function ajax_cargar_mas_problemas() {
             'imagen'         => $imagen,
             'url'            => get_permalink($fila->ID),
             'letra_completa' => strip_tags($fila->post_content),
+            'capitulo'       => intval($fila->term_taxonomy_id),
         ];
     }
 
