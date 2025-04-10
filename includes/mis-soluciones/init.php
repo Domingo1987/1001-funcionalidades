@@ -2,6 +2,8 @@
 
 // Shortcodes relacionados
 require_once __DIR__ . '/shortcode.php';
+// Funciones relacionadas
+require_once __DIR__ . '/functions.php';
 
 // Solo ejecutar si estamos en la página correcta
 add_action('wp_enqueue_scripts', function () {

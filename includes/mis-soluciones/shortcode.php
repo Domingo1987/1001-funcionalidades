@@ -101,6 +101,9 @@ function mis_soluciones_shortcode() {
             ]
         };
 
+        console.log('📊 Datos del grafo:', data);
+
+
         const width = 800, height = 600;
 
         const svg = d3.select("#graph")
