@@ -1,12 +1,4 @@
 <?php
-/**
- * Proporciona una vista de administración para gestionar centros
- *
- * @since      1.0.0
- * @package    Users1001
- * @author     Domingo Pérez
- */
-
 // Obtener todos los centros
 $admin = new Admin();
 $centros = $admin->get_all_centros();
@@ -21,17 +13,11 @@ $centros = $admin->get_all_centros();
             <div id="mensaje-centro" class="notice" style="display: none;"></div>
             
             <form id="agregar-centro-form">
-                <table class="form-table">
-                    <tr>
-                        <th scope="row"><label for="nuevo-centro">Nombre del centro</label></th>
-                        <td>
-                            <input type="text" id="nuevo-centro" name="nuevo-centro" class="regular-text" required>
-                        </td>
-                    </tr>
-                </table>
-                <p class="submit">
-                    <button type="submit" id="submit-centro" class="button button-primary">Agregar Centro</button>
-                </p>
+                <div class="form-group">
+                    <label for="nuevo-centro" class="form-label">Nombre del centro</label>
+                    <input type="text" id="nuevo-centro" name="nuevo-centro" class="form-input" required>
+                </div>
+                <button type="submit" id="submit-centro" class="btn btn-success">Agregar Centro</button>
             </form>
         </div>
         
@@ -39,19 +25,21 @@ $centros = $admin->get_all_centros();
             <h2>Centros Disponibles</h2>
             
             <?php if (!empty($centros)) : ?>
-                <table class="widefat fixed striped">
-                    <thead>
+                <table class="table table-striped table-hover table-scroll" style="width: 100%;">
+                    <thead style="background-color: #32b643; color: white;">
                         <tr>
-                            <th>Nombre del Centro</th>
-                            <th>Acciones</th>
+                            <th class="text-left">🏫 Nombre del Centro</th>
+                            <th class="text-center">🛠️ Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="lista-centros">
                         <?php foreach ($centros as $centro) : ?>
                             <tr>
                                 <td><?php echo esc_html($centro); ?></td>
-                                <td>
-                                    <button type="button" class="button eliminar-centro" data-centro="<?php echo esc_attr($centro); ?>">Eliminar</button>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-error btn-sm eliminar-centro" data-centro="<?php echo esc_attr($centro); ?>">
+                                        Eliminar
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -83,17 +71,13 @@ jQuery(document).ready(function($) {
                 },
                 success: function(response) {
                     if (response.success) {
-                        // Mostrar mensaje
                         $('#mensaje-centro')
                             .removeClass('notice-error')
                             .addClass('notice-success')
                             .html('<p>' + response.data.message + '</p>')
                             .show();
                         
-                        // Limpiar campo
                         $('#nuevo-centro').val('');
-                        
-                        // Actualizar tabla
                         actualizarTablaCentros(response.data.centros);
                     } else {
                         $('#mensaje-centro')
@@ -113,7 +97,7 @@ jQuery(document).ready(function($) {
             });
         }
     });
-    
+
     // Eliminar centro
     $(document).on('click', '.eliminar-centro', function() {
         var centro = $(this).data('centro');
@@ -130,14 +114,12 @@ jQuery(document).ready(function($) {
                 },
                 success: function(response) {
                     if (response.success) {
-                        // Mostrar mensaje
                         $('#mensaje-centro')
                             .removeClass('notice-error')
                             .addClass('notice-success')
                             .html('<p>' + response.data.message + '</p>')
                             .show();
                         
-                        // Actualizar tabla
                         actualizarTablaCentros(response.data.centros);
                     } else {
                         $('#mensaje-centro')
@@ -157,8 +139,8 @@ jQuery(document).ready(function($) {
             });
         }
     });
-    
-    // Función para actualizar la tabla de centros
+
+    // Actualizar tabla de centros
     function actualizarTablaCentros(centros) {
         var html = '';
         
@@ -166,7 +148,9 @@ jQuery(document).ready(function($) {
             $.each(centros, function(index, centro) {
                 html += '<tr>' +
                     '<td>' + centro + '</td>' +
-                    '<td><button type="button" class="button eliminar-centro" data-centro="' + centro + '">Eliminar</button></td>' +
+                    '<td class="text-center">' +
+                    '<button type="button" class="btn btn-error btn-sm eliminar-centro" data-centro="' + centro + '">Eliminar</button>' +
+                    '</td>' +
                     '</tr>';
             });
         } else {

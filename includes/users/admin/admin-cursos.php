@@ -31,7 +31,7 @@ $cursos = $admin->get_all_cursos();
             <h2>Cursos Disponibles</h2>
             
             <?php if (!empty($cursos)) : ?>
-                <table class="table table-striped table-hover table-scroll">
+                <table class="table table-striped table-hover table-scroll" style="width: 100%;">
                     <thead style="background-color: #32b643; color: #ffffff;">
                         <tr>
                             <th class="text-left">📚 Nombre del Curso</th>
