@@ -43,7 +43,7 @@ $cursos = $admin->get_all_cursos();
                             <tr>
                                 <td><?php echo esc_html($curso); ?></td>
                                 <td>
-                                    <button class="btn btn-error" data-curso="<?php echo esc_attr($curso); ?>">Eliminar</button>
+                                    <button class="btn btn-error btn-sm eliminar-curso" data-curso="<?php echo esc_attr($curso); ?>">Eliminar</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -111,6 +111,8 @@ jQuery(document).ready(function($) {
     // Eliminar curso
     $(document).on('click', '.eliminar-curso', function() {
         var curso = $(this).data('curso');
+        console.log('🧨 Clic en eliminar curso:', curso);
+
         var confirmar = confirm('¿Está seguro de eliminar el curso "' + curso + '"?');
         
         if (confirmar) {
@@ -124,6 +126,8 @@ jQuery(document).ready(function($) {
                     curso: curso
                 },
                 success: function(response) {
+                    console.log('✅ Respuesta del servidor:', response);
+
                     if (response.success) {
                         // Mostrar mensaje
                         $('#mensaje-curso')
@@ -161,7 +165,7 @@ jQuery(document).ready(function($) {
             $.each(cursos, function(index, curso) {
                 html += '<tr>' +
                     '<td>' + curso + '</td>' +
-                    '<td><button class="btn btn-error" data-curso="' + curso + '">Eliminar</button></td>' +
+                    '<td><button class="btn btn-error btn-sm eliminar-curso" data-curso="' + curso + '">Eliminar</button></td>' +
                     '</tr>';
             });
         } else {
