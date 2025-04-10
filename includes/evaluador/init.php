@@ -15,7 +15,7 @@ require_once __DIR__ . '/ajax-openai.php';
 
 // Enqueue estilos y scripts solo en la página del dashboard
 add_action('wp_enqueue_scripts', function () {
-    if (is_page('dashboard')) {
+    if (is_page('evaluador-de-problemas')) {
         wp_enqueue_style(
             'evaluador-css',
             FUNC_URL . 'assets/css/evaluador.css',
