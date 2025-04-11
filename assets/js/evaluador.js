@@ -1,27 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const yaUsado = sessionStorage.getItem('evaluador_anonimo_usado');
-    const estaLogueado = document.body.classList.contains('logged-in'); // Clase que agrega WordPress
+    verificarIntentoAnonimo();
 
-    console.log('🧠 ¿Usuario está logueado?', estaLogueado);
-    console.log('📦 ¿Session evaluador usado?', yaUsado);
-
-    if (!estaLogueado && yaUsado === '1') {
-        console.log('🚫 Mostrando modal: ya usó su intento anónimo');
-
-        const modal = document.createElement('dialog');
-        modal.id = 'modal-evaluador-limitado';
-        modal.innerHTML = `
-            <main data-theme="pico" style="max-width:500px;text-align:center;">
-                <p>Ya usaste tu intento anónimo del evaluador.</p>
-                <button onclick="window.location.href='/login/'">Iniciar Sesión</button>
-            </main>
-        `;
-        document.body.appendChild(modal);
-        modal.showModal();
-        return;
-    }
-
-    console.log('✅ Usuario puede usar el evaluador');
 
 
 
@@ -120,3 +99,46 @@ document.addEventListener('DOMContentLoaded', function () {
         subirOtro.style.display = 'none';
     }
 });
+
+function verificarIntentoAnonimo() {
+    const yaUsado = sessionStorage.getItem('evaluador_anonimo_usado');
+    const estaLogueado = document.body.classList.contains('logged-in');
+
+    console.log('🧠 ¿Usuario está logueado?', estaLogueado);
+    console.log('📦 ¿Session evaluador usado?', yaUsado);
+
+    if (!estaLogueado && yaUsado === '1') {
+        console.log('🚫 Mostrando modal visual tipo PHP');
+
+        const modal = document.createElement('dialog');
+        modal.id = 'modal-evaluador-limitado';
+
+        modal.innerHTML = `
+            <main data-theme="pico" style="position: relative; padding: 0;">
+                <div style="position: relative;">
+                    <img src="/wp-content/plugins/1001-funcionalidades/assets/img/inicia_sesion.webp" alt="Inicia Sesión" style="width: 100%; border-radius: 0;" />
+                    <div style="
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;
+                        background: rgba(0, 0, 0, 0.6);
+                        color: white;
+                        text-align: center;
+                        padding: 0.75rem 1rem;
+                        font-weight: bold;
+                        font-size: 1rem;
+                    ">
+                        Ya usaste tu intento anónimo. Inicia sesión para continuar.
+                    </div>
+                </div>
+                <form method="dialog" class="text-center" style="margin-top: 1rem;">
+                    <button onclick="window.location.href='/login/'" class="primary">Iniciar sesión</button>
+                    <button type="button" class="secondary" onclick="document.getElementById('modal-evaluador-limitado').close()">Cerrar</button>
+                </form>
+            </main>
+        `;
+
+        document.body.appendChild(modal);
+        modal.showModal();
+    }
+}
