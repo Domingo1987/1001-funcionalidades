@@ -1,6 +1,6 @@
 <?php
 
-function mostrar_modal_redireccion_login($retardo = 2000, $mensaje = '') {
+function mostrar_modal_redireccion_login($retardo, $mensaje = '') {
     $img_url = FUNC_URL . 'assets/img/inicia_sesion.webp';
 
     ob_start(); ?>
