@@ -5,10 +5,12 @@ function shortcode_en_construccion_modal() {
     ob_start(); ?>
     
     <dialog id="modal-construccion">
-        <img src="<?php echo esc_url($img_url); ?>" alt="En construcción">
-        <form method="dialog">
-            <button>Cerrar</button>
-        </form>
+        <main data-theme="pico">
+            <img src="<?php echo esc_url($img_url); ?>" alt="En construcción" />
+            <form method="dialog" class="text-center">
+                <button class="secondary">Cerrar</button>
+            </form>
+        </main>
     </dialog>
 
     <script>
@@ -25,4 +27,5 @@ function shortcode_en_construccion_modal() {
 }
 
 add_shortcode('en_construccion', 'shortcode_en_construccion_modal');
+
 

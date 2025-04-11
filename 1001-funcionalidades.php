@@ -3,7 +3,7 @@
  * Plugin Name:       1001 Funcionalidades
  * Plugin URI:        https://1001problemas.com/
  * Description:       Conjunto de funcionalidades personalizadas para el sitio 1001problemas.com: shortcodes, estadísticas de usuario, scripts interactivos, mejoras visuales y más.
- * Version:           6.1.2
+ * Version:           6.1.4
  * Requires at least: 5.5
  * Requires PHP:      7.4
  * Author:            Domingo Pérez
@@ -33,10 +33,12 @@ function cargar_recursos_1001_funcionalidades() {
     wp_enqueue_style('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css');
     wp_enqueue_script('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array(), null, true);
 
-    if (is_page('listado-problemas')||is_page('dashboard')) {
+    
+    if (is_page('listado-problemas')||is_page('dashboard') ||is_page('tools')) {
         wp_enqueue_style('pico', 'https://unpkg.com/@picocss/pico@latest/css/pico.min.css', [], null);
     } 
     
+
     if (is_page('dashboard')) {
         wp_enqueue_style('dashboard-css', FUNC_URL . 'assets/css/dashboard.css');
         wp_enqueue_script('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js', array(), null, true);
