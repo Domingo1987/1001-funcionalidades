@@ -10,26 +10,25 @@ function redireccionar_si_no_logueado() {
 }
 add_shortcode('redireccionar', 'redireccionar_si_no_logueado');
 
-// 🔁 Hook: mostrar cantidad de códigos en el footer
+// 🔁 Hook: mostrar cantidad de códigos en el footer con Pico
 add_action('wp_footer', 'codigos_footer');
 function codigos_footer() {
     ?>
-        <div class="problema-card">
-        <p class="problema-numero"><?php echo do_shortcode('[cantidad_codigo]'); ?></p>
-        <p class="problema-descripcion">CÓDIGOS</p>
-    </div>
-
+    <article data-theme="pico" class="footer-card-pico">
+        <h2 class="footer-numero"><?php echo do_shortcode('[cantidad_codigo]'); ?></h2>
+        <p class="footer-descripcion">CÓDIGOS</p>
+    </article>
     <?php
 }
 
-// 🔁 Hook: mostrar cantidad de comentarios en el footer
+// 🔁 Hook: mostrar cantidad de comentarios en el footer con Pico
 add_action('wp_footer', 'comentarios_footer');
 function comentarios_footer() {
     ?>
-    <div class="problema-card">
-            <p class="problema-numero"><?php echo do_shortcode('[cantidad_comentarios]'); ?></p>
-            <p class="problema-descripcion">SOLUCIONES</p>
-    </div>
+    <article data-theme="pico" class="footer-card-pico">
+        <h2 class="footer-numero"><?php echo do_shortcode('[cantidad_comentarios]'); ?></h2>
+        <p class="footer-descripcion">SOLUCIONES</p>
+    </article>
     <?php
 }
 

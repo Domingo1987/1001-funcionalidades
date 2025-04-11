@@ -29,10 +29,51 @@
     font-style: italic;
 }
 
-/* Sobrescribir color solo para los elementos del footer */
+/* 🎯 Restaurar y proteger estilos del footer frente a PicoCSS */
+
+footer,
+footer * {
+    font-family: Helvetica, Arial, sans-serif !important;
+    font-size: 11px !important;
+    color: #999999 !important;
+    line-height: 17px !important;
+    text-transform: none !important;
+    background-color: #444 !important; /* o el que uses tú */
+    border-bottom: 7px solid #333 !important;
+    margin-top: 50px !important;
+    text-align: start !important;
+}
+
+/* Enlaces en el footer */
+footer a {
+    color: #ccc !important;
+    font-weight: normal !important;
+    text-decoration: underline !important;
+}
+
+/* Listas */
+footer ul,
+footer ol {
+    padding-left: 1.2rem !important;
+    list-style: disc !important;
+}
+
+footer li {
+    margin-left: 0.5rem !important;
+}
+
+/* Opcional: suavizar para pantallas más chicas */
+@media (max-width: 500px) {
+    footer {
+        font-size: 10px !important;
+    }
+}
+
+
 /* ✅ Restaurar estilos del footer sin que Pico los afecte */
-.problema-card {
-  background: #444;
+/* 🎯 Tarjetas en el footer con Pico, estilo problema-card */
+.footer-card-pico {
+  background-color: #444;
   border: 2px solid #fff;
   border-radius: 8px;
   padding: 20px;
@@ -41,35 +82,50 @@
   color: #fff;
   width: fit-content;
   max-width: 100%;
-  font-family: Arial, sans-serif;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.problema-numero {
-  padding-bottom: 10px;
-  color: inherit;
-  font-size: 50px;
-  font-weight: 700;
+/* Estilo del número */
+.footer-numero {
+  font-size: 3rem;
+  font-weight: 800;
   margin: 0;
+  color: inherit;
 }
 
-.problema-descripcion {
-  font-size: 18px;
-  margin: 5px 0 0;
+/* Estilo de la etiqueta inferior */
+.footer-descripcion {
+  font-size: 1.125rem;
+  margin: 0.5rem 0 0;
   text-transform: uppercase;
   color: #ccc;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
 }
 
-/* 📱 Si la pantalla es angosta, achicamos texto */
-@media (max-width: 400px) {
-  .problema-descripcion {
-      font-size: 14px;
+/* Responsive */
+@media (max-width: 500px) {
+  .footer-numero {
+    font-size: 2.25rem;
+  }
+  .footer-descripcion {
+    font-size: 1rem;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  #footer-bottom p {
+    color: #ccc !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  #footer-bottom p {
+    color: #333 !important;
+  }
+}
+
 
 /* estrellas */
 .estrellas {
