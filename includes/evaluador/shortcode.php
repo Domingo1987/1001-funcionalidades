@@ -6,10 +6,17 @@ function evaluador_problemas_shortcode() {
     if (!is_user_logged_in()) {
         // Usuario no logueado
         if (isset($_COOKIE['evaluador_anonimo_usado'])) {
-            // Ya usó su intento anónimo
-            return mostrar_modal_redireccion_login(2000, 'Ya utilizaste tu intento anónimo. Inicia sesión para más intentos.');
+            // 🔍 Log en consola para verificar que detecta la cookie
+            echo "<script>console.log('🔁 Cookie evaluador_anonimo_usado detectada. Valor: " . esc_js($_COOKIE['evaluador_anonimo_usado']) . "');</script>";
+
+            // Solo si su valor es '1'
+            if ($_COOKIE['evaluador_anonimo_usado'] === '1') {
+                return mostrar_modal_redireccion_login(2000, 'Ya utilizaste tu intento anónimo. Inicia sesión para más intentos.');
+            }
         } elseif (!isset($_COOKIE['acepto_cookies']) || $_COOKIE['acepto_cookies'] !== '1') {
             // No aceptó cookies → tampoco permitimos uso
+            // 🔍 Log en consola para verificar que detecta la cooki
+            echo "<script>console.log('🔁 Cookie acepto_cookies no detectada. Valor: " . esc_js($_COOKIE['acepto_cookies']) . "');</script>";
             return mostrar_modal_redireccion_login(2000, 'Esta herramienta requiere aceptar cookies');
         } else {
             // Aceptó cookies y es su primer intento → permitimos y creamos la cookie de uso
