@@ -13,7 +13,8 @@ function evaluador_problemas_shortcode() {
             return mostrar_modal_redireccion_login(2000, 'Esta herramienta requiere aceptar cookies');
         } else {
             // Aceptó cookies y es su primer intento → permitimos y creamos la cookie de uso
-            setcookie('evaluador_anonimo_usado', '1', time() + 3600, COOKIEPATH, COOKIE_DOMAIN);
+            setcookie('evaluador_anonimo_usado', '1', time() + 3600, '/', $_SERVER['HTTP_HOST']);
+            echo "<script>console.log('✅ Cookie evaluador_anonimo_usado creada');</script>";
         }
     }
 
