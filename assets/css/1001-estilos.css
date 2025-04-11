@@ -116,14 +116,22 @@ footer li {
 
 @media (prefers-color-scheme: dark) {
   #footer-bottom p {
-    color: #ccc !important;
+    color: #c3c3c3 !important;
   }
 }
 
 @media (prefers-color-scheme: light) {
   #footer-bottom p {
-    color: #333 !important;
+    color: #c3c3c3 !important;
   }
+}
+
+#footer ul li {
+  color: currentColor !important;
+}
+
+#footer ul li a {
+  color: #fff !important; /* o el color que uses para los enlaces del footer */
 }
 
 
