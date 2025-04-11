@@ -2,7 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const yaUsado = sessionStorage.getItem('evaluador_anonimo_usado');
     const estaLogueado = document.body.classList.contains('logged-in'); // Clase que agrega WordPress
 
+    console.log('🧠 ¿Usuario está logueado?', estaLogueado);
+    console.log('📦 ¿Session evaluador usado?', yaUsado);
+
     if (!estaLogueado && yaUsado === '1') {
+        console.log('🚫 Mostrando modal: ya usó su intento anónimo');
+
         const modal = document.createElement('dialog');
         modal.id = 'modal-evaluador-limitado';
         modal.innerHTML = `
@@ -15,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.showModal();
         return;
     }
+
+    console.log('✅ Usuario puede usar el evaluador');
+
 
 
     const form = document.getElementById('evaluarFormulario');
