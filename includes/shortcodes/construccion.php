@@ -1,6 +1,6 @@
 <?php
 function shortcode_en_construccion_modal() {
-    $img_url = plugins_url('assets/img/en_construccion.webp', dirname(__DIR__, 2));
+    $img_url = FUNC_URL . 'assets/img/en_construccion.webp';
 
     ob_start(); ?>
     
