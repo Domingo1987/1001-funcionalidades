@@ -111,12 +111,14 @@ function verificarIntentoAnonimo() {
         console.log('🚫 Mostrando modal visual tipo PHP');
 
         const modal = document.createElement('dialog');
-        modal.id = 'modal-evaluador-limitado';
-
+        modal.id = 'modal-construccion'; // ⬅️ Reutiliza el mismo estilo CSS
         modal.innerHTML = `
             <main data-theme="pico" style="position: relative; padding: 0;">
                 <div style="position: relative;">
-                    <img src="/wp-content/plugins/1001-funcionalidades/assets/img/inicia_sesion.webp" alt="Inicia Sesión" style="width: 100%; border-radius: 0;" />
+                    <img src="/wp-content/plugins/1001-funcionalidades/assets/img/inicia_sesion.webp"
+                        alt="Inicia Sesión"
+                        style="width: 100%; max-height: 90vh; object-fit: contain; border-radius: 10px;" />
+
                     <div style="
                         position: absolute;
                         bottom: 0;
@@ -131,9 +133,10 @@ function verificarIntentoAnonimo() {
                         Ya usaste tu intento anónimo. Inicia sesión para continuar.
                     </div>
                 </div>
-                <form method="dialog" class="text-center" style="margin-top: 1rem;">
+
+                <form method="dialog" class="text-center" style="margin-top: -1rem;">
                     <button onclick="window.location.href='/login/'" class="primary">Iniciar sesión</button>
-                    <button type="button" class="secondary" onclick="document.getElementById('modal-evaluador-limitado').close()">Cerrar</button>
+                    <button type="button" class="secondary" onclick="modal.close()">Cerrar</button>
                 </form>
             </main>
         `;
