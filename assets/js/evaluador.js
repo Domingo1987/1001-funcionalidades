@@ -136,7 +136,6 @@ function verificarIntentoAnonimo() {
 
                 <form method="dialog" class="text-center" style="margin-top: -1rem;">
                     <button onclick="window.location.href='/login/'" class="primary">Iniciar sesión</button>
-                    <button type="button" class="secondary" onclick="modal.close()">Cerrar</button>
                 </form>
             </main>
         `;
