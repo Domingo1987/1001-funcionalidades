@@ -7,14 +7,7 @@ if (!defined('ABSPATH')) exit;
 require_once plugin_dir_path(__FILE__) . '/../utils/estadisticas-dashboard.php';
 
 function shortcode_dashboard() {
-    if (!is_user_logged_in()) {
-        return '<article class="contrast"><p>Debes estar logueado para ver tu tablero personalizado.</p></article>';
-    }
-
-    error_log('✅ Entró al shortcode_dashboard()');
-
     ob_start();
-    echo '<!-- Dashboard cargado -->';
 
     ?>
     <section class="container">

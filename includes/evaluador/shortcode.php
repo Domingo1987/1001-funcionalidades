@@ -3,11 +3,6 @@
 // Este shortcode se utiliza para mostrar un formulario donde los usuarios pueden enviar un problema y una solución para su evaluación.
 
 function evaluador_problemas_shortcode() {
-    if (!is_user_logged_in()) {
-        wp_redirect(home_url());
-        exit;
-    }
-
     // Obtener el ID del usuario actual
     $user_id = get_current_user_id();
 
