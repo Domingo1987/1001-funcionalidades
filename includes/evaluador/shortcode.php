@@ -3,28 +3,7 @@
 // Este shortcode se utiliza para mostrar un formulario donde los usuarios pueden enviar un problema y una solución para su evaluación.
 
 function evaluador_problemas_shortcode() {
-    if (!is_user_logged_in()) {
-        // Usuario no logueado
-        if (isset($_COOKIE['evaluador_anonimo_usado'])) {
-            // 🔍 Log en consola para verificar que detecta la cookie
-            echo "<script>console.log('🔁 Cookie evaluador_anonimo_usado detectada. Valor: " . esc_js($_COOKIE['evaluador_anonimo_usado']) . "');</script>";
-
-            // Solo si su valor es '1'
-            if ($_COOKIE['evaluador_anonimo_usado'] === '1') {
-                return mostrar_modal_redireccion_login(10000, 'Ya utilizaste tu intento anónimo. Inicia sesión para más intentos.');
-            }
-        } elseif (!isset($_COOKIE['acepto_cookies']) || $_COOKIE['acepto_cookies'] !== '1') {
-            // No aceptó cookies → tampoco permitimos uso
-            // 🔍 Log en consola para verificar que detecta la cooki
-            echo "<script>console.log('🔁 Cookie acepto_cookies no detectada. Valor: " . esc_js($_COOKIE['acepto_cookies']) . "');</script>";
-            return mostrar_modal_redireccion_login(10000, 'Esta herramienta requiere aceptar cookies');
-        } else {
-            // Aceptó cookies y es su primer intento → permitimos y creamos la cookie de uso
-            setcookie('evaluador_anonimo_usado', '1', time() + 3600, '/', $_SERVER['HTTP_HOST']);
-            echo "<script>console.log('✅ Cookie evaluador_anonimo_usado creada');</script>";
-        }
-    }
-
+    
     // ✅ Usuario actual o visitante anónimo con ID simbólico
     $user_id = is_user_logged_in() ? get_current_user_id() : 1001;
 

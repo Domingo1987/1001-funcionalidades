@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const yaUsado = sessionStorage.getItem('evaluador_anonimo_usado');
+    const estaLogueado = document.body.classList.contains('logged-in'); // Clase que agrega WordPress
+
+    if (!estaLogueado && yaUsado === '1') {
+        const modal = document.createElement('dialog');
+        modal.id = 'modal-evaluador-limitado';
+        modal.innerHTML = `
+            <main data-theme="pico" style="max-width:500px;text-align:center;">
+                <p>Ya usaste tu intento anónimo del evaluador.</p>
+                <button onclick="window.location.href='/login/'">Iniciar Sesión</button>
+            </main>
+        `;
+        document.body.appendChild(modal);
+        modal.showModal();
+        return;
+    }
+
+
     const form = document.getElementById('evaluarFormulario');
     const evaluarBoton = document.getElementById('evaluarBoton');
     const resultadoEvaluacion = document.getElementById('resultadoEvaluacion');
@@ -34,7 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 evaluarBoton.style.display = 'none';
                 subirOtro.style.display = 'block';
 
-                // Actualizar el dashboard después de una evaluación exitosa
+                // 👇 Marcar que ya lo usó (si no está logueado)
+                if (!document.body.classList.contains('logged-in')) {
+                    sessionStorage.setItem('evaluador_anonimo_usado', '1');
+                }
+
                 if (typeof actualizarDashboard === 'function') {
                     actualizarDashboard();
                 }
