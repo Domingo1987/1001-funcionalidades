@@ -131,3 +131,47 @@
   opacity: 0.6;
 }
 
+/* 🛠️ Modal página en construcción */
+dialog#modal-construccion {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  border: none;
+  padding: 0;
+  border-radius: 10px;
+  max-width: 90%;
+  width: auto;
+  margin: auto;
+  z-index: 1000;
+}
+
+dialog[open]#modal-construccion {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#modal-construccion img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+#modal-construccion form {
+  text-align: center;
+  margin-top: -1rem;
+}
+
+#modal-construccion button {
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  background-color: #4a6da7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#modal-construccion button:hover {
+  opacity: 0.9;
+}
