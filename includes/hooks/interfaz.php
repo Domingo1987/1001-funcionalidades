@@ -47,16 +47,10 @@ add_shortcode('redireccionar', 'redireccionar_si_no_logueado');
 add_action('wp_footer', 'codigos_footer');
 function codigos_footer() {
     ?>
-    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; margin-left: 1rem;">
         <article class="footer-card-pico">
             <h2 class="footer-numero"><?php echo do_shortcode('[cantidad_codigo]'); ?></h2>
             <p class="footer-descripcion">CÓDIGOS</p>
         </article>
-        <article class="footer-card-pico">
-            <h2 class="footer-numero"><?php echo do_shortcode('[cantidad_comentarios]'); ?></h2>
-            <p class="footer-descripcion">SOLUCIONES</p>
-        </article>
-    </div>
     <?php
 }
 
