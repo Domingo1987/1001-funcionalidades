@@ -22,35 +22,10 @@ add_action('template_redirect', 'verificar_acceso_paginas_privadas');
 function verificar_acceso_paginas_privadas() {
     $paginas_protegidas = ['usuarios', 'dashboard', 'profile', 'estadisticas', 'mis-soluciones'];
 
-    if (
-        !is_user_logged_in() &&
-        is_page($paginas_protegidas)
-    ) {
-        // Mostrar modal y redirigir en 2 segundos
+    if (!is_user_logged_in() && is_page($paginas_protegidas)) {
         add_action('wp_footer', function () {
-            $img_url = FUNC_URL . 'assets/img/inicia_sesion.webp';
-            ?>
-            <dialog id="modal-construccion">
-                <main data-theme="pico">
-                    <img src="<?php echo esc_url($img_url); ?>" alt="Inicia Sesión" />
-                    <form method="dialog" class="text-center">
-                        <button class="secondary">Cerrar</button>
-                    </form>
-                </main>
-            </dialog>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const modal = document.getElementById('modal-construccion');
-                    if (modal && typeof modal.showModal === 'function') {
-                        modal.showModal();
-                        setTimeout(() => {
-                            window.location.href = "https://pruebas.1001problemas.com/login/";
-                        }, 2000);
-                    }
-                });
-            </script>
-            <?php
+            echo mostrar_modal_redireccion_login(2000);
         });
     }
 }
+

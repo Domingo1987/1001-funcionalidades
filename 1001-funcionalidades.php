@@ -3,7 +3,7 @@
  * Plugin Name:       1001 Funcionalidades
  * Plugin URI:        https://1001problemas.com/
  * Description:       Conjunto de funcionalidades personalizadas para el sitio 1001problemas.com: shortcodes, estadísticas de usuario, scripts interactivos, mejoras visuales y más.
- * Version:           6.1.13
+ * Version:           6.2.0
  * Requires at least: 5.5
  * Requires PHP:      7.4
  * Author:            Domingo Pérez
@@ -62,13 +62,13 @@ require_once FUNC_PATH . 'includes/ajax/problema-num.php';
 
 // 🎣 HOOKS
 require_once FUNC_PATH . 'includes/hooks/comentarios.php';
+require_once FUNC_PATH . 'includes/hooks/cookies.php';
 require_once FUNC_PATH . 'includes/hooks/interfaz.php';
 require_once FUNC_PATH . 'includes/hooks/language-selector.php';
 require_once FUNC_PATH . 'includes/hooks/page-intros.php';
 require_once FUNC_PATH . 'includes/hooks/post-metadata.php';
 require_once FUNC_PATH . 'includes/hooks/redirecciones.php';
 require_once FUNC_PATH . 'includes/hooks/wpdiscuz.php';
-
 
 // 🧩 SHORTCODES
 require_once FUNC_PATH . 'includes/shortcodes/construccion.php';
@@ -77,6 +77,7 @@ require_once FUNC_PATH . 'includes/shortcodes/ide.php';
 require_once FUNC_PATH . 'includes/shortcodes/dashboard.php';
 
 // 🧠 UTILS
+require_once FUNC_PATH . 'includes/utils/modales.php';
 
 // 🔌 INTEGRACIONES
 require_once FUNC_PATH . 'includes/integraciones/chatgpt.php';
