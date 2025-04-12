@@ -514,7 +514,7 @@ function get_progreso_por_categoria($user_id) {
 
     // Problemas comentados por categoría
     $resueltos = $wpdb->get_results($wpdb->prepare("
-        SELECT t.name as categoria, COUNT(DISTINCT p.ID) as cantidad
+        SELECT tt.term_id as id, t.name as categoria, COUNT(DISTINCT p.ID) as cantidad
         FROM {$wpdb->comments} c
         JOIN {$wpdb->posts} p ON c.comment_post_ID = p.ID
         JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
@@ -522,12 +522,12 @@ function get_progreso_por_categoria($user_id) {
         JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
         WHERE c.user_id = %d
         AND tt.taxonomy = 'categorias_problemas'
-        GROUP BY t.name
+        GROUP BY tt.term_id, t.name
     ", $user_id));
 
-    // Total de problemas por categoría
+    // Total de problemas por categoría (ordenados por ID)
     $totales = $wpdb->get_results("
-        SELECT t.name as categoria, COUNT(p.ID) as total
+        SELECT tt.term_id as id, t.name as categoria, COUNT(p.ID) as total
         FROM {$wpdb->posts} p
         JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
         JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
@@ -535,17 +535,19 @@ function get_progreso_por_categoria($user_id) {
         WHERE tt.taxonomy = 'categorias_problemas'
         AND p.post_type = 'problema'
         AND p.post_status = 'publish'
-        GROUP BY t.name
+        GROUP BY tt.term_id, t.name
+        ORDER BY tt.term_id
     ");
 
     $resultado = [];
     foreach ($totales as $t) {
         $nombre = $t->categoria;
-        $total = $t->total;
+        $id     = $t->id;
+        $total  = $t->total;
         $resuelto = 0;
 
         foreach ($resueltos as $r) {
-            if ($r->categoria === $nombre) {
+            if ($r->id === $id) {
                 $resuelto = $r->cantidad;
                 break;
             }
@@ -554,6 +556,7 @@ function get_progreso_por_categoria($user_id) {
         $porcentaje = $total > 0 ? round(($resuelto / $total) * 100, 2) : 0;
 
         $resultado[] = [
+            'id' => $id,
             'categoria' => $nombre,
             'porcentaje' => $porcentaje,
             'resueltos' => $resuelto,
