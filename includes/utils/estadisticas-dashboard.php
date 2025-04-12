@@ -591,3 +591,84 @@ function get_comentarios_por_publicacion_ia($user_id) {
 
     return $wpdb->get_results($sql);
 }
+
+function get_participacion_mensual($user_id) {
+    global $wpdb;
+
+    // Generar lista de últimos 12 meses
+    $meses = [];
+    $now = new DateTime();
+    for ($i = 11; $i >= 0; $i--) {
+        $mes = clone $now;
+        $mes->modify("-$i months");
+        $meses[] = $mes->format('Y-m');
+    }
+
+    // Comentarios en problemas
+    $comentarios = $wpdb->get_results($wpdb->prepare("
+        SELECT 
+            DATE_FORMAT(c.comment_date, '%%Y-%%m') as mes,
+            t.name as categoria,
+            COUNT(*) as cantidad
+        FROM {$wpdb->comments} c
+        JOIN {$wpdb->posts} p ON c.comment_post_ID = p.ID
+        JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+        WHERE c.user_id = %d
+          AND c.comment_approved = '1'
+          AND p.post_type = 'problema'
+          AND tt.taxonomy = 'categorias_problemas'
+          AND c.comment_date >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+        GROUP BY mes, categoria
+    ", $user_id));
+
+    // Publicaciones IA
+    $publicaciones = $wpdb->get_results($wpdb->prepare("
+        SELECT 
+            DATE_FORMAT(post_date, '%%Y-%%m') as mes,
+            t.name as categoria,
+            COUNT(*) as cantidad
+        FROM {$wpdb->posts} p
+        JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+        WHERE p.post_author = %d
+          AND p.post_type = 'inteligencia_artificial'
+          AND p.post_status = 'publish'
+          AND tt.taxonomy = 'categoria_ia'
+          AND post_date >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+        GROUP BY mes, categoria
+    ", $user_id));
+
+    // Combinar datos
+    $datos = [];
+
+    foreach ($comentarios as $fila) {
+        $cat = $fila->categoria;
+        $mes = $fila->mes;
+        $datos[$cat][$mes] = ($datos[$cat][$mes] ?? 0) + (int) $fila->cantidad;
+    }
+
+    foreach ($publicaciones as $fila) {
+        $cat = $fila->categoria ?: 'IA';
+        $mes = $fila->mes;
+        $datos[$cat][$mes] = ($datos[$cat][$mes] ?? 0) + (int) $fila->cantidad;
+    }
+
+    // Generar formato final para Apex Heatmap
+    $resultado = [];
+    foreach ($datos as $categoria => $por_mes) {
+        $fila = ['name' => $categoria, 'data' => []];
+        foreach ($meses as $mes) {
+            $etiqueta = DateTime::createFromFormat('Y-m', $mes)->format('M Y');
+            $fila['data'][] = [
+                'x' => $etiqueta,
+                'y' => $por_mes[$mes] ?? 0
+            ];
+        }
+        $resultado[] = $fila;
+    }
+
+    return $resultado;
+}

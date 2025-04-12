@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     aplicarEstrellas();
     renderizarProgresoPorCategoria();
     renderizarInteraccionesIA();
+    renderizarEvolucionTemporal();
 });
 
 function animarContadores() {
@@ -172,6 +173,47 @@ function renderizarInteraccionesIA() {
               }
             }
           }
+    };
+
+    const chart = new ApexCharts(contenedor, options);
+    chart.render();
+}
+
+function renderizarEvolucionTemporal() {
+    const contenedor = document.querySelector('#grafico-evolucion-temporal');
+    const loader = document.querySelector('#grafico-evolucion-temporal-loader');
+
+    loader?.remove();
+    if (!contenedor || typeof dashboardData === 'undefined') return;
+
+    const data = dashboardData.heatmapData;
+    if (!Array.isArray(data) || data.length === 0) {
+        contenedor.innerHTML = '<p class="text-muted">No hay participación registrada en los últimos 12 meses.</p>';
+        return;
+    }
+
+    const options = {
+        series: data,
+        chart: {
+            height: 450,
+            type: 'heatmap'
+        },
+        dataLabels: {
+            enabled: true
+        },
+        colors: ["#00A100", "#128C00", "#62B600", "#A0C600", "#E5E600", "#FFC300", "#FF6F00", "#FF0000"],
+        title: {
+            text: 'Evolución mensual por categoría',
+            align: 'center'
+        },
+        xaxis: {
+            type: 'category'
+        },
+        tooltip: {
+            y: {
+                formatter: val => val + ' participación' + (val !== 1 ? 'es' : '')
+            }
+        }
     };
 
     const chart = new ApexCharts(contenedor, options);
