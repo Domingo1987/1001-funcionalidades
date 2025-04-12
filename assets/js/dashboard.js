@@ -254,19 +254,27 @@ function renderizarEvolucionTemporal() {
         tooltip: {
             custom: function({ series, seriesIndex, dataPointIndex, w }) {
                 const val = series[seriesIndex][dataPointIndex];
-                if (val === 0) return ''; // oculta el label si es cero
+                if (val === 0) return ''; // oculta si no hay participación
               
                 const label = w.globals.seriesNames[seriesIndex];
                 const mes = w.globals.labels[dataPointIndex];
+                const color = getComputedStyle(document.documentElement)
+                  .getPropertyValue('--color') || '#007bff';
               
                 return `
-                  <article class="card" style="padding: 0.5rem 0.75rem; border: 1px solid #ccc; border-radius: 8px; max-width: 220px;">
-                    <header style="margin-bottom: 0.25rem; font-weight: bold;">${label}</header>
-                    <p style="margin: 0 0 0.25rem; font-size: 0.9rem; color: #666;">${mes}</p>
-                    <strong style="font-size: 1rem;">${val}</strong> participación${val !== 1 ? 'es' : ''}
+                  <article class="card-1001" style="--color: ${color}; padding: 0; min-width: 200px;">
+                    <div class="barra-color"></div>
+                    <div class="contenido-card" style="flex-direction: column; align-items: flex-start; padding: 0.75rem;">
+                      <div class="texto" style="text-align: left;">
+                        <p style="font-weight: bold; margin-bottom: 0.5rem;">${label}</p>
+                        <p style="font-size: 0.85rem; color: #666;">${mes}</p>
+                        <strong style="font-size: 1.2rem;">${val} participación${val !== 1 ? 'es' : ''}</strong>
+                      </div>
+                    </div>
                   </article>
                 `;
               }
+              
               
           }
           
