@@ -187,7 +187,7 @@ function renderizarEvolucionTemporal() {
     if (!contenedor || typeof dashboardData === 'undefined') return;
 
     const data = dashboardData.heatmapData;
-    const coloresCategorias = dashboardData.coloresCategorias || {};
+    const coloresOriginales = dashboardData.coloresCategorias || {};
 
     if (!Array.isArray(data) || data.length === 0) {
         contenedor.innerHTML = '<p class="text-muted">No hay participación registrada en los últimos 12 meses.</p>';
@@ -208,26 +208,36 @@ function renderizarEvolucionTemporal() {
         "IA": "IA"
     };
 
-    // 🔁 Reemplazar los nombres largos por los alias en cada serie
+    // 🎨 Sincronizar colores con los alias
+    const coloresAlias = Object.fromEntries(
+        Object.entries(coloresOriginales).map(([key, color]) => [
+            aliasCategorias[key] || key,
+            color
+        ])
+    );
+
+    // 🔁 Aplicar alias a cada serie
     const series = data.map(serie => ({
         name: aliasCategorias[serie.name] || serie.name,
         data: serie.data
     }));
 
-    // 📋 Mostrar orden y valores en la consola
+    // 🧪 Mostrar en consola para depuración
     console.table(series.map(s => ({
         Categoría: s.name,
-        ParticipacionesTotales: s.data.reduce((acc, punto) => acc + punto.y, 0)
+        ParticipacionesTotales: s.data.reduce((acc, punto) => acc + punto.y, 0),
+        ColorAsignado: coloresAlias[s.name] || '#ccc'
     })));
 
+    // ⚙️ Opciones del gráfico
     const options = {
-        series: [...series].reverse(),
+        series: [...series].reverse(), // Apex muestra de abajo hacia arriba
         chart: {
             height: 450,
             type: 'heatmap'
         },
         dataLabels: { enabled: true },
-        colors: series.map(s => coloresCategorias[s.name] || '#ccc'),
+        colors: series.map(s => coloresAlias[s.name] || '#ccc'),
         title: {
             text: 'Evolución mensual por categoría',
             align: 'center'
@@ -242,6 +252,7 @@ function renderizarEvolucionTemporal() {
         }
     };
 
+    // 🚀 Renderizar gráfico
     const chart = new ApexCharts(contenedor, options);
     chart.render();
 }
