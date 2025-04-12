@@ -46,7 +46,7 @@ function get_tendencia_porcentual($user_id) {
 
     $tabla = "{$wpdb->prefix}evaluaciones";
 
-    // Obtener los últimos 5 IDs de evaluaciones del usuario
+    // Últimos 5 IDs
     $ultimos_ids = $wpdb->get_col($wpdb->prepare("
         SELECT id FROM $tabla
         WHERE user_id = %d
@@ -58,24 +58,27 @@ function get_tendencia_porcentual($user_id) {
 
     $ids_str = implode(',', array_map('intval', $ultimos_ids));
 
-    // Calcular promedio de esas últimas evaluaciones
-    $prom_ultimas = (float) $wpdb->get_var("SELECT AVG(total_puntos) FROM $tabla WHERE id IN ($ids_str)");
+    // Promedio últimas evaluaciones
+    $prom_ultimas = (float) $wpdb->get_var("
+        SELECT AVG(total_puntos) FROM $tabla WHERE id IN ($ids_str)
+    ");
 
-    // Calcular promedio del resto (histórico anterior)
-    $prom_restante = (float) $wpdb->get_var("
-        SELECT AVG(total_puntos) 
-        FROM $tabla 
-        WHERE user_id = %d
-        AND id NOT IN ($ids_str)
-    ", $user_id);
+    // Promedio del resto (usar prepare aquí)
+    $prom_restante = (float) $wpdb->get_var(
+        $wpdb->prepare("
+            SELECT AVG(total_puntos) 
+            FROM $tabla 
+            WHERE user_id = %d
+            AND id NOT IN ($ids_str)
+        ", $user_id)
+    );
 
-    // Si no hay datos previos suficientes
     if ($prom_restante <= 0) return 0;
 
-    // Cálculo de la tendencia
     $tendencia = (($prom_ultimas - $prom_restante) / $prom_restante) * 100;
     return round($tendencia, 2);
 }
+
 
 
 
