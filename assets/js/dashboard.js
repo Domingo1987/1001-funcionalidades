@@ -37,6 +37,9 @@ function renderizarProgresoPorCategoria() {
     const contenedor = document.querySelector('#grafico-categorias');
     const loader = document.querySelector('#grafico-categorias-loader');
 
+    // 💡 Remover siempre el loader
+    loader?.remove();
+
     // ❌ Si no hay contenedor o no hay datos, salimos
     if (!contenedor || typeof dashboardData === 'undefined') return;
 
@@ -67,8 +70,6 @@ function renderizarProgresoPorCategoria() {
         '#e91e63', '#ffc107', '#4caf50', '#9c27b0', '#795548'
     ];
 
-    // 🧼 Removemos el loader ANTES de renderizar
-    loader?.remove();
 
     // ⚙️ Opciones del gráfico
     const options = {
@@ -118,11 +119,13 @@ function renderizarProgresoPorCategoria() {
 }
 
 function renderizarInteraccionesIA() {
-    const contenedor = document.querySelector('#grafico-interacciones-ia');
+    const contenedor = document.querySelector('#grafico-publicaciones-ia');
     if (!contenedor || typeof dashboardData === 'undefined') return;
 
     const loader = document.querySelector('#grafico-publicaciones-ia-loader');
 
+    // 💡 Remover siempre el loader
+    loader?.remove();
 
     const dataOriginal = dashboardData.interaccionesIA;
     if (!Array.isArray(dataOriginal) || dataOriginal.length === 0) {
@@ -147,8 +150,6 @@ function renderizarInteraccionesIA() {
         data: publicaciones
     }));
 
-    // 🧼 Removemos el loader ANTES de renderizar
-    loader?.remove();
 
     const options = {
         series: series,

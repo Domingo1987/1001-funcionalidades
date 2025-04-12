@@ -581,10 +581,10 @@ function get_comentarios_por_publicacion_ia($user_id) {
         LEFT JOIN {$wpdb->term_relationships} tr ON pia.ID = tr.object_id
         LEFT JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
         LEFT JOIN {$wpdb->terms} categoria_ia ON tt.term_id = categoria_ia.term_id
-        WHERE pia.post_type = 'publicacion_ia'
+        WHERE pia.post_type = 'inteligen_artificial'
           AND pia.post_status = 'publish'
           AND pia.post_author = %d
-          AND tt.taxonomy = 'categoria_ia'
+          AND tt.taxonomy = 'ia_categoria'
         GROUP BY pia.id, categoria_ia.name
         ORDER BY categoria_ia.name ASC
     ", $user_id);
