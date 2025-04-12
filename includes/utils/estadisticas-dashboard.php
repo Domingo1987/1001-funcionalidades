@@ -566,3 +566,28 @@ function get_progreso_por_categoria($user_id) {
 
     return $resultado;
 }
+
+function get_comentarios_por_publicacion_ia($user_id) {
+    global $wpdb;
+
+    $sql = $wpdb->prepare("
+        SELECT 
+            pia.id AS publicacion_id,
+            pia.post_title AS titulo,
+            categoria_ia.name AS categoria,
+            COUNT(c.comment_ID) AS comentarios
+        FROM {$wpdb->prefix}posts pia
+        LEFT JOIN {$wpdb->prefix}comments c ON c.comment_post_ID = pia.id AND c.comment_approved = '1'
+        LEFT JOIN {$wpdb->term_relationships} tr ON pia.ID = tr.object_id
+        LEFT JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        LEFT JOIN {$wpdb->terms} categoria_ia ON tt.term_id = categoria_ia.term_id
+        WHERE pia.post_type = 'publicacion_ia'
+          AND pia.post_status = 'publish'
+          AND pia.post_author = %d
+          AND tt.taxonomy = 'categoria_ia'
+        GROUP BY pia.id, categoria_ia.name
+        ORDER BY categoria_ia.name ASC
+    ", $user_id);
+
+    return $wpdb->get_results($sql);
+}

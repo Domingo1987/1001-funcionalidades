@@ -35,7 +35,8 @@ add_action('wp_enqueue_scripts', function () {
 
         wp_localize_script('dashboard-js', 'dashboardData', [
             // 🟢 PROGRESO POR CATEGORÍA
-            'progresoPorCategoria' => get_progreso_por_categoria($user_id)
+            'progresoPorCategoria' => get_progreso_por_categoria($user_id),
+            'interaccionesIA' => get_comentarios_por_publicacion_ia($user_id)
         ]);
     }
 });

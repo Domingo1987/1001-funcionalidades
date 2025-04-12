@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animarContadores();
     aplicarEstrellas();
     renderizarProgresoPorCategoria();
+    renderizarInteraccionesIA();
 });
 
 function animarContadores() {
@@ -112,6 +113,60 @@ function renderizarProgresoPorCategoria() {
     };
 
     // 🚀 Crear y mostrar el gráfico
+    const chart = new ApexCharts(contenedor, options);
+    chart.render();
+}
+
+function renderizarInteraccionesIA() {
+    const contenedor = document.querySelector('#grafico-interacciones-ia');
+    if (!contenedor || typeof dashboardData === 'undefined') return;
+
+    const dataOriginal = dashboardData.interaccionesIA;
+    if (!Array.isArray(dataOriginal) || dataOriginal.length === 0) {
+        contenedor.innerHTML = '<p class="text-muted">Sin publicaciones IA con comentarios.</p>';
+        return;
+    }
+
+    // Agrupar publicaciones por categoría
+    const agrupado = {};
+
+    dataOriginal.forEach(pub => {
+        const categoria = pub.categoria || 'Sin categoría';
+        const titulo = pub.titulo || `Publicación ${pub.publicacion_id}`;
+        const comentarios = parseInt(pub.comentarios || 0) + 1;
+
+        if (!agrupado[categoria]) agrupado[categoria] = [];
+        agrupado[categoria].push({ x: titulo, y: comentarios });
+    });
+
+    const series = Object.entries(agrupado).map(([nombre, publicaciones]) => ({
+        name: nombre,
+        data: publicaciones
+    }));
+
+    const options = {
+        series: series,
+        chart: {
+            type: 'treemap',
+            height: 390
+        },
+        title: {
+            text: 'Publicaciones IA y comentarios',
+            align: 'center'
+        },
+        legend: {
+            show: false
+        },
+        tooltip: {
+            y: {
+              formatter: (val, opts) => {
+                // Le restamos 1 para mostrar el valor real
+                return (val - 1) + ' comentarios';
+              }
+            }
+          }
+    };
+
     const chart = new ApexCharts(contenedor, options);
     chart.render();
 }
