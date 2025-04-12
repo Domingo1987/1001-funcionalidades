@@ -11,8 +11,8 @@ $comentarios_recibidos = get_comentarios_recibidos($user_id);
 ?>
 
 <details>
+    <summary>📊 Comentarios por publicación IA</summary>
     <section style="margin-top: 2rem;">
-        <h4>📊 Comentarios por publicación IA</h4>
         <div id="grafico-interacciones-ia" style="max-width: 100%; margin: auto;"></div>
     </section>
 </details>
