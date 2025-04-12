@@ -194,75 +194,55 @@ function renderizarEvolucionTemporal() {
 
     const coloresCategorias = dashboardData.coloresCategorias || {};
 
-    const maximos = {};
+    // 🔍 Calcular el valor máximo de participaciones
+    let maxValor = 0;
     data.forEach(serie => {
-    let max = 0;
     serie.data.forEach(p => {
-        if (p.y > max) max = p.y;
+        if (p.y > maxValor) {
+        maxValor = p.y;
+        }
     });
-    maximos[serie.name] = max || 1; // evitar división por 0
     });
+    if (maxValor < 5) maxValor = 5; // asegurar mínimo visual razonable
 
 
-    data.forEach(serie => {
-        const colorBase = coloresCategorias[serie.name] || '#ccc';
-        const max = maximos[serie.name];
-      
-        serie.data.forEach(punto => {
-          const intensidad = punto.y / max;
-          punto.fillColor = interpolarColor(colorBase, intensidad);
-        });
-      });
-      
+    // 🧪 Asegurar un mínimo razonable
+    if (maxValor < 5) maxValor = 5;
 
-      const options = {
+    const options = {
         series: data,
         chart: {
-          type: 'heatmap',
-          height: 450
+            height: 450,
+            type: 'heatmap'
         },
         plotOptions: {
-          heatmap: {
-            shadeIntensity: 0,
-            useFillColorAsStroke: false,
-            colorScale: {
-              ranges: [{
-                from: 0,
-                to: 9999,
-                color: undefined // ignora color fijo
-              }]
+            heatmap: {
+              colorScale: {
+                ranges: [
+                  { from: 1, to: maxValor, color: '#ddd' } // default color si querés
+                ]
+              }
             }
-          }
+          },
+        colors: data.map(serie => coloresCategorias[serie.name] || '#ccc'),
+
+        dataLabels: {
+            enabled: true
         },
-        dataLabels: { enabled: true },
         title: {
-          text: 'Evolución mensual por categoría',
-          align: 'center'
+            text: 'Evolución mensual por categoría',
+            align: 'center'
+        },
+        xaxis: {
+            type: 'category'
         },
         tooltip: {
-          y: {
-            formatter: val => val + ' participación' + (val !== 1 ? 'es' : '')
-          }
+            y: {
+                formatter: val => val + ' participación' + (val !== 1 ? 'es' : '')
+            }
         }
-      };
-      
+    };
 
     const chart = new ApexCharts(contenedor, options);
     chart.render();
 }
-
-function interpolarColor(baseHex, intensidad) {
-    const hex = baseHex.replace('#', '');
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-
-    const blanco = 255;
-
-    const rFinal = Math.round((1 - intensidad) * blanco + intensidad * r);
-    const gFinal = Math.round((1 - intensidad) * blanco + intensidad * g);
-    const bFinal = Math.round((1 - intensidad) * blanco + intensidad * b);
-
-    return `rgb(${rFinal},${gFinal},${bFinal})`;
-}
-
