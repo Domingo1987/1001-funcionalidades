@@ -32,20 +32,44 @@ function aplicarEstrellas() {
 }
 
 function renderizarProgresoPorCategoria() {
+    // 🔍 Buscar el contenedor del gráfico y el loader
     const contenedor = document.querySelector('#grafico-categorias');
+    const loader = document.querySelector('#grafico-categorias-loader');
+
+    // ❌ Si no hay contenedor o no hay datos, salimos
     if (!contenedor || typeof dashboardData === 'undefined') return;
 
     const categorias = dashboardData.progresoPorCategoria;
     if (!Array.isArray(categorias) || categorias.length === 0) return;
 
-    const series = categorias.map(c => c.porcentaje);
-    const labels = categorias.map(c => c.categoria);
+    // ✂️ Acortar nombres si son muy largos
+    const aliasCategorias = {
+        "Introducción a la programación de computadores": "Intro a la programación",
+        "Conceptos generales de los lenguajes de programación": "Conceptos generales",
+        "Presentación del lenguaje C": "Lenguaje C",
+        "Procedimientos y funciones": "Procedimientos",
+        "Tipos de datos definidos por el programador": "TD definidos",
+        "Tipos de datos estructurados": "TD estructurados",
+        "Definición de tipos de datos dinámicos": "TD dinámicos",
+        "Archivos": "Archivos",
+        "Punteros": "Punteros"
+      };
+      
 
+    // 🔢 Series y etiquetas para el gráfico
+    const series = categorias.map(c => parseFloat(c.porcentaje));
+    const labels = categorias.map(c => aliasCategorias[c.categoria] || c.categoria);
+
+    // 🎨 Colores personalizados (puede crecer si hay más categorías)
     const colors = [
         '#1ab7ea', '#0084ff', '#39539E', '#0077B5',
         '#e91e63', '#ffc107', '#4caf50', '#9c27b0', '#795548'
-    ]; // podés agregar más si hay más categorías
+    ];
 
+    // 🧼 Removemos el loader ANTES de renderizar
+    loader?.remove();
+
+    // ⚙️ Opciones del gráfico
     const options = {
         series: series,
         chart: {
@@ -78,7 +102,7 @@ function renderizarProgresoPorCategoria() {
             }
         },
         labels: labels,
-        colors: colors.slice(0, series.length), // limitar a la cantidad de categorías
+        colors: colors.slice(0, series.length),
         responsive: [{
             breakpoint: 480,
             options: {
@@ -87,6 +111,7 @@ function renderizarProgresoPorCategoria() {
         }]
     };
 
+    // 🚀 Crear y mostrar el gráfico
     const chart = new ApexCharts(contenedor, options);
     chart.render();
 }
