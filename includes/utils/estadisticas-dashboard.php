@@ -704,3 +704,5 @@ function get_colores_por_categoria() {
         'IA' => '#fdff00'
     ];
 }
+
+

@@ -194,40 +194,75 @@ function renderizarEvolucionTemporal() {
 
     const coloresCategorias = dashboardData.coloresCategorias || {};
 
-    const options = {
+    const maximos = {};
+    data.forEach(serie => {
+    let max = 0;
+    serie.data.forEach(p => {
+        if (p.y > max) max = p.y;
+    });
+    maximos[serie.name] = max || 1; // evitar división por 0
+    });
+
+
+    data.forEach(serie => {
+        const colorBase = coloresCategorias[serie.name] || '#ccc';
+        const max = maximos[serie.name];
+      
+        serie.data.forEach(punto => {
+          const intensidad = punto.y / max;
+          punto.fillColor = interpolarColor(colorBase, intensidad);
+        });
+      });
+      
+
+      const options = {
         series: data,
         chart: {
-            height: 450,
-            type: 'heatmap'
+          type: 'heatmap',
+          height: 450
         },
         plotOptions: {
-            heatmap: {
-              colorScale: {
-                ranges: [
-                  { from: 1, to: 100, color: '#ddd' } // default color si querés
-                ]
-              }
+          heatmap: {
+            shadeIntensity: 0,
+            useFillColorAsStroke: false,
+            colorScale: {
+              ranges: [{
+                from: 0,
+                to: 9999,
+                color: undefined // ignora color fijo
+              }]
             }
-          },
-        colors: data.map(serie => coloresCategorias[serie.name] || '#ccc'),
-
-        dataLabels: {
-            enabled: true
+          }
         },
+        dataLabels: { enabled: true },
         title: {
-            text: 'Evolución mensual por categoría',
-            align: 'center'
-        },
-        xaxis: {
-            type: 'category'
+          text: 'Evolución mensual por categoría',
+          align: 'center'
         },
         tooltip: {
-            y: {
-                formatter: val => val + ' participación' + (val !== 1 ? 'es' : '')
-            }
+          y: {
+            formatter: val => val + ' participación' + (val !== 1 ? 'es' : '')
+          }
         }
-    };
+      };
+      
 
     const chart = new ApexCharts(contenedor, options);
     chart.render();
 }
+
+function interpolarColor(baseHex, intensidad) {
+    const hex = baseHex.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    const blanco = 255;
+
+    const rFinal = Math.round((1 - intensidad) * blanco + intensidad * r);
+    const gFinal = Math.round((1 - intensidad) * blanco + intensidad * g);
+    const bFinal = Math.round((1 - intensidad) * blanco + intensidad * b);
+
+    return `rgb(${rFinal},${gFinal},${bFinal})`;
+}
+
