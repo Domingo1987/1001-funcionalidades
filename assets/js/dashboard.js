@@ -253,14 +253,21 @@ function renderizarEvolucionTemporal() {
         },
         tooltip: {
             custom: function({ series, seriesIndex, dataPointIndex, w }) {
-              const val = series[seriesIndex][dataPointIndex];
-              if (val === 0) return ''; // oculta completamente
-              const label = w.globals.seriesNames[seriesIndex];
-              const mes = w.globals.labels[dataPointIndex];
-              return `<div class="apex-tooltip">
-                        <strong>${label}</strong><br>${mes}<br><strong>${val}</strong> participación${val !== 1 ? 'es' : ''}
-                      </div>`;
-            }
+                const val = series[seriesIndex][dataPointIndex];
+                if (val === 0) return ''; // oculta el label si es cero
+              
+                const label = w.globals.seriesNames[seriesIndex];
+                const mes = w.globals.labels[dataPointIndex];
+              
+                return `
+                  <article class="card" style="padding: 0.5rem 0.75rem; border: 1px solid #ccc; border-radius: 8px; max-width: 220px;">
+                    <header style="margin-bottom: 0.25rem; font-weight: bold;">${label}</header>
+                    <p style="margin: 0 0 0.25rem; font-size: 0.9rem; color: #666;">${mes}</p>
+                    <strong style="font-size: 1rem;">${val}</strong> participación${val !== 1 ? 'es' : ''}
+                  </article>
+                `;
+              }
+              
           }
           
           
