@@ -192,16 +192,28 @@ function renderizarEvolucionTemporal() {
         return;
     }
 
+    const coloresCategorias = dashboardData.coloresCategorias || {};
+
     const options = {
         series: data,
         chart: {
             height: 450,
             type: 'heatmap'
         },
+        plotOptions: {
+            heatmap: {
+              colorScale: {
+                ranges: [
+                  { from: 1, to: 100, color: '#ddd' } // default color si querés
+                ]
+              }
+            }
+          },
+        colors: data.map(serie => coloresCategorias[serie.name] || '#ccc'),
+
         dataLabels: {
             enabled: true
         },
-        colors: ["#00A100", "#128C00", "#62B600", "#A0C600", "#E5E600", "#FFC300", "#FF6F00", "#FF0000"],
         title: {
             text: 'Evolución mensual por categoría',
             align: 'center'

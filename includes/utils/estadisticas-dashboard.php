@@ -658,7 +658,23 @@ function get_participacion_mensual($user_id) {
 
     // Generar formato final para Apex Heatmap
     $resultado = [];
-    foreach ($datos as $categoria => $por_mes) {
+
+    $categorias_fijas = [
+        'Introducción a la programación de computadores',
+        'Conceptos generales de los lenguajes de programación',
+        'Presentación del lenguaje C',
+        'Procedimientos y funciones',
+        'Tipos de datos definidos por el programador',
+        'Tipos de datos estructurados',
+        'Punteros',
+        'Definición de tipos de datos dinámicos',
+        'Archivos',
+        'IA'
+    ];
+    
+    foreach ($categorias_fijas as $categoria) {
+        $por_mes = $datos[$categoria] ?? [];
+    
         $fila = ['name' => $categoria, 'data' => []];
         foreach ($meses as $mes) {
             $etiqueta = DateTime::createFromFormat('Y-m', $mes)->format('M Y');
@@ -667,8 +683,24 @@ function get_participacion_mensual($user_id) {
                 'y' => $por_mes[$mes] ?? 0
             ];
         }
+    
         $resultado[] = $fila;
-    }
+    }    
 
     return $resultado;
+}
+
+function get_colores_por_categoria() {
+    return [
+        'Introducción a la programación de computadores' => '#2e3897',
+        'Conceptos generales de los lenguajes de programación' => '#943125',
+        'Presentación del lenguaje C' => '#229434',
+        'Procedimientos y funciones' => '#329292',
+        'Tipos de datos definidos por el programador' => '#903292',
+        'Tipos de datos estructurados' => '#929231',
+        'Punteros' => '#929231',
+        'Definición de tipos de datos dinámicos' => '#e41920',
+        'Archivos' => '#815627',
+        'IA' => '#fdff00'
+    ];
 }
