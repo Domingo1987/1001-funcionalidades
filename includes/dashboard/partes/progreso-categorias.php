@@ -2,7 +2,7 @@
 if (!defined('ABSPATH')) exit;
 ?>
 
-<details open>
+<details>
   <summary>📊 Progreso por categoría</summary>
   <section class="container" style="max-width: 700px; margin: auto; text-align: center;">
     <div id="grafico-categorias-loader" class="text-muted" data-theme="pico">
