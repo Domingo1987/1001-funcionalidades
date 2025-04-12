@@ -50,3 +50,29 @@ function get_user_problems_with_categories() {
 
     return $problems_with_categories;
 }
+
+function generar_nodos_problemas($problemas) {
+    $nodos = [];
+    foreach ($problemas as $p) {
+        $nodos[] = "{ id: 'Problema {$p['problem_number']}', category: '{$p['category']}', count: 1 }";
+    }
+    return implode(",", $nodos);
+}
+
+function generar_links_por_categoria($problemas) {
+    $category_groups = [];
+    foreach ($problemas as $p) {
+        $category_groups[$p['category']][] = $p['problem_number'];
+    }
+
+    $links = [];
+    foreach ($category_groups as $category => $problemas_cat) {
+        for ($i = 0; $i < count($problemas_cat); $i++) {
+            for ($j = $i + 1; $j < count($problemas_cat); $j++) {
+                $links[] = "{ source: 'Problema {$problemas_cat[$i]}', target: 'Problema {$problemas_cat[$j]}' }";
+            }
+        }
+    }
+
+    return implode(",", $links);
+}

@@ -14,13 +14,13 @@ add_action('wp_enqueue_scripts', function () {
             [],
             '1.0'
         );
-
+*/
         wp_enqueue_script(
-            'listado-problemas-js',
-            FUNC_URL . 'assets/js/listado-problemas.js',
+            'mis-soluciones-js',
+            FUNC_URL . 'assets/js/mis-soluciones.js',
             ['jquery'],
             '1.0',
             true
-        );*/
+        );
     }
 });
