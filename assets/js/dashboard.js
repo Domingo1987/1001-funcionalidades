@@ -183,6 +183,9 @@ function renderizarEvolucionTemporal() {
     const contenedor = document.querySelector('#grafico-evolucion-temporal');
     const loader = document.querySelector('#grafico-evolucion-temporal-loader');
 
+    const coloresCategorias = dashboardData.coloresCategorias || {};
+
+
     loader?.remove();
     if (!contenedor || typeof dashboardData === 'undefined') return;
 
