@@ -66,6 +66,10 @@ function mostrar_modal_en_construccion() {
             const modal = document.getElementById('modal-construccion');
             if (modal && typeof modal.showModal === 'function') {
                 modal.showModal();
+
+                modal.addEventListener('close', () => {
+                window.location.href = "/";
+            });
             }
         });
     </script>
