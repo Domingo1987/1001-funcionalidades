@@ -253,30 +253,28 @@ function renderizarEvolucionTemporal() {
         },
         tooltip: {
             custom: function({ series, seriesIndex, dataPointIndex, w }) {
-                const val = series[seriesIndex][dataPointIndex];
-                if (val === 0) return ''; // oculta si no hay participación
-              
-                const label = w.globals.seriesNames[seriesIndex];
-                const mes = w.globals.labels[dataPointIndex];
-                const color = getComputedStyle(document.documentElement)
-                  .getPropertyValue('--color') || '#007bff';
-              
-                return `
-                  <article class="card-1001" style="--color: ${color}; padding: 0; min-width: 200px;">
-                    <div class="barra-color"></div>
-                    <div class="contenido-card" style="flex-direction: column; align-items: flex-start; padding: 0.75rem;">
-                      <div class="texto" style="text-align: left;">
-                        <p style="font-weight: bold; margin-bottom: 0.5rem;">${label}</p>
-                        <p style="font-size: 0.85rem; color: #666;">${mes}</p>
-                        <strong style="font-size: 1.2rem;">${val} participación${val !== 1 ? 'es' : ''}</strong>
-                      </div>
+              const val = series[seriesIndex][dataPointIndex];
+              if (val === 0) return '';
+          
+              const label = w.globals.seriesNames[seriesIndex];
+              const mes = w.globals.labels[dataPointIndex];
+              const color = w.config.colors[seriesIndex] || '#007bff';
+          
+              return `
+                <article class="card-1001" style="--color: ${color};">
+                  <div class="barra-color"></div>
+                  <div class="contenido-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.5rem;">
+                    <div class="texto" style="text-align: center;">
+                      <p style="font-weight: bold;">${label}</p>
+                      <p style="font-size: 0.85rem; color: #666;">${mes}</p>
+                      <strong style="font-size: 1rem;">${val} participación${val !== 1 ? 'es' : ''}</strong>
                     </div>
-                  </article>
-                `;
-              }
-              
-              
+                  </div>
+                </article>
+              `;
+            }
           }
+          
           
           
     };
