@@ -253,9 +253,12 @@ function renderizarEvolucionTemporal() {
         },
         tooltip: {
             y: {
-                formatter: val => val + ' participación' + (val !== 1 ? 'es' : '')
+              formatter: function (val) {
+                return val === 0 ? '' : val + ' participación' + (val !== 1 ? 'es' : '');
+              }
             }
-        }
+          }
+          
     };
 
     // 🚀 Renderizar gráfico
