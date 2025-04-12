@@ -192,43 +192,16 @@ function renderizarEvolucionTemporal() {
         return;
     }
 
-    const coloresCategorias = dashboardData.coloresCategorias || {};
-
-    // 🔍 Calcular el valor máximo de participaciones
-    let maxValor = 0;
-    data.forEach(serie => {
-    serie.data.forEach(p => {
-        if (p.y > maxValor) {
-        maxValor = p.y;
-        }
-    });
-    });
-    if (maxValor < 5) maxValor = 5; // asegurar mínimo visual razonable
-
-
-    // 🧪 Asegurar un mínimo razonable
-    if (maxValor < 5) maxValor = 5;
-
     const options = {
         series: data,
         chart: {
             height: 450,
             type: 'heatmap'
         },
-        plotOptions: {
-            heatmap: {
-              colorScale: {
-                ranges: [
-                  { from: 1, to: maxValor, color: '#ddd' } // default color si querés
-                ]
-              }
-            }
-          },
-        colors: data.map(serie => coloresCategorias[serie.name] || '#ccc'),
-
         dataLabels: {
             enabled: true
         },
+        colors: data.map(serie => coloresCategorias[serie.name] || '#ccc'),
         title: {
             text: 'Evolución mensual por categoría',
             align: 'center'
