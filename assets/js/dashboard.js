@@ -236,7 +236,13 @@ function renderizarEvolucionTemporal() {
             height: 450,
             type: 'heatmap'
         },
-        dataLabels: { enabled: true },
+        dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+              return val === 0 ? '' : val;
+            }
+          },
+          
         colors: series.map(s => coloresAlias[s.name] || '#ccc'),
         title: {
             text: 'Evolución mensual por categoría',
