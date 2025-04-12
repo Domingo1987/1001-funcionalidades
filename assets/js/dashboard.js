@@ -252,12 +252,17 @@ function renderizarEvolucionTemporal() {
             type: 'category'
         },
         tooltip: {
-            y: {
-              formatter: function (val) {
-                return val === 0 ? '' : val + ' participación' + (val !== 1 ? 'es' : '');
-              }
+            custom: function({ series, seriesIndex, dataPointIndex, w }) {
+              const val = series[seriesIndex][dataPointIndex];
+              if (val === 0) return ''; // oculta completamente
+              const label = w.globals.seriesNames[seriesIndex];
+              const mes = w.globals.labels[dataPointIndex];
+              return `<div class="apex-tooltip">
+                        <strong>${label}</strong><br>${mes}<br><strong>${val}</strong> participación${val !== 1 ? 'es' : ''}
+                      </div>`;
             }
           }
+          
           
     };
 
