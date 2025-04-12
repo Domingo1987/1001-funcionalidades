@@ -221,7 +221,7 @@ function renderizarEvolucionTemporal() {
     })));
 
     const options = {
-        series: series,
+        series: [...series].reverse(),
         chart: {
             height: 450,
             type: 'heatmap'
