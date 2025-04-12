@@ -121,6 +121,9 @@ function renderizarInteraccionesIA() {
     const contenedor = document.querySelector('#grafico-interacciones-ia');
     if (!contenedor || typeof dashboardData === 'undefined') return;
 
+    const loader = document.querySelector('#grafico-publicaciones-ia-loader');
+
+
     const dataOriginal = dashboardData.interaccionesIA;
     if (!Array.isArray(dataOriginal) || dataOriginal.length === 0) {
         contenedor.innerHTML = '<p class="text-muted">Sin publicaciones IA con comentarios.</p>';
@@ -143,6 +146,9 @@ function renderizarInteraccionesIA() {
         name: nombre,
         data: publicaciones
     }));
+
+    // 🧼 Removemos el loader ANTES de renderizar
+    loader?.remove();
 
     const options = {
         series: series,
