@@ -182,29 +182,52 @@ function renderizarInteraccionesIA() {
 function renderizarEvolucionTemporal() {
     const contenedor = document.querySelector('#grafico-evolucion-temporal');
     const loader = document.querySelector('#grafico-evolucion-temporal-loader');
-
-    const coloresCategorias = dashboardData.coloresCategorias || {};
-
-
     loader?.remove();
+
     if (!contenedor || typeof dashboardData === 'undefined') return;
 
     const data = dashboardData.heatmapData;
+    const coloresCategorias = dashboardData.coloresCategorias || {};
+
     if (!Array.isArray(data) || data.length === 0) {
         contenedor.innerHTML = '<p class="text-muted">No hay participación registrada en los últimos 12 meses.</p>';
         return;
     }
 
+    // ✂️ Alias para mostrar nombres cortos
+    const aliasCategorias = {
+        "Introducción a la programación de computadores": "Intro a la programación",
+        "Conceptos generales de los lenguajes de programación": "Conceptos generales",
+        "Presentación del lenguaje C": "Lenguaje C",
+        "Procedimientos y funciones": "Procedimientos",
+        "Tipos de datos definidos por el programador": "TD definidos",
+        "Tipos de datos estructurados": "TD estructurados",
+        "Definición de tipos de datos dinámicos": "TD dinámicos",
+        "Archivos": "Archivos",
+        "Punteros": "Punteros",
+        "IA": "IA"
+    };
+
+    // 🔁 Reemplazar los nombres largos por los alias en cada serie
+    const series = data.map(serie => ({
+        name: aliasCategorias[serie.name] || serie.name,
+        data: serie.data
+    }));
+
+    // 📋 Mostrar orden y valores en la consola
+    console.table(series.map(s => ({
+        Categoría: s.name,
+        ParticipacionesTotales: s.data.reduce((acc, punto) => acc + punto.y, 0)
+    })));
+
     const options = {
-        series: data,
+        series: series,
         chart: {
             height: 450,
             type: 'heatmap'
         },
-        dataLabels: {
-            enabled: true
-        },
-        colors: data.map(serie => coloresCategorias[serie.name] || '#ccc'),
+        dataLabels: { enabled: true },
+        colors: series.map(s => coloresCategorias[s.name] || '#ccc'),
         title: {
             text: 'Evolución mensual por categoría',
             align: 'center'
