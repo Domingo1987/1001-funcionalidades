@@ -1,7 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-$progreso = dashboardData['progresoMensual'] ?? [];
+$user_id = get_current_user_id();
+
+// Simulación de progreso mensual por capítulo (10 filas x 12 columnas)
+$progreso = get_progreso_mensual($user_id);
 
 $capitulos = [
     'Cap. 1', 'Cap. 2', 'Cap. 3', 'Cap. 4', 'Cap. 5',
