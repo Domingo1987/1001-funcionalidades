@@ -505,3 +505,58 @@ function get_progreso_mensual($user_id) {
     $html .= '</div>';
     return $html;
 }
+
+function get_progreso_por_categoria($user_id) {
+    global $wpdb;
+
+    // Problemas comentados por categoría
+    $resueltos = $wpdb->get_results($wpdb->prepare("
+        SELECT t.name as categoria, COUNT(DISTINCT p.ID) as cantidad
+        FROM {$wpdb->comments} c
+        JOIN {$wpdb->posts} p ON c.comment_post_ID = p.ID
+        JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+        WHERE c.user_id = %d
+        AND tt.taxonomy = 'categorias_problemas'
+        GROUP BY t.name
+    ", $user_id));
+
+    // Total de problemas por categoría
+    $totales = $wpdb->get_results("
+        SELECT t.name as categoria, COUNT(p.ID) as total
+        FROM {$wpdb->posts} p
+        JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+        WHERE tt.taxonomy = 'categorias_problemas'
+        AND p.post_type = 'problema'
+        AND p.post_status = 'publish'
+        GROUP BY t.name
+    ");
+
+    $resultado = [];
+    foreach ($totales as $t) {
+        $nombre = $t->categoria;
+        $total = $t->total;
+        $resuelto = 0;
+
+        foreach ($resueltos as $r) {
+            if ($r->categoria === $nombre) {
+                $resuelto = $r->cantidad;
+                break;
+            }
+        }
+
+        $porcentaje = $total > 0 ? round(($resuelto / $total) * 100, 2) : 0;
+
+        $resultado[] = [
+            'categoria' => $nombre,
+            'porcentaje' => $porcentaje,
+            'resueltos' => $resuelto,
+            'total' => $total
+        ];
+    }
+
+    return $resultado;
+}

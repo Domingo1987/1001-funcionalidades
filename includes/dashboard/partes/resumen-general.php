@@ -3,18 +3,14 @@
 
 if (!defined('ABSPATH')) exit;
 
-// ID del usuario actual
-$user_id = get_current_user_id();
-
-// Simulaciones con funciones que luego se definirán en estadisticas-dashboard.php
-$problemas       = get_problemas_resueltos($user_id);
-$puntaje         = get_puntaje_promedio($user_id);
-$tendencia       = get_tendencia_porcentual($user_id);
-$comentarios     = get_cantidad_comentarios($user_id);
-$ia_posts        = get_ia_publicadas($user_id);
-$medallas        = get_cantidad_medallas($user_id);
-$preguntas_creadas = get_preguntas_creadas($user_id);
-$actividad       = get_actividad_semanal($user_id);
+$problemas         = dashboardData['problemas'] ?? 0;
+$puntaje           = dashboardData['puntaje'] ?? 0;
+$tendencia         = dashboardData['tendencia'] ?? 0;
+$comentarios       = dashboardData['comentarios'] ?? 0;
+$ia_posts          = dashboardData['ia_posts'] ?? 0;
+$medallas          = dashboardData['medallas'] ?? 0;
+$preguntas_creadas = dashboardData['preguntas'] ?? 0;
+$actividad         = dashboardData['actividadSemanal'] ?? 0;
 
 // Variables derivadas
 $color           = $tendencia >= 0 ? 'green' : 'red';

@@ -1,9 +1,8 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-$user_id = get_current_user_id();
-$logradas = get_medallas_logradas($user_id);
-$pendientes = get_medallas_pendientes($user_id);
+$logradas   = dashboardData['medallasLogradas'] ?? [];
+$pendientes = dashboardData['medallasPendientes'] ?? [];
 ?>
 
 <details>

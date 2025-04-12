@@ -1,13 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-$user_id = get_current_user_id();
-
-// Simulación de funciones
-$likes_dados = get_likes_dados($user_id);
-$likes_recibidos = get_likes_recibidos($user_id);
-$comentarios_hechos = get_comentarios_hechos($user_id);
-$comentarios_recibidos = get_comentarios_recibidos($user_id);
+$likes_dados        = dashboardData['likesDados'] ?? 0;
+$likes_recibidos    = dashboardData['likesRecibidos'] ?? 0;
+$comentarios_hechos = dashboardData['comentariosHechos'] ?? 0;
+$comentarios_recibidos = dashboardData['comentariosRecibidos'] ?? 0;
 ?>
 
 <details>

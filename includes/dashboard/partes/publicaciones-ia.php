@@ -1,14 +1,9 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-$user_id = get_current_user_id();
-
-// Datos simulados (futuros get_* reemplazables)
-$tipos_ia = get_publicaciones_ia_por_tipo($user_id);
-$valoraciones = get_valoraciones_ia($user_id);
-$promedio  = $valoraciones['cantidad_valoraciones'] > 0 
-    ? round($valoraciones['estrellas_totales'] / $valoraciones['cantidad_valoraciones'],1) 
-    : 0;
+$tipos_ia     = dashboardData['publicacionesIA'] ?? [];
+$valoraciones = dashboardData['valoracionesIA'] ?? ['estrellas_totales' => 0, 'cantidad_valoraciones' => 0];
+$promedio     = dashboardData['promedioIA'] ?? 0;
 
 ?>
 
