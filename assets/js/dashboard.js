@@ -261,12 +261,22 @@ function renderizarEvolucionTemporal() {
               const color = w.config.colors[seriesIndex] || '#007bff';
           
               return `
-                <article class="card-1001" style="--color: ${color};">
+                <article class="card-1001" style="
+                  --color: ${color};
+                  min-width: auto;
+                  flex: none;
+                  width: auto;
+                  max-width: 240px;
+                ">
                   <div class="barra-color"></div>
-                  <div class="contenido-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.5rem;">
+                  <div class="contenido-card" style="
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 0.75rem;
+                  ">
                     <div class="texto" style="text-align: center;">
-                      <p style="font-weight: bold;">${label}</p>
-                      <p style="font-size: 0.85rem; color: #666;">${mes}</p>
+                      <p style="margin: 0 0 0.25rem 0;"><strong>${label}</strong></p>
+                      <p style="margin: 0 0 0.25rem 0; font-size: 0.75rem;">${mes}</p>
                       <strong style="font-size: 1rem;">${val} participación${val !== 1 ? 'es' : ''}</strong>
                     </div>
                   </div>
@@ -274,6 +284,7 @@ function renderizarEvolucionTemporal() {
               `;
             }
           }
+          
           
           
           
