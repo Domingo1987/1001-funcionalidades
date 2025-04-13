@@ -275,9 +275,9 @@ function renderizarEvolucionTemporal() {
                     padding: 0.75rem;
                   ">
                     <div class="texto" style="text-align: center;">
-                      <strong style="margin: 0 0 0.25rem 0; font-size: 0.8rem;"><strong>${label}</strong>
+                        <p style="margin: 0; font-size: 1rem; font-weight: bold;">${label}</p>
                       <p style="margin: 0 0 0.25rem 0; font-size: 0.75rem;">${mes}</p>
-                        <strong style="font-size: 1rem;">${val} ${val === 1 ? 'participación' : 'participaciones'}</strong>
+        <p style="margin: 0; font-size: 0.9rem;"><strong>${val}</strong> ${val === 1 ? 'participación' : 'participaciones'}</p>
                     </div>
                   </div>
                 </article>
