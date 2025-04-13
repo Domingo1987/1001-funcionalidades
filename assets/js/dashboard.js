@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarProgresoPorCategoria();
     renderizarInteraccionesIA();
     renderizarEvolucionTemporal();
+    renderizarRadarCompetencias();
 });
 
 function animarContadores() {
@@ -291,6 +292,32 @@ function renderizarEvolucionTemporal() {
     };
 
     // 🚀 Renderizar gráfico
+    const chart = new ApexCharts(contenedor, options);
+    chart.render();
+}
+
+function renderizarRadarCompetencias() {
+    const contenedor = document.querySelector('#grafico-radar-competencias');
+    const loader = document.querySelector('#grafico-radar-competencias-loader');
+    loader?.remove();
+
+    if (!contenedor || typeof dashboardData === 'undefined') return;
+
+    const options = {
+        series: dashboardData.radarSeries,
+        chart: {
+            height: 400,
+            type: 'radar',
+        },
+        title: {
+            text: 'Progreso por competencia',
+            align: 'center'
+        },
+        xaxis: {
+            categories: dashboardData.radarLabels
+        }
+    };
+
     const chart = new ApexCharts(contenedor, options);
     chart.render();
 }

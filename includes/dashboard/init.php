@@ -32,13 +32,17 @@ add_action('wp_enqueue_scripts', function () {
 
         // Obtener todos los datos del usuario logueado
         $user_id = get_current_user_id();
+        $radar_data = get_radar_series_por_usuario($user_id);
+
 
         wp_localize_script('dashboard-js', 'dashboardData', [
             // 🟢 PROGRESO POR CATEGORÍA
             'heatmapData' => get_participacion_mensual($user_id),
             'coloresCategorias' => get_colores_por_categoria(),
             'progresoPorCategoria' => get_progreso_por_categoria($user_id),
-            'interaccionesIA' => get_comentarios_por_publicacion_ia($user_id)
+            'interaccionesIA' => get_comentarios_por_publicacion_ia($user_id),
+            'radarSeries' => $radar_data['series'],
+            'radarLabels' => $radar_data['labels']
         ]);
     }
 });

@@ -737,4 +737,67 @@ function get_colores_por_categoria() {
     ];
 }
 
+function get_radar_series_por_usuario($user_id) {
+    global $wpdb;
+
+    // Obtener lista de criterios en orden (ID y nombre)
+    $criterios = $wpdb->get_results("SELECT id, nombre FROM wp_evaluaciones_criterios_def ORDER BY id ASC");
+    $labels = array_column($criterios, 'nombre');
+    $criterio_ids = array_column($criterios, 'id');
+
+    // Obtener lista de prácticos donde participó el usuario
+    $practicos = $wpdb->get_results($wpdb->prepare("
+        SELECT DISTINCT p.id, p.nombre
+        FROM wp_evaluaciones e
+        JOIN wp_practicos_problemas pp ON e.problema_id = pp.id
+        JOIN wp_practicos p ON pp.practico_id = p.id
+        WHERE e.user_id = %d
+    ", $user_id));
+
+    $series = [];
+
+    // Calcular promedios por práctico
+    foreach ($practicos as $practico) {
+        $promedios = [];
+        foreach ($criterio_ids as $criterio_id) {
+            $prom = $wpdb->get_var($wpdb->prepare("
+                SELECT AVG(ec.criterio_puntos)
+                FROM wp_evaluaciones_criterios ec
+                JOIN wp_evaluaciones e ON ec.evaluacion_id = e.id
+                JOIN wp_practicos_problemas pp ON e.problema_id = pp.id
+                WHERE e.user_id = %d AND ec.criterio_id = %d AND pp.practico_id = %d
+            ", $user_id, $criterio_id, $practico->id));
+
+            $promedios[] = round($prom ?: 0, 2);
+        }
+
+        $series[] = [
+            'name' => $practico->nombre,
+            'data' => $promedios
+        ];
+    }
+
+    // Calcular promedio general (TODOS)
+    $todos = [];
+    foreach ($criterio_ids as $criterio_id) {
+        $prom = $wpdb->get_var($wpdb->prepare("
+            SELECT AVG(ec.criterio_puntos)
+            FROM wp_evaluaciones_criterios ec
+            JOIN wp_evaluaciones e ON ec.evaluacion_id = e.id
+            WHERE e.user_id = %d AND ec.criterio_id = %d
+        ", $user_id, $criterio_id));
+        $todos[] = round($prom ?: 0, 2);
+    }
+
+    // Insertar "TODOS" al inicio
+    array_unshift($series, [
+        'name' => 'TODOS',
+        'data' => $todos
+    ]);
+
+    return [
+        'labels' => $labels,
+        'series' => $series
+    ];
+}
 
