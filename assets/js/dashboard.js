@@ -397,7 +397,7 @@ function renderizarMedallas() {
           'Comentaste o respondiste en 25 publicaciones IA',
           'Participaste activamente en 50 publicaciones IA'
         ],
-        icono: base + 'explorador-icono.svg'
+        icono: base + 'colaborador-icono.svg'
       },
       {
         clave: 'valorado',
@@ -410,7 +410,7 @@ function renderizarMedallas() {
           'Recibiste 25 likes acumulados',
           'Recibiste 50 likes o más en la comunidad'
         ],
-        icono: base + 'explorador-icono.svg'
+        icono: base + 'valorado-icono.svg'
       },
       {
         clave: 'multilenguaje',
@@ -423,7 +423,7 @@ function renderizarMedallas() {
           'Resolviste 5 o más por lenguaje',
           'Resolviste 10+ por lenguaje en todos'
         ],
-        icono: base + 'explorador-icono.svg'
+        icono: base + 'multilenguaje-icono.svg'
       },
       {
         clave: 'creadorIA',
@@ -436,7 +436,7 @@ function renderizarMedallas() {
           'Creaste 10 publicaciones IA',
           'Creaste 20 publicaciones IA'
         ],
-        icono: base + 'explorador-icono.svg'
+        icono: base + 'creadoria-icono.svg'
       }
     ];
   

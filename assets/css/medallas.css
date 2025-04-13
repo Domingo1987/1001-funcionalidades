@@ -24,10 +24,10 @@
   
   .medalla-capas .icono {
     position: absolute;
-    width: 90%;
+    width: 50%;
     height: auto;
     left: 50%;
-    top: 12%;
+    top: 20%;
     transform: translateX(-50%);
     z-index: 2;
   }
