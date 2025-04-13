@@ -126,3 +126,50 @@ section.resumen-general-cards {
 .nivel-4 { background-color: #196127; }
 .nivel-5 { background-color: #0f3d19; }
 
+/* Estilos para Medallas de progreso */
+.medalla {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    cursor: help;
+  }
+  
+  .medalla img {
+    width: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+  }
+  
+  .medalla .nivel {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: crimson;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  }
+  
+  .medalla[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    border-radius: 5px;
+    z-index: 10;
+  }
+  
+  .medalla.plata img { border-color: silver; }
+  .medalla.oro img { border-color: gold; }
+  .medalla.rubi img { border-color: darkred; }
+  .medalla.diamante img { border-color: deepskyblue; }
+  

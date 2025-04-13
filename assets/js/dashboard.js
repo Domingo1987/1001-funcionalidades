@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarInteraccionesIA();
     renderizarEvolucionTemporal();
     renderizarRadarCompetencias();
+    renderizarMedallas();
 });
 
 function animarContadores() {
@@ -353,5 +354,58 @@ function renderizarRadarCompetencias() {
   
     const chart = new ApexCharts(contenedor, options);
     chart.render();
+  }
+  
+function renderizarMedallas() {
+    const contenedor = document.querySelector('#contenedor-medallas');
+    const loader = document.querySelector('#medallas-loader');
+    if (!contenedor || typeof dashboardData?.userMedallas === 'undefined') return;
+    loader?.remove();
+  
+    const niveles = ["", "bronce", "plata", "oro", "rubi", "diamante"];
+    const datos = dashboardData.userMedallas;
+  
+    const medallas = [
+      {
+        clave: 'explorador',
+        nombre: 'Explorador',
+        descripcion: [
+          '',
+          'Visitaste 1 problema',
+          'Resolvés 5 problemas',
+          'Resolvés 10 problemas',
+          'Resolvés 25 problemas',
+          'Resolvés 50 problemas'
+        ],
+        imagenes: {
+          1: '/img/medallas/explorador-1.webp',
+          2: '/img/medallas/explorador-2.webp',
+          3: '/img/medallas/explorador-3.webp',
+          4: '/img/medallas/explorador-4.webp',
+          5: '/img/medallas/explorador-5.webp'
+        }
+      }
+      // futuras medallas acá
+    ];
+  
+    medallas.forEach(medalla => {
+      const nivel = datos[medalla.clave] || 0;
+      if (nivel === 0) return;
+  
+      const div = document.createElement('div');
+      div.className = `medalla ${niveles[nivel]}`;
+      div.setAttribute(
+        'data-tooltip',
+        `Nivel ${nivel} - ${medalla.nombre}: ${medalla.descripcion[nivel]}`
+      );
+  
+      const imagenSrc = medalla.imagenes[nivel] || medalla.imagenes[1];
+  
+      div.innerHTML = `
+        <img src="${imagenSrc}" alt="${medalla.nombre}">
+        <span class="nivel">${nivel}</span>
+      `;
+      contenedor.appendChild(div);
+    });
   }
   

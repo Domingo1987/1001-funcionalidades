@@ -39,7 +39,8 @@ add_action('wp_enqueue_scripts', function () {
             'coloresCategorias' => get_colores_por_categoria(),
             'progresoPorCategoria' => get_progreso_por_categoria($user_id),
             'interaccionesIA' => get_comentarios_por_publicacion_ia($user_id),
-            'radarCompetencias' => get_radar_series_por_usuario($user_id)
+            'radarCompetencias' => get_radar_series_por_usuario($user_id),
+            'explorador' => calcular_nivel_explorador($user_id)
         ]);
     }
 });

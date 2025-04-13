@@ -812,3 +812,34 @@ function get_radar_series_por_usuario($user_id) {
     ];
 }
 
+function calcular_nivel_explorador($user_id) {
+    $resueltos = get_total_problemas_resueltos($user_id); // Debe existir o crearse
+    
+    // 🐛 Log para debug
+    error_log("👨‍💻 Usuario $user_id resolvió $resueltos problemas.");
+    
+    if ($resueltos >= 50) return 5;
+    if ($resueltos >= 25) return 4;
+    if ($resueltos >= 10) return 3;
+    if ($resueltos >= 5) return 2;
+    if ($resueltos >= 1) return 1;
+    return 0;
+}
+
+function get_total_problemas_resueltos($user_id) {
+    global $wpdb;
+
+    // Asegurarse de que el post_type sea 'problema'
+    $count = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(DISTINCT c.comment_post_ID)
+         FROM {$wpdb->comments} c
+         INNER JOIN {$wpdb->posts} p ON c.comment_post_ID = p.ID
+         WHERE c.user_id = %d
+           AND c.comment_approved = 1
+           AND p.post_type = 'problema'",
+        $user_id
+    ));
+
+    return intval($count);
+}
+
