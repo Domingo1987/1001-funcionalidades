@@ -419,16 +419,48 @@ function get_medallas_pendientes($user_id) {
  * Cantidad de likes que dio el usuario en publicaciones de IA
  */
 function get_likes_dados($user_id) {
-    // Simulado. Reemplazar con consulta real si tenés tabla de likes.
-    return 19;
+    global $wpdb;
+
+    // Likes dados a publicaciones
+    $likes_posts = (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM wp_wc_users_rated
+         WHERE user_id = %d AND rating > 0",
+        $user_id
+    ));
+
+    // Likes dados a comentarios
+    $likes_comentarios = (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM wp_wc_users_voted
+         WHERE user_id = %d",
+        $user_id
+    ));
+
+    return $likes_posts + $likes_comentarios;
 }
 
 /**
  * Cantidad de likes que recibió el usuario en sus publicaciones de IA
  */
 function get_likes_recibidos($user_id) {
-    // Simulado. Reemplazar con consulta real si tenés tabla de likes.
-    return 11;
+    global $wpdb;
+
+    // Likes recibidos en publicaciones
+    $recibidos_posts = (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM wp_wc_users_rated ur
+         JOIN wp_posts p ON ur.post_id = p.ID
+         WHERE ur.rating > 0 AND p.post_author = %d",
+        $user_id
+    ));
+
+    // Likes recibidos en comentarios
+    $recibidos_comentarios = (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM wp_wc_users_voted uv
+         JOIN wp_comments c ON uv.comment_id = c.comment_ID
+         WHERE c.user_id = %d",
+        $user_id
+    ));
+
+    return $recibidos_posts + $recibidos_comentarios;
 }
 
 /**
