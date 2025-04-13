@@ -454,7 +454,7 @@ function renderizarMedallas() {
         <img class="icono" src="${medalla.icono}" alt="${medalla.nombre}">
         <svg viewBox="0 0 100 100" class="svg-titulo" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <path id="curvaTexto-${medalla.clave}" d="M90,55 A40,40 0 1,0 10,55" fill="none"/>
+            <path id="curvaTexto-${medalla.clave}" d="M10,55 A40,40 0 1,1 90,55" fill="none"/>
           </defs>
           <text fill="white" font-size="6" font-weight="bold" text-anchor="middle">
             <textPath xlink:href="#curvaTexto-${medalla.clave}" startOffset="50%">
