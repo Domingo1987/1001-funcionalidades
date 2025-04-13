@@ -359,12 +359,18 @@ function renderizarRadarCompetencias() {
 function renderizarMedallas() {
     const contenedor = document.querySelector('#medallas');
     const loader = document.querySelector('#medallas-loader');
-    if (!contenedor || typeof dashboardData?.userMedallas === 'undefined') return;
+    if (!contenedor || typeof dashboardData?.userMedallas === 'undefined') {
+      console.warn('⚠️ Contenedor o datos de medallas no disponibles');
+      return;
+    }
     loader?.remove();
+
   
     const niveles = ["", "bronce", "plata", "oro", "rubi", "diamante"];
     const datos = dashboardData.userMedallas;
-  
+
+    console.log('📦 Datos de medallas:', datos); // 👈 Mostrás todo lo que trae
+
     const medallas = [
       {
         clave: 'explorador',
@@ -385,12 +391,16 @@ function renderizarMedallas() {
           5: '/img/medallas/explorador-5.webp'
         }
       }
-      // futuras medallas acá
     ];
   
     medallas.forEach(medalla => {
       const nivel = datos[medalla.clave] || 0;
-      if (nivel === 0) return;
+      console.log(`🔍 ${medalla.nombre} → Nivel: ${nivel}`); // 👈 Nivel individual
+  
+      if (nivel === 0) {
+        console.info(`ℹ️ ${medalla.nombre} no desbloqueada (nivel 0)`);
+        return;
+      }
   
       const div = document.createElement('div');
       div.className = `medalla ${niveles[nivel]}`;
