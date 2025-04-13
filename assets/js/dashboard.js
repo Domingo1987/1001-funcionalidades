@@ -300,24 +300,58 @@ function renderizarRadarCompetencias() {
     const contenedor = document.querySelector('#grafico-radar-competencias');
     const loader = document.querySelector('#grafico-radar-competencias-loader');
     loader?.remove();
-
+  
     if (!contenedor || typeof dashboardData === 'undefined') return;
-
+  
+    const radarData = dashboardData.radarCompetencias;
+    if (!radarData || !Array.isArray(radarData.series) || radarData.series.length === 0) {
+      contenedor.innerHTML = '<p class="text-muted">No hay evaluaciones registradas aún.</p>';
+      return;
+    }
+  
+    // 🧪 Mostrar en consola los datos (debug)
+    console.table(radarData.series.map(s => ({
+      Serie: s.name,
+      ...s.data.reduce((acc, val, i) => {
+        acc[radarData.labels[i]] = val;
+        return acc;
+      }, {})
+    })));
+  
     const options = {
-        series: dashboardData.radarSeries,
-        chart: {
-            height: 400,
-            type: 'radar',
-        },
-        title: {
-            text: 'Progreso por competencia',
-            align: 'center'
-        },
-        xaxis: {
-            categories: dashboardData.radarLabels
+      series: radarData.series,
+      chart: {
+        height: 450,
+        type: 'radar'
+      },
+      title: {
+        text: 'Progreso por competencia',
+        align: 'center'
+      },
+      xaxis: {
+        categories: radarData.labels
+      },
+      stroke: {
+        width: 2
+      },
+      fill: {
+        opacity: 0.25
+      },
+      markers: {
+        size: 4
+      },
+      tooltip: {
+        y: {
+          formatter: val => val + ' pts'
         }
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'center'
+      }
     };
-
+  
     const chart = new ApexCharts(contenedor, options);
     chart.render();
-}
+  }
+  

@@ -740,56 +740,67 @@ function get_colores_por_categoria() {
 function get_radar_series_por_usuario($user_id) {
     global $wpdb;
 
-    // Obtener lista de criterios en orden (ID y nombre)
-    $criterios = $wpdb->get_results("SELECT id, nombre FROM wp_evaluaciones_criterios_def ORDER BY id ASC");
-    $labels = array_column($criterios, 'nombre');
-    $criterio_ids = array_column($criterios, 'id');
-
-    // Obtener lista de prácticos donde participó el usuario
-    $practicos = $wpdb->get_results($wpdb->prepare("
-        SELECT DISTINCT p.id, p.nombre
-        FROM wp_evaluaciones e
-        JOIN wp_practicos_problemas pp ON e.problema_id = pp.id
-        JOIN wp_practicos p ON pp.practico_id = p.id
-        WHERE e.user_id = %d
-    ", $user_id));
+    // 🧠 Definí acá los criterios que querés mostrar (orden y etiquetas)
+    $criterios = [
+        1 => "Comprensión del Problema",
+        2 => "Estructura del Código",
+        3 => "Funcionalidad",
+        4 => "Estrategias"
+    ];
+    $criterio_ids = array_keys($criterios);
+    $labels = array_values($criterios);
 
     $series = [];
 
-    // Calcular promedios por práctico
-    foreach ($practicos as $practico) {
-        $promedios = [];
-        foreach ($criterio_ids as $criterio_id) {
-            $prom = $wpdb->get_var($wpdb->prepare("
-                SELECT AVG(ec.criterio_puntos)
-                FROM wp_evaluaciones_criterios ec
-                JOIN wp_evaluaciones e ON ec.evaluacion_id = e.id
-                JOIN wp_practicos_problemas pp ON e.problema_id = pp.id
-                WHERE e.user_id = %d AND ec.criterio_id = %d AND pp.practico_id = %d
-            ", $user_id, $criterio_id, $practico->id));
+    // 🔍 Obtener promedio por criterio agrupado por práctico
+    $resultados = $wpdb->get_results($wpdb->prepare("
+        SELECT 
+            pp.practico_id,
+            p.nombre AS practico_nombre,
+            ec.criterio_id,
+            ROUND(AVG(ec.criterio_puntos), 2) AS promedio
+        FROM wp_evaluaciones e
+        JOIN wp_evaluaciones_criterios ec ON ec.evaluacion_id = e.id
+        JOIN wp_practicos_problemas pp ON e.problema_id = pp.id
+        JOIN wp_practicos p ON pp.practico_id = p.id
+        WHERE e.user_id = %d
+        GROUP BY pp.practico_id, ec.criterio_id
+        ORDER BY pp.practico_id, ec.criterio_id
+    ", $user_id));
 
-            $promedios[] = round($prom ?: 0, 2);
+    // 🧩 Agrupar resultados por práctico
+    $por_practico = [];
+    foreach ($resultados as $fila) {
+        $pid = $fila->practico_id;
+        $por_practico[$pid]['nombre'] = $fila->practico_nombre;
+        $por_practico[$pid]['criterios'][$fila->criterio_id] = (float) $fila->promedio;
+    }
+
+    // 🧪 Construir cada serie con todos los criterios
+    foreach ($por_practico as $practico) {
+        $datos = [];
+        foreach ($criterio_ids as $cid) {
+            $datos[] = $practico['criterios'][$cid] ?? 0;
         }
-
         $series[] = [
-            'name' => $practico->nombre,
-            'data' => $promedios
+            'name' => $practico['nombre'],
+            'data' => $datos
         ];
     }
 
-    // Calcular promedio general (TODOS)
+    // 📊 Calcular promedio general (serie "TODOS")
     $todos = [];
-    foreach ($criterio_ids as $criterio_id) {
+    foreach ($criterio_ids as $cid) {
         $prom = $wpdb->get_var($wpdb->prepare("
-            SELECT AVG(ec.criterio_puntos)
-            FROM wp_evaluaciones_criterios ec
-            JOIN wp_evaluaciones e ON ec.evaluacion_id = e.id
+            SELECT ROUND(AVG(ec.criterio_puntos), 2)
+            FROM wp_evaluaciones e
+            JOIN wp_evaluaciones_criterios ec ON ec.evaluacion_id = e.id
             WHERE e.user_id = %d AND ec.criterio_id = %d
-        ", $user_id, $criterio_id));
-        $todos[] = round($prom ?: 0, 2);
+        ", $user_id, $cid));
+        $todos[] = $prom ?: 0;
     }
 
-    // Insertar "TODOS" al inicio
+    // ⬆️ Insertar al inicio
     array_unshift($series, [
         'name' => 'TODOS',
         'data' => $todos
