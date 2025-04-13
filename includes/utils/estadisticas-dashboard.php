@@ -248,10 +248,9 @@ function get_problemas_por_categoria($user_id) {
  * @param int $user_id ID del usuario
  * @return array Arreglo de lenguajes con nombre, icono, color y porcentaje
  */
-function get_porcentaje_lenguajes($user_id) {
+function get_lenguajes_por_tipo($user_id) {
     global $wpdb;
 
-    // Contar la cantidad de comentarios por lenguaje
     $resultados = $wpdb->get_results($wpdb->prepare("
         SELECT cm.meta_value AS lenguaje, COUNT(*) AS cantidad
         FROM {$wpdb->comments} c
@@ -261,18 +260,15 @@ function get_porcentaje_lenguajes($user_id) {
         GROUP BY cm.meta_value
     ", $user_id), OBJECT_K);
 
-    // Total de todos los comentarios con lenguaje registrado
     $total = array_sum(array_map(fn($r) => $r->cantidad, $resultados));
     if ($total === 0) return [];
 
-    // Definir íconos y colores por lenguaje
     $info_lenguajes = [
         'python' => ['nombre' => 'Python', 'icono' => '🐍', 'color' => '#4caf50'],
         'java'   => ['nombre' => 'Java',   'icono' => '☕', 'color' => '#f44336'],
         'c'      => ['nombre' => 'C',      'icono' => '🔧', 'color' => '#2196f3'],
     ];
 
-    // Armar el resultado
     $resultado = [];
     foreach ($resultados as $lenguaje => $datos) {
         $clave = strtolower($lenguaje);
@@ -280,16 +276,18 @@ function get_porcentaje_lenguajes($user_id) {
 
         $porcentaje = round(($datos->cantidad / $total) * 100);
 
-        $resultado[] = [
+        $resultado[$clave] = [
             'nombre'     => $info_lenguajes[$clave]['nombre'],
             'icono'      => $info_lenguajes[$clave]['icono'],
             'color'      => $info_lenguajes[$clave]['color'],
-            'porcentaje' => $porcentaje
+            'porcentaje' => $porcentaje,
+            'cantidad'   => (int) $datos->cantidad
         ];
     }
 
     return $resultado;
 }
+
 
 
 /**
@@ -317,41 +315,18 @@ function get_publicaciones_ia_por_tipo($user_id) {
         GROUP BY t.term_id
     ");
 
-    $iconos_colores = [
-        'Generación de Imágenes'        => ['icono' => '🖼️', 'color' => '#3f51b5'],
-        'Modelos Conversacionales'      => ['icono' => '💬', 'color' => '#009688'],
-        'Generación de Audio'           => ['icono' => '🎵', 'color' => '#e91e63'],
-        'Generación de Video'           => ['icono' => '🎬', 'color' => '#607d8b'],
-        'Plataformas de Implementación' => ['icono' => '🛠️', 'color' => '#ff9800'],
-        'Flujo'                         => ['icono' => '🔁', 'color' => '#795548'],
-        'Inteligencia Artificial'       => ['icono' => '🤖', 'color' => '#673ab7'],
-    ];
-
     $salida = [];
 
     foreach ($resultados as $fila) {
-        $tipo = $fila->tipo;
-        $cantidad = intval($fila->cantidad);
-        $icono = $iconos_colores[$tipo]['icono'] ?? '📁';
-        $color = $iconos_colores[$tipo]['color'] ?? '#999';
-
-        $salida[] = [
-            'tipo'     => $tipo,
-            'icono'    => $icono,
-            'color'    => $color,
-            'cantidad' => $cantidad,
-        ];
+        $salida[$fila->tipo] = (int) $fila->cantidad;
     }
 
     return $salida;
 }
 
 
-/**
- * Devuelve un array con la cantidad de likes recibidos y dados por el usuario.
- * @param int $user_id
- * @return array
- */
+
+/*
 function get_valoraciones_ia($user_id) {
     global $wpdb;
 
@@ -374,42 +349,7 @@ function get_valoraciones_ia($user_id) {
         'estrellas_totales'     => intval($datos->total_estrellas)
     ];
 }
-
-
-
-/**
- * ********************************************************************************
- */
-
-/**
- * Devuelve un array de medallas logradas por el usuario.
- * 
- * @param int $user_id
- * @return array
- */
-function get_medallas_logradas($user_id) {
-    // TODO: Reemplazar con consulta a la base de datos
-    return [
-        ['nombre' => 'Primer Problema', 'icono' => '🥇', 'color' => '#ffd700'],
-        ['nombre' => '5 Comentarios', 'icono' => '💬', 'color' => '#4caf50'],
-        ['nombre' => 'IA Inicial', 'icono' => '🤖', 'color' => '#9c27b0'],
-    ];
-}
-
-/**
- * Devuelve un array de medallas pendientes por el usuario.
- * 
- * @param int $user_id
- * @return array
- */
-function get_medallas_pendientes($user_id) {
-    // TODO: Reemplazar con consulta a la base de datos
-    return [
-        ['nombre' => '50 Problemas', 'icono' => '🎯'],
-        ['nombre' => '10 IA Publicadas', 'icono' => '🤖'],
-        ['nombre' => '100 Comentarios', 'icono' => '💬'],
-    ];
-}
+*/
 
  /**
  * ********************************************************************************
@@ -812,19 +752,7 @@ function get_radar_series_por_usuario($user_id) {
     ];
 }
 
-function calcular_nivel_explorador($user_id) {
-    $resueltos = get_total_problemas_resueltos($user_id); // Debe existir o crearse
-    
-    // 🐛 Log para debug
-    error_log("👨‍💻 Usuario $user_id resolvió $resueltos problemas.");
-    
-    if ($resueltos >= 50) return 5;
-    if ($resueltos >= 25) return 4;
-    if ($resueltos >= 10) return 3;
-    if ($resueltos >= 5) return 2;
-    if ($resueltos >= 1) return 1;
-    return 0;
-}
+
 
 function get_total_problemas_resueltos($user_id) {
     global $wpdb;
@@ -842,4 +770,46 @@ function get_total_problemas_resueltos($user_id) {
 
     return intval($count);
 }
+
+function get_comentarios_en_ia($user_id) {
+    global $wpdb;
+
+    return (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$wpdb->comments} c
+         INNER JOIN {$wpdb->posts} p ON c.comment_post_ID = p.ID
+         WHERE c.user_id = %d
+           AND c.comment_approved = 1
+           AND p.post_type = 'inteligen_artificial'",
+        $user_id
+    ));
+}
+
+function get_respuestas_en_problemas($user_id) {
+    global $wpdb;
+
+    return (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$wpdb->comments} c
+         INNER JOIN {$wpdb->posts} p ON c.comment_post_ID = p.ID
+         WHERE c.user_id = %d
+           AND c.comment_approved = 1
+           AND c.comment_parent > 0
+           AND p.post_type = 'problema'",
+        $user_id
+    ));
+}
+
+function get_likes_en_comentarios($user_id) {
+    global $wpdb;
+
+    return (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT SUM(CAST(cm.meta_value AS UNSIGNED)) FROM {$wpdb->comments} c
+         INNER JOIN {$wpdb->commentmeta} cm ON cm.comment_id = c.comment_ID
+         WHERE c.user_id = %d
+           AND cm.meta_key = 'likes'
+           AND c.comment_approved = 1",
+        $user_id
+    ));
+}
+
+
 

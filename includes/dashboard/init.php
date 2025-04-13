@@ -33,6 +33,7 @@ add_action('wp_enqueue_scripts', function () {
         // Obtener todos los datos del usuario logueado
         $user_id = get_current_user_id();
 
+
         wp_localize_script('dashboard-js', 'dashboardData', [
             // 🟢 PROGRESO POR CATEGORÍA
             'heatmapData' => get_participacion_mensual($user_id),
@@ -40,10 +41,18 @@ add_action('wp_enqueue_scripts', function () {
             'progresoPorCategoria' => get_progreso_por_categoria($user_id),
             'interaccionesIA' => get_comentarios_por_publicacion_ia($user_id),
             'radarCompetencias' => get_radar_series_por_usuario($user_id),
+        
+            // 🏅 MEDALLAS CON DATOS COMPLETOS
             'userMedallas' => [
-                'explorador' => calcular_nivel_explorador($user_id)
-                ],
-                'medallasBase' => plugins_url('../assets/img/medallas/', __DIR__)
-             ]);
+                'explorador'     => calcular_nivel_explorador($user_id),
+                'colaborador'    => calcular_nivel_colaborador($user_id),
+                'valorado'       => calcular_nivel_valorado($user_id),
+                'multilenguaje'  => calcular_nivel_multilenguaje($user_id),
+                'creadorIA'      => calcular_nivel_creador_ia($user_id) // 🔁 Clave sin guion para consistencia
+            ],
+        
+            // 📁 RUTA BASE DE IMÁGENES
+            'medallasBase' => plugins_url('../assets/img/medallas/', __DIR__)
+        ]);
     }
 });

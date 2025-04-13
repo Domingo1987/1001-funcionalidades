@@ -5,7 +5,7 @@ $user_id = get_current_user_id();
 
 // Simulación de funciones
 $categorias = get_problemas_por_categoria($user_id);
-$lenguajes = get_porcentaje_lenguajes($user_id);
+$lenguajes = get_lenguajes_por_tipo($user_id);
 ?>
 
 <details>

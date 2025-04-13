@@ -392,32 +392,110 @@ function renderizarMedallas() {
         4: base + 'explorador-4.webp',
         5: base + 'explorador-5.webp'
         }
+      },
+      {
+        clave: 'colaborador',
+        nombre: 'Colaborador',
+        descripcion: [
+          '',
+          'Hiciste tu primer comentario o respuesta en IA',
+          'Comentaste o respondiste en 5 publicaciones IA',
+          'Participaste en 10 publicaciones IA',
+          'Comentaste o respondiste en 25 publicaciones IA',
+          'Participaste activamente en 50 publicaciones IA'
+        ],
+        imagenes: {
+          1: base + 'explorador-1.webp',
+          2: base + 'explorador-2.webp',
+          3: base + 'explorador-3.webp',
+          4: base + 'explorador-4.webp',
+          5: base + 'explorador-5.webp'
+        }
+      },
+      {
+        clave: 'valorado',
+        nombre: 'Valorado',
+        descripcion: [
+          '',
+          'Recibiste tu primer like',
+          'Recibiste 5 likes en total',
+          'Recibiste 10 likes entre comentarios y publicaciones',
+          'Recibiste 25 likes acumulados',
+          'Recibiste 50 likes o más en la comunidad'
+        ],
+        imagenes: {
+          1: base + 'explorador-1.webp',
+          2: base + 'explorador-2.webp',
+          3: base + 'explorador-3.webp',
+          4: base + 'explorador-4.webp',
+          5: base + 'explorador-5.webp'
+        }
+      },
+      {
+        clave: 'multilenguaje',
+        nombre: 'Multilenguaje',
+        descripcion: [
+          '',
+          'Resolviste 1 problema en 1 lenguaje',
+          'Resolviste problemas en 2 lenguajes distintos',
+          'Resolviste en 3 lenguajes',
+          'Resolviste 5 o más por lenguaje',
+          'Resolviste 10+ por lenguaje en todos'
+        ],
+        imagenes: {
+          1: base + 'explorador-1.webp',
+          2: base + 'explorador-2.webp',
+          3: base + 'explorador-3.webp',
+          4: base + 'explorador-4.webp',
+          5: base + 'explorador-5.webp'
+        }
+      },
+      {
+        clave: 'creadorIA',
+        nombre: 'Creador IA',
+        descripcion: [
+          '',
+          'Creaste tu primera publicación IA',
+          'Creaste 3 publicaciones IA',
+          'Creaste 5 publicaciones IA',
+          'Creaste 10 publicaciones IA',
+          'Creaste 20 publicaciones IA'
+        ],
+        imagenes: {
+          1: base + 'explorador-1.webp',
+          2: base + 'explorador-2.webp',
+          3: base + 'explorador-3.webp',
+          4: base + 'explorador-4.webp',
+          5: base + 'explorador-5.webp'
+        }
       }
     ];
   
     medallas.forEach(medalla => {
-      const nivel = datos[medalla.clave] || 0;
-      console.log(`🔍 ${medalla.nombre} → Nivel: ${nivel}`); // 👈 Nivel individual
-  
+      const nivel = datos[medalla.clave]?.nivel || 0; // ✅ CAMBIO AQUÍ
+    
+      console.log(`🔍 ${medalla.nombre} → Nivel: ${nivel}`);
+    
       if (nivel === 0) {
         console.info(`ℹ️ ${medalla.nombre} no desbloqueada (nivel 0)`);
         return;
       }
-  
+    
       const div = document.createElement('div');
       div.className = `medalla ${niveles[nivel]}`;
       div.setAttribute(
         'data-tooltip',
         `Nivel ${nivel} - ${medalla.nombre}: ${medalla.descripcion[nivel]}`
       );
-  
+    
       const imagenSrc = medalla.imagenes[nivel] || medalla.imagenes[1];
-  
+    
       div.innerHTML = `
         <img src="${imagenSrc}" alt="${medalla.nombre}">
         <span class="nivel">${nivel}</span>
       `;
       contenedor.appendChild(div);
     });
+    
   }
   
