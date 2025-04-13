@@ -357,18 +357,17 @@ function renderizarRadarCompetencias() {
   }
   
 function renderizarMedallas() {
-    const contenedor = document.querySelector('#medallas');
-    const loader = document.querySelector('#medallas-loader');
-    if (!contenedor || typeof dashboardData?.userMedallas === 'undefined') {
-      console.warn('⚠️ Contenedor o datos de medallas no disponibles');
-      return;
-    }
-    loader?.remove();
+  const contenedor = document.querySelector('#medallas');
+  const loader = document.querySelector('#medallas-loader');
+  if (!contenedor || typeof dashboardData?.userMedallas === 'undefined') {
+    console.warn('⚠️ Contenedor o datos de medallas no disponibles');
+    return;
+  }
+  loader?.remove();
 
-  
-    const niveles = ["", "bronce", "plata", "oro", "rubi", "diamante"];
-    const datos = dashboardData.userMedallas;
-    const base = dashboardData.medallasBase;
+  const datos = dashboardData.userMedallas;
+  const base = dashboardData.medallasBase;
+  const niveles = ["", "bronce", "plata", "oro", "rubi", "diamante"];
 
 
     console.log('📦 Datos de medallas:', datos); // 👈 Mostrás todo lo que trae
@@ -385,13 +384,7 @@ function renderizarMedallas() {
           'Resolvés 25 problemas',
           'Resolvés 50 problemas'
         ],
-        imagenes: {
-          1: base + 'explorador-1.webp',
-        2: base + 'explorador-2.webp',
-        3: base + 'explorador-3.webp',
-        4: base + 'explorador-4.webp',
-        5: base + 'explorador-5.webp'
-        }
+        icono: base + 'explorador-icono.svg'
       },
       {
         clave: 'colaborador',
@@ -404,13 +397,7 @@ function renderizarMedallas() {
           'Comentaste o respondiste en 25 publicaciones IA',
           'Participaste activamente en 50 publicaciones IA'
         ],
-        imagenes: {
-          1: base + 'explorador-1.webp',
-          2: base + 'explorador-2.webp',
-          3: base + 'explorador-3.webp',
-          4: base + 'explorador-4.webp',
-          5: base + 'explorador-5.webp'
-        }
+        icono: base + 'explorador-icono.svg'
       },
       {
         clave: 'valorado',
@@ -423,13 +410,7 @@ function renderizarMedallas() {
           'Recibiste 25 likes acumulados',
           'Recibiste 50 likes o más en la comunidad'
         ],
-        imagenes: {
-          1: base + 'explorador-1.webp',
-          2: base + 'explorador-2.webp',
-          3: base + 'explorador-3.webp',
-          4: base + 'explorador-4.webp',
-          5: base + 'explorador-5.webp'
-        }
+        icono: base + 'explorador-icono.svg'
       },
       {
         clave: 'multilenguaje',
@@ -442,13 +423,7 @@ function renderizarMedallas() {
           'Resolviste 5 o más por lenguaje',
           'Resolviste 10+ por lenguaje en todos'
         ],
-        imagenes: {
-          1: base + 'explorador-1.webp',
-          2: base + 'explorador-2.webp',
-          3: base + 'explorador-3.webp',
-          4: base + 'explorador-4.webp',
-          5: base + 'explorador-5.webp'
-        }
+        icono: base + 'explorador-icono.svg'
       },
       {
         clave: 'creadorIA',
@@ -461,41 +436,38 @@ function renderizarMedallas() {
           'Creaste 10 publicaciones IA',
           'Creaste 20 publicaciones IA'
         ],
-        imagenes: {
-          1: base + 'explorador-1.webp',
-          2: base + 'explorador-2.webp',
-          3: base + 'explorador-3.webp',
-          4: base + 'explorador-4.webp',
-          5: base + 'explorador-5.webp'
-        }
+        icono: base + 'explorador-icono.svg'
       }
     ];
   
     medallas.forEach(medalla => {
-      const nivel = datos[medalla.clave]?.nivel || 0; // ✅ CAMBIO AQUÍ
-    
-      console.log(`🔍 ${medalla.nombre} → Nivel: ${nivel}`);
-    
-      if (nivel === 0) {
-        console.info(`ℹ️ ${medalla.nombre} no desbloqueada (nivel 0)`);
-        return;
-      }
-    
+      const info = datos[medalla.clave];
+      const nivel = info?.nivel || 0;
+      if (nivel === 0) return;
+  
       const div = document.createElement('div');
-      div.className = `medalla ${niveles[nivel]}`;
-      div.setAttribute(
-        'data-tooltip',
-        `Nivel ${nivel} - ${medalla.nombre}: ${medalla.descripcion[nivel]}`
-      );
-    
-      const imagenSrc = medalla.imagenes[nivel] || medalla.imagenes[1];
-    
+      div.className = `medalla-capas ${niveles[nivel]}`;
+      div.setAttribute('data-tooltip', `Nivel ${nivel} - ${medalla.nombre}: ${medalla.descripcion[nivel]}`);
+  
       div.innerHTML = `
-        <img src="${imagenSrc}" alt="${medalla.nombre}">
+        <div class="fondo"></div>
+        <img class="icono" src="${medalla.icono}" alt="${medalla.nombre}">
+        <svg viewBox="0 0 100 100" class="svg-titulo" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path id="curvaTexto-${medalla.clave}" d="M90,55 A40,40 0 1,0 10,55" fill="none"/>
+          </defs>
+          <text fill="white" font-size="6" font-weight="bold" text-anchor="middle">
+            <textPath xlink:href="#curvaTexto-${medalla.clave}" startOffset="50%">
+              ${medalla.nombre.toUpperCase()}
+            </textPath>
+          </text>
+        </svg>
         <span class="nivel">${nivel}</span>
       `;
+  
       contenedor.appendChild(div);
     });
+  
     
-  }
+}
   

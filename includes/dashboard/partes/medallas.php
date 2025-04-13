@@ -1,4 +1,4 @@
-<?php
+<?php 
 if (!defined('ABSPATH')) exit;
 ?>
 
@@ -9,6 +9,6 @@ if (!defined('ABSPATH')) exit;
       <progress style="width: 50%; margin-top: 1rem;"></progress>
       <p style="margin-top: 0.5rem;">Cargando medallas...</p>
     </div>
-    <div id="medallas" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;"></div>
+    <div id="medallas" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;"></div>
   </section>
 </details>

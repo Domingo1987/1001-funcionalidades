@@ -22,6 +22,9 @@ add_action('wp_enqueue_scripts', function () {
             true
         );
 
+        wp_enqueue_style('medallas-css', FUNC_URL . 'assets/css/medallas.css', [], '1.0');
+
+
         wp_enqueue_script(
             'dashboard-js',
             FUNC_URL . 'assets/js/dashboard.js',
