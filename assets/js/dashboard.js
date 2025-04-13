@@ -462,7 +462,7 @@ function renderizarMedallas() {
             </textPath>
           </text>
         </svg>
-        <span class="nivel">${nivel}</span>
+        
       `;
   
       contenedor.appendChild(div);
@@ -470,4 +470,4 @@ function renderizarMedallas() {
   
     
 }
-  
+  /*<span class="nivel">${nivel}</span>*/
