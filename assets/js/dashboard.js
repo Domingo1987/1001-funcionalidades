@@ -368,6 +368,8 @@ function renderizarMedallas() {
   
     const niveles = ["", "bronce", "plata", "oro", "rubi", "diamante"];
     const datos = dashboardData.userMedallas;
+    const base = dashboardData.medallasBase;
+
 
     console.log('📦 Datos de medallas:', datos); // 👈 Mostrás todo lo que trae
 
@@ -384,11 +386,11 @@ function renderizarMedallas() {
           'Resolvés 50 problemas'
         ],
         imagenes: {
-          1: '/img/medallas/explorador-1.webp',
-          2: '/img/medallas/explorador-2.webp',
-          3: '/img/medallas/explorador-3.webp',
-          4: '/img/medallas/explorador-4.webp',
-          5: '/img/medallas/explorador-5.webp'
+          1: base + 'explorador-1.webp',
+        2: base + 'explorador-2.webp',
+        3: base + 'explorador-3.webp',
+        4: base + 'explorador-4.webp',
+        5: base + 'explorador-5.webp'
         }
       }
     ];

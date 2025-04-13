@@ -42,7 +42,8 @@ add_action('wp_enqueue_scripts', function () {
             'radarCompetencias' => get_radar_series_por_usuario($user_id),
             'userMedallas' => [
                 'explorador' => calcular_nivel_explorador($user_id)
-            ]
-                    ]);
+                ],
+                'medallasBase' => plugins_url('assets/img/medallas/', __DIR__)
+             ]);
     }
 });
