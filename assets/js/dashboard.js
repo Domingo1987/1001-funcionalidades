@@ -357,7 +357,7 @@ function renderizarRadarCompetencias() {
   }
   
 function renderizarMedallas() {
-    const contenedor = document.querySelector('#contenedor-medallas');
+    const contenedor = document.querySelector('#medallas');
     const loader = document.querySelector('#medallas-loader');
     if (!contenedor || typeof dashboardData?.userMedallas === 'undefined') return;
     loader?.remove();
