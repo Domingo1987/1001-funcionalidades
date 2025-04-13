@@ -43,7 +43,7 @@ add_action('wp_enqueue_scripts', function () {
             'userMedallas' => [
                 'explorador' => calcular_nivel_explorador($user_id)
                 ],
-                'medallasBase' => plugins_url('assets/img/medallas/', __DIR__)
+                'medallasBase' => plugins_url('../assets/img/medallas/', __DIR__)
              ]);
     }
 });
