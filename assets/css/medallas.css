@@ -59,20 +59,28 @@
   .medalla-capas[data-tooltip] {
     position: relative;
   }
-  .medalla-capas[data-tooltip]:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: -2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #333;
-    color: white;
-    padding: 4px 8px;
-    font-size: 0.7rem;
-    border-radius: 4px;
-    white-space: nowrap;
-    z-index: 99;
-  }
+
+  /* 🔒 Desactiva el tooltip por defecto de Pico */
+.medalla-capas[data-tooltip]::after {
+  content: none !important;
+}
+
+/* ✅ Tooltip personalizado */
+.medalla-capas[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 99;
+}
+
   .svg-titulo {
     position: absolute;
     top: 8px;
