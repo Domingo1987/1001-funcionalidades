@@ -20,7 +20,7 @@ function renderizar_actividad_por_tipo() {
     include plugin_dir_path(__FILE__) . '/partes/actividad_por_tipo.php';
 }
 
-function renderizar_progreso_categoria($user_id) {
+function renderizar_progreso_categorias($user_id) {
     error_log("✅ Ejecutando renderizar_progreso_categoria para user $user_id");
 
     ob_start();
