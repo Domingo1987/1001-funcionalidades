@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 // Obtener todos los cursos
 $admin = new Admin();
 $cursos = $admin->get_all_cursos();

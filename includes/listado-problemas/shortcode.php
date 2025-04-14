@@ -1,5 +1,7 @@
 <?php
-// Shortcode: [listar_problemas categoria="capitulo-3"]
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 function shortcode_listar_problemas($atts = []) {
     $atts = shortcode_atts([

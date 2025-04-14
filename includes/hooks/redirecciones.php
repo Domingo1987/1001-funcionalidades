@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 // Redirección automática si se accede a /?problema_azar=1
 add_action('template_redirect', function() {
     if (isset($_GET['problema_azar'])) {

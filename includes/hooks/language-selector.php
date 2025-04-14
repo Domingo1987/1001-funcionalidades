@@ -1,6 +1,7 @@
 <?php
-// 🧠 Evitar acceso directo
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // 🎯 Encolar scripts y estilos solo en posts individuales
 function language_selector_scripts() {

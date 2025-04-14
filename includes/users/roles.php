@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 // Agrega roles personalizados al activar el plugin
 function cienuno_agregar_roles_personalizados() {
     add_role('creador_ia', 'Creador-IA', ['read' => true, 'upload_files' => true]);

@@ -1,5 +1,7 @@
 <?php
-// Archivo: utils/problemas.php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // Función: Obtener número de problema (v2.0, acepta ID opcional)
 function get_num_problema($post_id = null) {

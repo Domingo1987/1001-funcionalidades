@@ -1,5 +1,7 @@
 <?php
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 add_action('wp_ajax_dashboard_cargar_seccion', 'dashboard_ajax_cargar_seccion');
 

@@ -1,5 +1,7 @@
-<?php 
-if (!defined('ABSPATH')) exit;
+<?php
+if (!defined('ABSPATH')) {
+    exit;
+}
 ?>
 
   <section class="container" style="max-width: 700px; margin: auto; text-align: center;">

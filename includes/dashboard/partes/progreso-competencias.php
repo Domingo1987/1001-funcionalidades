@@ -1,8 +1,8 @@
 <?php
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-$user_id = get_current_user_id();
-// Aquí en el futuro podríamos usar funciones como get_competencias_usuario($user_id);
 ?>
 
   <section class="container" style="max-width: 700px; margin: auto; text-align: center;">

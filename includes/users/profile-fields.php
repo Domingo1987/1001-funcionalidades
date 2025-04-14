@@ -1,4 +1,9 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+
 // Agrega campos al perfil de usuario
 function cienuno_agregar_campos_usuario($user) { ?>
     <h3>Información Académica</h3>

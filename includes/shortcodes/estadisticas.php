@@ -1,4 +1,7 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // Shortcode [cantidad_comentarios] - Cantidad total de comentarios realizados por usuarios registrados
 function mostrar_cant_comentarios_en_respuestas() {

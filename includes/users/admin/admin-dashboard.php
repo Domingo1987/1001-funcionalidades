@@ -1,11 +1,8 @@
 <?php
-/**
- * Proporciona una vista de administración para el plugin
- *
- * @since      1.0.0
- * @package    Users1001
- * @author     Domingo Pérez
- */
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 ?>
 
 <div class="wrap">

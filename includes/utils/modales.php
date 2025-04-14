@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 
 function mostrar_modal_redireccion_login($retardo, $mensaje = '') {
     $img_url = FUNC_URL . 'assets/img/inicia_sesion.webp';

@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 // Archivo: includes/ajax/cargar-problemas.php
 add_action('wp_ajax_cargar_mas_problemas', 'ajax_cargar_mas_problemas');
 add_action('wp_ajax_nopriv_cargar_mas_problemas', 'ajax_cargar_mas_problemas');

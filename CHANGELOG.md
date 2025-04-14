@@ -1,5 +1,37 @@
 # Changelog - Plugin 1001 Funcionalidades
 
+## [7.0.0] - 2025-04-14
+
+### Añadido
+- Sistema de carga por AJAX en el dashboard: las secciones ahora se cargan **al hacer clic**, mejorando el rendimiento inicial.
+- Uso de **transients** para cachear los resultados de cada sección del dashboard por usuario, evitando múltiples consultas SQL repetidas.
+- Shortcode `[dashboard]` reorganizado con etiquetas `<details>` y `<summary>`, compatible con carga condicional y visual collapsible.
+- Sección `📊 Progreso por categoría` ahora se carga mediante `fetch()` y visualiza los datos con ApexCharts radial bar.
+- Sección `📈 Evolución temporal` integrada con gráfico tipo heatmap categorizado por mes y categoría.
+- Sección `📌 Resumen general` separada y cargada dinámicamente.
+- Nuevo sistema de selección de problemas precargados en el evaluador, con selector de prácticas asociados al curso del usuario.
+- Mejora en el shortcode `[evaluador_problemas]` para autocompletar el campo "Problema" si se selecciona uno desde la base.
+- Archivos `evaluador.js` y `shortcode.php` refactorizados con lógica modular y control de errores con `console.log()` y `error_log()`.
+
+### Mejorado
+- Separación de funciones `renderizar_*` del dashboard por secciones en archivos individuales dentro de `includes/partes`.
+- Mejora del rendimiento general al evitar cargar todos los datos del dashboard en la carga inicial de la página.
+- `functions.php` y `ajax.php` del dashboard ahora centralizan mejor la lógica de selección y respuesta.
+- Visualización de datos solo cuando es necesario, respetando el contexto y reduciendo la carga inicial.
+- Soporte completo para usuarios con múltiples años, cursos y centros desde `historico_academico`.
+
+### Corregido
+- Problemas con tildes mal codificadas (`Programaciu00f3n`) en `historico_academico`: ahora se usa `JSON_UNESCAPED_UNICODE` para guardar correctamente los caracteres UTF-8.
+- Prevención de acceso directo a archivos PHP con `if (!defined('ABSPATH')) exit;` aplicado globalmente.
+
+### Eliminado
+- Código obsoleto para precarga masiva de estadísticas en `shortcode.php` que ya no era necesario tras modularización con AJAX.
+- Acción AJAX `get_num_problema` no utilizada fue desactivada y comentada tras verificación de uso.
+
+### Ejemplo de uso
+```plaintext
+[dashboard] → carga el panel completo con secciones colapsadas por defecto y carga bajo demanda.
+
 ## [5.0.0] - 2025-04-07
 ### Añadido
 - Shortcode `[problema_azar]` ahora admite un atributo opcional `capitulo` y se adapta automáticamente según si el usuario está logueado o no:

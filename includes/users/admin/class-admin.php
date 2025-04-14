@@ -1,4 +1,9 @@
 <?php
+
+if (!defined('ABSPATH')) {
+    exit; // Evita el acceso directo
+}
+
 class Admin {
     public function __construct() {
         // Inicialización
@@ -367,7 +372,8 @@ class Admin {
         }
         
         // Guardar en formato JSON
-        update_user_meta($user_id, 'historico_academico', json_encode($historico));
+        update_user_meta($user_id, 'historico_academico', json_encode($historico, JSON_UNESCAPED_UNICODE));
+
     }
 
     public function get_all_cursos($year = null) {

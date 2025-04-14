@@ -1,5 +1,7 @@
 <?php
-// Archivo: comentarios.php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // Filtro para ocultar los comentarios si el usuario no ha comentado aún
 // Aplica solo en páginas individuales de tipo post (is_single)

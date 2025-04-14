@@ -1,5 +1,7 @@
 <?php
-// Archivo: hooks/post-metadata.php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 function mostrar_capitulos_o_categoria_ia() {
     $output = '';

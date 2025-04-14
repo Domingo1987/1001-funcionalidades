@@ -1,5 +1,7 @@
 <?php
-// Archivo: integraciones/seguridad.php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // Asignar capacidades personalizadas para el tipo de contenido 'inteligen_artificial'
 // Se aplica a roles: administrator, editor y author

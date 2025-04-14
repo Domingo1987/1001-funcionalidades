@@ -1,5 +1,8 @@
 <?php
-// Módulo usuarios: inicialización completa
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 
 require_once __DIR__ . '/roles.php';
 require_once __DIR__ . '/metadatos.php';

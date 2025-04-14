@@ -83,7 +83,7 @@ function obtener_problemas_practicos_usuario($user_id = null) {
     $sql = "
         SELECT 
             pp.id,
-            CONCAT('Práctico ', p.id, ' - ', p.nombre, ' → ', pp.titulo) AS nombre,
+            CONCAT('Práctico: ', p.nombre, ' → ', pp.titulo) AS nombre,
             pp.descripcion
         FROM {$wpdb->prefix}practicos_problemas pp
         JOIN {$wpdb->prefix}practicos p ON pp.practico_id = p.id

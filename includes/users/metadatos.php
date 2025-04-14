@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 // Guarda metadatos: curso, centro, cohorte
 function cienuno_guardar_metadatos_usuario($user_id) {
     if (!current_user_can('edit_user', $user_id)) return false;

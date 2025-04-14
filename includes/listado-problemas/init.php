@@ -1,4 +1,7 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // Shortcodes relacionados
 require_once __DIR__ . '/shortcode.php';

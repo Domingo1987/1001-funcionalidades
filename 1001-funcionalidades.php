@@ -3,7 +3,7 @@
  * Plugin Name:       1001 Funcionalidades
  * Plugin URI:        https://1001problemas.com/
  * Description:       Conjunto de  funcionalidades personalizadas para el sitio 1001problemas.com: shortcodes, estadísticas de usuario, scripts interactivos, mejoras visuales y más.
- * Version:           7.0.2
+ * Version:           7.0.3
  * Requires at least: 5.5
  * Requires PHP:      7.4
  * Author:            Domingo Pérez
@@ -56,13 +56,14 @@ function cargar_recursos_1001_funcionalidades() {
 add_action('wp_enqueue_scripts', 'cargar_recursos_1001_funcionalidades');
 
 // INCLUDES ORGANIZADOS
+// Modulo de dashboard
+require_once FUNC_PATH  . 'includes/dashboard/init.php';
 
-// 🔄 AJAX
-require_once FUNC_PATH . 'includes/ajax/problema-num.php';
+// Modulo de evaluador
+require_once FUNC_PATH  . 'includes/evaluador/init.php';
 
 // 🎣 HOOKS
 require_once FUNC_PATH . 'includes/hooks/comentarios.php';
-require_once FUNC_PATH . 'includes/hooks/cookies.php';
 require_once FUNC_PATH . 'includes/hooks/interfaz.php';
 require_once FUNC_PATH . 'includes/hooks/language-selector.php';
 require_once FUNC_PATH . 'includes/hooks/page-intros.php';
@@ -70,26 +71,26 @@ require_once FUNC_PATH . 'includes/hooks/post-metadata.php';
 require_once FUNC_PATH . 'includes/hooks/redirecciones.php';
 require_once FUNC_PATH . 'includes/hooks/wpdiscuz.php';
 
-// 🧩 SHORTCODES
-require_once FUNC_PATH . 'includes/shortcodes/construccion.php';
-require_once FUNC_PATH . 'includes/shortcodes/estadisticas.php';
-require_once FUNC_PATH . 'includes/shortcodes/ide.php';
-
-// 🧠 UTILS
-require_once FUNC_PATH . 'includes/utils/modales.php';
-
 // 🔌 INTEGRACIONES
-require_once FUNC_PATH . 'includes/integraciones/chatgpt.php';
 require_once FUNC_PATH . 'includes/integraciones/seguridad.php';
 
 // Modulo de listado-problemas
 require_once FUNC_PATH  . 'includes/listado-problemas/init.php';
 
+// 🧩 SHORTCODES
+require_once FUNC_PATH . 'includes/shortcodes/construccion.php';
+require_once FUNC_PATH . 'includes/shortcodes/estadisticas.php';
+require_once FUNC_PATH . 'includes/shortcodes/ide.php';
+
 // Modulo de users  
 require_once FUNC_PATH  . 'includes/users/init.php';
 
-// Modulo de evaluador
-require_once FUNC_PATH  . 'includes/evaluador/init.php';
+// 🧠 UTILS
+require_once FUNC_PATH . 'includes/utils/modales.php';
 
-// Modulo de dashboard
-require_once FUNC_PATH  . 'includes/dashboard/init.php';
+
+
+
+
+
+

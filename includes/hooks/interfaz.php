@@ -1,50 +1,7 @@
 <?php
-// Archivo: hooks/interfaz.php
-/*
-// Shortcode [redireccionar] — Redirige al inicio si el usuario no está logueado
-function redireccionar_si_no_logueado() {
-    if (!is_user_logged_in()) {
-        $img_url = FUNC_URL . 'assets/img/inicia_sesion.webp';
-
-        ob_start(); ?>
-        
-        <dialog id="modal-construccion">
-            <main data-theme="pico">
-                <img src="<?php echo esc_url($img_url); ?>" alt="Inicia sesión para acceder" />
-                <div class="text-center" style="margin-top: -1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                    <a href="https://pruebas.1001problemas.com/login/" class="contrast" style="background-color: #3993d5; color: white; padding: 0.6rem 1rem; border-radius: 8px; text-decoration: none;">
-                        🔐 Iniciar Sesión
-                    </a>
-                    <form method="dialog">
-                        <button class="secondary">Cerrar</button>
-                    </form>
-                </div>
-            </main>
-        </dialog>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modal = document.getElementById('modal-construccion');
-                if (modal && typeof modal.showModal === 'function') {
-                    modal.showModal();
-                    setTimeout(() => {
-                        window.location.href = "https://pruebas.1001problemas.com/listado-problemas/";
-                    }, 2000);
-                }
-            });
-        </script>
-
-        <?php
-        return ob_get_clean();
-    }
-
-    return ''; // Si está logueado, no hace nada
+if (!defined('ABSPATH')) {
+    exit;
 }
-add_shortcode('redireccionar', 'redireccionar_si_no_logueado');*/
-
-
-
-
 
 // 🔁 Hook: mostrar cantidad de códigos en el footer con Pico
 add_action('wp_footer', 'codigos_footer');

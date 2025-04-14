@@ -1,6 +1,7 @@
 <?php
-
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // Incluir archivo central de estadísticas (consulta a BD)
 require_once plugin_dir_path(__FILE__) . '/../utils/estadisticas-dashboard.php';

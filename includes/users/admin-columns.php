@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 // Agrega columnas en la tabla de usuarios
 function cienuno_columnas_personalizadas($columns) {
     $columns['curso'] = 'Curso';

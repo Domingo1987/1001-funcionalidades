@@ -1,5 +1,7 @@
 <?php
-// Archivo: hooks/page-intros.php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 function insertar_bienvenida_si_es_centrada($content) {
     if (is_page() && get_post_meta(get_the_ID(), BRANKIC_VAR_PREFIX . 'centered_title', true)) {

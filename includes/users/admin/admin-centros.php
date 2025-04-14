@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 // Obtener todos los centros
 $admin = new Admin();
 $centros = $admin->get_all_centros();

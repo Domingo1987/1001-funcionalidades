@@ -1,4 +1,7 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // 🚀 Shortcode principal del dashboard
 require_once __DIR__ . '/shortcode.php';

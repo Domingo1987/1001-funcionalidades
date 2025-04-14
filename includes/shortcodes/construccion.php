@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 function shortcode_en_construccion_modal() {
     return mostrar_modal_en_construccion();
 }

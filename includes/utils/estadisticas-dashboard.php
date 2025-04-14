@@ -1,5 +1,8 @@
 <?php
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 
 /**
  * Devuelve la cantidad total de problemas resueltos por el usuario.
@@ -324,32 +327,6 @@ function get_publicaciones_ia_por_tipo($user_id) {
     return $salida;
 }
 
-
-
-/*
-function get_valoraciones_ia($user_id) {
-    global $wpdb;
-
-    $sql = "
-        SELECT 
-            SUM(CASE WHEN pm.meta_key = 'wpdiscuz_post_rating' THEN pm.meta_value * (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = pm.post_id AND meta_key = 'wpdiscuz_post_rating_count' LIMIT 1) ELSE 0 END) AS total_estrellas,
-            SUM(CASE WHEN pm.meta_key = 'wpdiscuz_post_rating_count' THEN pm.meta_value ELSE 0 END) AS cantidad_valoraciones
-        FROM {$wpdb->postmeta} pm
-        INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-        WHERE p.post_type = 'inteligen_artificial'
-          AND p.post_status = 'publish'
-          AND p.post_author = %d
-          AND pm.meta_key IN ('wpdiscuz_post_rating', 'wpdiscuz_post_rating_count')
-    ";
-
-    $datos = $wpdb->get_row($wpdb->prepare($sql, $user_id));
-
-    return [
-        'cantidad_valoraciones' => intval($datos->cantidad_valoraciones),
-        'estrellas_totales'     => intval($datos->total_estrellas)
-    ];
-}
-*/
 
  /**
  * ********************************************************************************

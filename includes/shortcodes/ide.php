@@ -1,5 +1,7 @@
 <?php
-// Archivo: shortcodes/ide.php
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 // Shortcode [IDE_C] — Muestra un iframe con un IDE online para lenguaje C
 function show_ide_c() {
