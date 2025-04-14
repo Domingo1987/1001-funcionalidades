@@ -37,15 +37,17 @@ function dashboard_ajax_cargar_seccion() {
     $html = get_transient($transient_key);
 
     if ($html === false) {
+        error_log("🆕 Transient NO encontrado, generando nuevo para $seccion ($user_id)");
+
         if (function_exists($func)) {
             $html = $func($user_id);
             set_transient($transient_key, $html, 10 * MINUTE_IN_SECONDS);
-            error_log("🟢 Transient usado para $seccion ($user_id)");
         } else {
             $html = "<p class='text-danger'>❌ No existe la función $func()</p>";
-            error_log("🆕 Transient NO encontrado, generando nuevo para $seccion ($user_id)");
 
         }
+    } else {
+        error_log("🟢 Transient encontrado para $seccion ($user_id)");
     }
 
     echo $html;
