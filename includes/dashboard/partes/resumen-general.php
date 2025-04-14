@@ -22,8 +22,7 @@ $icono           = $tendencia >= 0 ? '⬆️' : '⬇️';
 $tendencia_valor = abs($tendencia);
 ?>
 
-<details open>
-  <summary>📌 Resumen general</summary>
+
   <section class="resumen-general-cards" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem;">
     
     <article class="card-1001" style="--color: #00c2ff;">
@@ -118,4 +117,4 @@ $tendencia_valor = abs($tendencia);
     </article>
 
   </section>
-</details>
+
