@@ -16,11 +16,17 @@ function renderizar_resumen_general($user_id) {
 
 
 function renderizar_actividad_por_tipo() {
+    ob_start();
     include plugin_dir_path(__FILE__) . '/partes/actividad_por_tipo.php';
 }
 
-function renderizar_progreso_categoria() {
+function renderizar_progreso_categoria($user_id) {
+    error_log("✅ Ejecutando renderizar_progreso_categoria para user $user_id");
+
+    ob_start();
     include plugin_dir_path(__FILE__) . '/partes/progreso-categorias.php';
+    return ob_get_clean();
+
 }
 function renderizar_publicaciones_ia() {
     include plugin_dir_path(__FILE__) . '/partes/publicaciones-ia.php';
