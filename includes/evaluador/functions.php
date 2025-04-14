@@ -57,7 +57,8 @@ function obtener_problemas_practicos_usuario($user_id = null) {
         return [];
     }
 
-    $historial = json_decode($json, true);
+    $historial = json_decode($historico_json, true); // ya convierte bien en UTF-8 si el campo está bien
+
     if (!$historial || !is_array($historial)) {
         error_log("❌ Error al decodificar JSON del historial académico");
         return [];
