@@ -39,10 +39,7 @@ function shortcode_dashboard() {
             <div class="contenido-seccion">Cargando...</div>
         </details>
 
-        <details data-seccion="actividad-por-tipo">
-            <summary>🔍 Actividad por tipo de contenido</summary>
-            <div class="contenido-seccion">Cargando...</div>
-        </details>
+        
     </section>
     <?php
     return ob_get_clean();
