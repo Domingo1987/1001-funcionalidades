@@ -10,9 +10,6 @@ $comentarios_hechos = get_comentarios_hechos($user_id);
 $comentarios_recibidos = get_comentarios_recibidos($user_id);
 ?>
 
-<details>
-    <summary>💬 Interacciones sociales</summary>
-
     <section style="margin-top: 1rem;">
         <h4>👍 Likes</h4>
         <div class="resumen-general-cards" style="display: flex; gap: 1rem;">
@@ -66,4 +63,3 @@ $comentarios_recibidos = get_comentarios_recibidos($user_id);
             </article>
         </div>
     </section>
-</details>

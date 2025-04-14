@@ -15,9 +15,10 @@ function renderizar_resumen_general($user_id) {
 }
 
 
-function renderizar_actividad_por_tipo() {
+function renderizar_actividad_por_tipo($user_id) {
     ob_start();
     include plugin_dir_path(__FILE__) . '/partes/actividad_por_tipo.php';
+    return ob_get_clean();
 }
 
 function renderizar_progreso_categorias($user_id) {
@@ -28,24 +29,35 @@ function renderizar_progreso_categorias($user_id) {
     return ob_get_clean();
 
 }
-function renderizar_publicaciones_ia() {
+function renderizar_publicaciones_ia($user_id) {
+    ob_start();
     include plugin_dir_path(__FILE__) . '/partes/publicaciones-ia.php';
+    return ob_get_clean();
 }
 
-function renderizar_medallas() {
-    include plugin_dir_path(__FILE__) . '/partes/medallas.php';
-}
-
-function renderizar_interacciones_sociales() {
-    include plugin_dir_path(__FILE__) . '/partes/interacciones-sociales.php';
-}
-
-function renderizar_progreso_competencias() {
+function renderizar_progreso_competencias($user_id) {
+    ob_start();
     include plugin_dir_path(__FILE__) . '/partes/progreso-competencias.php';
+    return ob_get_clean();
 }
 
-function renderizar_evolucion_temporal() {
+function renderizar_medallas($user_id) {
+    ob_start();
+    include plugin_dir_path(__FILE__) . '/partes/medallas.php';
+    return ob_get_clean();
+}
+
+function renderizar_interacciones_sociales($user_id) {
+    ob_start();
+    include plugin_dir_path(__FILE__) . '/partes/interacciones-sociales.php';
+    return ob_get_clean();
+}
+
+
+function renderizar_evolucion_temporal($user_id) {
+    ob_start();
     include plugin_dir_path(__FILE__) . '/partes/evolucion-temporal.php';
+    return ob_get_clean();
 }
 
 function calcular_nivel_explorador($user_id) {

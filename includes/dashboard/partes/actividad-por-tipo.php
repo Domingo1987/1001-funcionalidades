@@ -8,8 +8,6 @@ $categorias = get_problemas_por_categoria($user_id);
 $lenguajes = get_lenguajes_por_tipo($user_id);
 ?>
 
-<details>
-    <summary>🔍 Actividad por tipo de contenido</summary>
 
     <!-- Problemas por categoría -->
     <h4 style="margin-top: 1rem;">📚 Problemas por categoría</h4>
@@ -52,4 +50,3 @@ $lenguajes = get_lenguajes_por_tipo($user_id);
             </article>
         <?php endforeach; ?>
     </section>
-</details>

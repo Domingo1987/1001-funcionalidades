@@ -11,9 +11,34 @@ document.addEventListener('DOMContentLoaded', () => {
       cargarSeccionDashboard('progreso-categorias', renderizarProgresoCategorias);
     });
 
-  // y seguís así con cada sección que vayas agregando...
-});
+    document.querySelector('details[data-seccion="publicaciones-ia"]')
+    ?.addEventListener('toggle', () => {
+      cargarSeccionDashboard('publicaciones-ia', renderizarPublicacionesIA);
+    });
 
+    document.querySelector('details[data-seccion="progreso-competencias"]')
+  ?.addEventListener('toggle', () => {
+    cargarSeccionDashboard('progreso-competencias', renderizarRadarCompetencias);
+  });
+
+  document.querySelector('details[data-seccion="medallas"]')
+  ?.addEventListener('toggle', () => {
+    cargarSeccionDashboard('medallas', renderizarMedallas);
+  });
+
+  document.querySelector('details[data-seccion="interacciones-sociales"]')
+  ?.addEventListener('toggle', () => {
+    cargarSeccionDashboard('interacciones-sociales');
+  });
+
+  document.querySelector('details[data-seccion="evolucion-temporal"]')
+  ?.addEventListener('toggle', () => {
+    cargarSeccionDashboard('evolucion-temporal', renderizarEvolucionTemporal);
+  });
+
+
+  
+});
 
 
 function animarContadores() {
@@ -42,7 +67,6 @@ function cargarSeccionDashboard(seccion, callback) {
   if (!detalle || detalle.dataset.cargado) return;
 
   const contenedor = detalle.querySelector('.contenido-seccion');
-  contenedor.innerHTML = '<p class="text-muted">Cargando...</p>';
 
   fetch(ajaxurl, {
     method: 'POST',
@@ -66,7 +90,6 @@ function cargarSeccionDashboard(seccion, callback) {
       console.error(err);
     });
 }
-
 
 function renderizarProgresoCategorias() {
   const contenedor = document.querySelector('#grafico-categorias');
@@ -126,8 +149,7 @@ function renderizarProgresoCategorias() {
   chart.render();
 }
 
-
-function renderizarInteraccionesIA() {
+function renderizarPublicacionesIA() {
     const contenedor = document.querySelector('#grafico-publicaciones-ia');
     if (!contenedor || typeof dashboardData === 'undefined') return;
 
@@ -186,6 +208,181 @@ function renderizarInteraccionesIA() {
     const chart = new ApexCharts(contenedor, options);
     chart.render();
 }
+
+function renderizarRadarCompetencias() {
+    const contenedor = document.querySelector('#grafico-radar-competencias');
+    const loader = document.querySelector('#grafico-radar-competencias-loader');
+    loader?.remove();
+  
+    if (!contenedor || typeof dashboardData === 'undefined') return;
+  
+    const radarData = dashboardData.radarCompetencias;
+    if (!radarData || !Array.isArray(radarData.series) || radarData.series.length === 0) {
+      contenedor.innerHTML = '<p class="text-muted">No hay evaluaciones registradas aún.</p>';
+      return;
+    }
+  
+    // 🧪 Mostrar en consola los datos (debug)
+    console.table(radarData.series.map(s => ({
+      Serie: s.name,
+      ...s.data.reduce((acc, val, i) => {
+        acc[radarData.labels[i]] = val;
+        return acc;
+      }, {})
+    })));
+  
+    const options = {
+      series: radarData.series,
+      chart: {
+        height: 450,
+        type: 'radar'
+      },
+      title: {
+        text: 'Progreso por competencia',
+        align: 'center'
+      },
+      xaxis: {
+        categories: radarData.labels
+      },
+      stroke: {
+        width: 2
+      },
+      fill: {
+        opacity: 0.25
+      },
+      markers: {
+        size: 4
+      },
+      tooltip: {
+        y: {
+          formatter: val => val + ' pts'
+        }
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'center'
+      }
+    };
+  
+    const chart = new ApexCharts(contenedor, options);
+    chart.render();
+  }
+
+function renderizarMedallas() {
+  const contenedor = document.querySelector('#medallas');
+  const loader = document.querySelector('#medallas-loader');
+  if (!contenedor || typeof dashboardData?.userMedallas === 'undefined') {
+    console.warn('⚠️ Contenedor o datos de medallas no disponibles');
+    return;
+  }
+  loader?.remove();
+
+  const datos = dashboardData.userMedallas;
+  const base = dashboardData.medallasBase;
+  const niveles = ["", "bronce", "plata", "oro", "rubi", "diamante"];
+
+
+    console.log('📦 Datos de medallas:', datos); // 👈 Mostrás todo lo que trae
+
+    const medallas = [
+      {
+        clave: 'explorador',
+        nombre: 'Explorador',
+        descripcion: [
+          '',
+          'Visitaste 1 problema',
+          'Resolvés 5 problemas',
+          'Resolvés 10 problemas',
+          'Resolvés 25 problemas',
+          'Resolvés 50 problemas'
+        ],
+        icono: base + 'explorador-icono.svg'
+      },
+      {
+        clave: 'colaborador',
+        nombre: 'Colaborador',
+        descripcion: [
+          '',
+          'Hiciste tu primer comentario o respuesta en IA',
+          'Comentaste o respondiste en 5 publicaciones IA',
+          'Participaste en 10 publicaciones IA',
+          'Comentaste o respondiste en 25 publicaciones IA',
+          'Participaste activamente en 50 publicaciones IA'
+        ],
+        icono: base + 'colaborador-icono.svg'
+      },
+      {
+        clave: 'valorado',
+        nombre: 'Valorado',
+        descripcion: [
+          '',
+          'Recibiste tu primer like',
+          'Recibiste 5 likes en total',
+          'Recibiste 10 likes entre comentarios y publicaciones',
+          'Recibiste 25 likes acumulados',
+          'Recibiste 50 likes o más en la comunidad'
+        ],
+        icono: base + 'valorado-icono.svg'
+      },
+      {
+        clave: 'multilenguaje',
+        nombre: 'Multilenguaje',
+        descripcion: [
+          '',
+          'Resolviste 1 problema en 1 lenguaje',
+          'Resolviste problemas en 2 lenguajes distintos',
+          'Resolviste en 3 lenguajes',
+          'Resolviste 5 o más por lenguaje',
+          'Resolviste 10+ por lenguaje en todos'
+        ],
+        icono: base + 'multilenguaje-icono.svg'
+      },
+      {
+        clave: 'creadorIA',
+        nombre: 'Creador IA',
+        descripcion: [
+          '',
+          'Creaste tu primera publicación IA',
+          'Creaste 3 publicaciones IA',
+          'Creaste 5 publicaciones IA',
+          'Creaste 10 publicaciones IA',
+          'Creaste 20 publicaciones IA'
+        ],
+        icono: base + 'creadoria-icono.svg'
+      }
+    ];
+  
+    medallas.forEach(medalla => {
+      const info = datos[medalla.clave];
+      const nivel = info?.nivel || 0;
+      if (nivel === 0) return;
+  
+      const div = document.createElement('div');
+      div.className = `medalla-capas ${niveles[nivel]}`;
+      div.setAttribute('data-tooltip', `Nivel ${nivel} - ${medalla.nombre}: ${medalla.descripcion[nivel]}`);
+  
+      div.innerHTML = `
+        <div class="fondo"></div>
+        <img class="icono" src="${medalla.icono}" alt="${medalla.nombre}">
+        <svg viewBox="0 0 100 100" class="svg-titulo" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path id="curvaTexto-${medalla.clave}" d="M10,45 A40,40 0 1,1 90,45" fill="none"/>
+          </defs>
+          <text fill="white" font-size="6" font-weight="bold" text-anchor="middle">
+            <textPath xlink:href="#curvaTexto-${medalla.clave}" startOffset="50%">
+              ${medalla.nombre.toUpperCase()}
+            </textPath>
+          </text>
+        </svg>
+        
+      `;
+  
+      contenedor.appendChild(div);
+    });
+  
+    
+}
+
 
 function renderizarEvolucionTemporal() {
     const contenedor = document.querySelector('#grafico-evolucion-temporal');
@@ -303,176 +500,5 @@ function renderizarEvolucionTemporal() {
     chart.render();
 }
 
-function renderizarRadarCompetencias() {
-    const contenedor = document.querySelector('#grafico-radar-competencias');
-    const loader = document.querySelector('#grafico-radar-competencias-loader');
-    loader?.remove();
-  
-    if (!contenedor || typeof dashboardData === 'undefined') return;
-  
-    const radarData = dashboardData.radarCompetencias;
-    if (!radarData || !Array.isArray(radarData.series) || radarData.series.length === 0) {
-      contenedor.innerHTML = '<p class="text-muted">No hay evaluaciones registradas aún.</p>';
-      return;
-    }
-  
-    // 🧪 Mostrar en consola los datos (debug)
-    console.table(radarData.series.map(s => ({
-      Serie: s.name,
-      ...s.data.reduce((acc, val, i) => {
-        acc[radarData.labels[i]] = val;
-        return acc;
-      }, {})
-    })));
-  
-    const options = {
-      series: radarData.series,
-      chart: {
-        height: 450,
-        type: 'radar'
-      },
-      title: {
-        text: 'Progreso por competencia',
-        align: 'center'
-      },
-      xaxis: {
-        categories: radarData.labels
-      },
-      stroke: {
-        width: 2
-      },
-      fill: {
-        opacity: 0.25
-      },
-      markers: {
-        size: 4
-      },
-      tooltip: {
-        y: {
-          formatter: val => val + ' pts'
-        }
-      },
-      legend: {
-        position: 'top',
-        horizontalAlign: 'center'
-      }
-    };
-  
-    const chart = new ApexCharts(contenedor, options);
-    chart.render();
-  }
-  
-function renderizarMedallas() {
-  const contenedor = document.querySelector('#medallas');
-  const loader = document.querySelector('#medallas-loader');
-  if (!contenedor || typeof dashboardData?.userMedallas === 'undefined') {
-    console.warn('⚠️ Contenedor o datos de medallas no disponibles');
-    return;
-  }
-  loader?.remove();
 
-  const datos = dashboardData.userMedallas;
-  const base = dashboardData.medallasBase;
-  const niveles = ["", "bronce", "plata", "oro", "rubi", "diamante"];
-
-
-    console.log('📦 Datos de medallas:', datos); // 👈 Mostrás todo lo que trae
-
-    const medallas = [
-      {
-        clave: 'explorador',
-        nombre: 'Explorador',
-        descripcion: [
-          '',
-          'Visitaste 1 problema',
-          'Resolvés 5 problemas',
-          'Resolvés 10 problemas',
-          'Resolvés 25 problemas',
-          'Resolvés 50 problemas'
-        ],
-        icono: base + 'explorador-icono.svg'
-      },
-      {
-        clave: 'colaborador',
-        nombre: 'Colaborador',
-        descripcion: [
-          '',
-          'Hiciste tu primer comentario o respuesta en IA',
-          'Comentaste o respondiste en 5 publicaciones IA',
-          'Participaste en 10 publicaciones IA',
-          'Comentaste o respondiste en 25 publicaciones IA',
-          'Participaste activamente en 50 publicaciones IA'
-        ],
-        icono: base + 'colaborador-icono.svg'
-      },
-      {
-        clave: 'valorado',
-        nombre: 'Valorado',
-        descripcion: [
-          '',
-          'Recibiste tu primer like',
-          'Recibiste 5 likes en total',
-          'Recibiste 10 likes entre comentarios y publicaciones',
-          'Recibiste 25 likes acumulados',
-          'Recibiste 50 likes o más en la comunidad'
-        ],
-        icono: base + 'valorado-icono.svg'
-      },
-      {
-        clave: 'multilenguaje',
-        nombre: 'Multilenguaje',
-        descripcion: [
-          '',
-          'Resolviste 1 problema en 1 lenguaje',
-          'Resolviste problemas en 2 lenguajes distintos',
-          'Resolviste en 3 lenguajes',
-          'Resolviste 5 o más por lenguaje',
-          'Resolviste 10+ por lenguaje en todos'
-        ],
-        icono: base + 'multilenguaje-icono.svg'
-      },
-      {
-        clave: 'creadorIA',
-        nombre: 'Creador IA',
-        descripcion: [
-          '',
-          'Creaste tu primera publicación IA',
-          'Creaste 3 publicaciones IA',
-          'Creaste 5 publicaciones IA',
-          'Creaste 10 publicaciones IA',
-          'Creaste 20 publicaciones IA'
-        ],
-        icono: base + 'creadoria-icono.svg'
-      }
-    ];
   
-    medallas.forEach(medalla => {
-      const info = datos[medalla.clave];
-      const nivel = info?.nivel || 0;
-      if (nivel === 0) return;
-  
-      const div = document.createElement('div');
-      div.className = `medalla-capas ${niveles[nivel]}`;
-      div.setAttribute('data-tooltip', `Nivel ${nivel} - ${medalla.nombre}: ${medalla.descripcion[nivel]}`);
-  
-      div.innerHTML = `
-        <div class="fondo"></div>
-        <img class="icono" src="${medalla.icono}" alt="${medalla.nombre}">
-        <svg viewBox="0 0 100 100" class="svg-titulo" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <path id="curvaTexto-${medalla.clave}" d="M10,45 A40,40 0 1,1 90,45" fill="none"/>
-          </defs>
-          <text fill="white" font-size="6" font-weight="bold" text-anchor="middle">
-            <textPath xlink:href="#curvaTexto-${medalla.clave}" startOffset="50%">
-              ${medalla.nombre.toUpperCase()}
-            </textPath>
-          </text>
-        </svg>
-        
-      `;
-  
-      contenedor.appendChild(div);
-    });
-  
-    
-}
