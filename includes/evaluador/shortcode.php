@@ -3,22 +3,44 @@
 // Este shortcode se utiliza para mostrar un formulario donde los usuarios pueden enviar un problema y una solución para su evaluación.
 
 function evaluador_problemas_shortcode() {
-    
-    // ✅ Usuario actual o visitante anónimo con ID simbólico
+
     $user_id = is_user_logged_in() ? get_current_user_id() : 1001;
 
-    // Problema y solución predeterminados
     $problemaDefault = "Escribe una función en Python que reciba dos números y retorne su suma.";
     $solucionDefault = "def suma(a, b):\n    return a + b\n\n# Ejemplo de uso:\nresultado = suma(2, 3)\nprint(resultado)  # Debería imprimir 5";
 
-    // Obtener el problema y la solución enviados por el usuario o usar los predeterminados
     $problema = isset($_POST['problema']) ? sanitize_textarea_field($_POST['problema']) : $problemaDefault;
     $solucion = isset($_POST['solucion']) ? sanitize_textarea_field($_POST['solucion']) : $solucionDefault;
+
+    $problemasDisponibles = obtener_problemas_practicos_usuario($user_id);
 
     ob_start();
     ?>
     <div class="evaluador-problemas-container">
         <form id="evaluarFormulario" method="POST" action="">
+
+            <!-- ✅ Switch para activar uso de desafíos precargados -->
+            <div class="evaluador-form-group">
+                <label for="usarExistente">
+                    <input type="checkbox" id="usarExistente" name="usarExistente" role="switch" />
+                    Usar desafío precargado de mi curso
+                </label>
+            </div>
+
+            <!-- ✅ Selector visible solo si el switch está activado -->
+            <div class="evaluador-form-group" id="selectorDesafio" style="display: none;">
+                <label for="desafioSeleccionado">Seleccionar desafío:</label>
+                <select id="desafioSeleccionado" name="desafioSeleccionado">
+                    <option value="">-- Elegí un desafío --</option>
+                    <?php foreach ($problemasDisponibles as $item): ?>
+                        <option value="<?= esc_attr($item->descripcion); ?>">
+                            <?= esc_html($item->nombre); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- 📝 Campo editable o autocompletado -->
             <div class="evaluador-form-group">
                 <label for="problema">Problema:</label>
                 <textarea id="problema" name="problema" required><?= esc_textarea($problema) ?></textarea>
@@ -29,14 +51,12 @@ function evaluador_problemas_shortcode() {
                 <textarea id="solucion" name="solucion" required><?= esc_textarea($solucion) ?></textarea>
             </div>
 
-            <!-- Campo oculto para pasar el user_id -->
             <input type="hidden" name="user_id3" value="<?= esc_attr($user_id); ?>" />
 
             <button type="submit" id="evaluarBoton" class="evaluador-button">Evaluar</button>
             <button type="button" id="subirOtro" class="evaluador-button" style="display:none;">Subir Otro Problema</button>
         </form>
 
-        <!-- Contenedor donde se mostrarán los resultados -->
         <div id="resultadoEvaluacion" class="evaluador-resultado"></div>
     </div>
     <?php

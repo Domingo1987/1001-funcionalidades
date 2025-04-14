@@ -1,8 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
     verificarIntentoAnonimo();
 
+    console.log("🧪 Cargando módulo de selector de desafío");
 
+    const switchInput = document.getElementById('usarExistente');
+    const selector = document.getElementById('selectorDesafio');
+    const selectDesafio = document.getElementById('desafioSeleccionado');
+    const campoProblema = document.getElementById('problema');
 
+    if (switchInput && selector && selectDesafio && campoProblema) {
+        switchInput.addEventListener('change', () => {
+            if (switchInput.checked) {
+                console.log("🟢 Selector activado → mostrando lista");
+                selector.style.display = 'block';
+            } else {
+                console.log("🔴 Selector desactivado → desbloqueando problema");
+                selector.style.display = 'none';
+                campoProblema.removeAttribute('readonly');
+                campoProblema.value = '';
+            }
+        });
+
+        selectDesafio.addEventListener('change', () => {
+            const valor = selectDesafio.value;
+            if (valor) {
+                console.log("📥 Desafío elegido desde DB:", valor.substring(0, 80) + "...");
+                campoProblema.value = valor;
+                campoProblema.setAttribute('readonly', true);
+            } else {
+                console.log("📭 Nada seleccionado → editable");
+                campoProblema.value = '';
+                campoProblema.removeAttribute('readonly');
+            }
+        });
+    } else {
+        console.warn("⚠️ No se encontró uno de los elementos del selector de desafíos");
+    }
 
     const form = document.getElementById('evaluarFormulario');
     const evaluarBoton = document.getElementById('evaluarBoton');
@@ -16,13 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         const problema = document.getElementById('problema').value;
         const solucion = document.getElementById('solucion').value.trim();
-        const user_id3 = document.querySelector('input[name="user_id3"]').value; // Obtener el user_id del campo hidden
+        const user_id3 = document.querySelector('input[name="user_id3"]').value;
 
         evaluarBoton.disabled = true;
         resultadoEvaluacion.innerHTML = '<p class="evaluador-evaluando">Evaluando...</p>';
 
         try {
-            // Enviar el problema y la solución al servidor para evaluar
             const response = await fetch('/wp-json/evaluador/v1/evaluar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -33,13 +65,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
 
-            // Verificar si se recibió algún dato antes de mostrar
             if (data && data.criterios) {
                 mostrarEvaluacion(data);
                 evaluarBoton.style.display = 'none';
                 subirOtro.style.display = 'block';
 
-                // 👇 Marcar que ya lo usó (si no está logueado)
                 if (!document.body.classList.contains('logged-in')) {
                     sessionStorage.setItem('evaluador_anonimo_usado', '1');
                 }
@@ -62,9 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function mostrarEvaluacion(data) {
-        resultadoEvaluacion.innerHTML = '';  // Limpiar contenido anterior
+        resultadoEvaluacion.innerHTML = '';
 
-        // Mostrar la evaluación de cada criterio desglosado
         data.criterios.forEach(function (criterio, index) {
             resultadoEvaluacion.innerHTML += `
                 <div class="evaluador-criterio">
@@ -85,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
         });
 
-        // Mostrar el total de puntos
         if (data.total_puntos !== undefined) {
             resultadoEvaluacion.innerHTML += `<div class="evaluador-total-puntos">Total de puntos: <strong>${data.total_puntos} / 24</strong></div>`;
         }
@@ -111,14 +139,13 @@ function verificarIntentoAnonimo() {
         console.log('🚫 Mostrando modal visual tipo PHP');
 
         const modal = document.createElement('dialog');
-        modal.id = 'modal-construccion'; // ⬅️ Reutiliza el mismo estilo CSS
+        modal.id = 'modal-construccion';
         modal.innerHTML = `
             <main data-theme="pico" style="position: relative; padding: 0;">
                 <div style="position: relative;">
                     <img src="/wp-content/plugins/1001-funcionalidades/assets/img/inicia_sesion.webp"
                         alt="Inicia Sesión"
                         style="width: 100%; max-height: 90vh; object-fit: contain; border-radius: 10px;" />
-
                     <div style="
                         position: absolute;
                         bottom: 0;
@@ -133,13 +160,11 @@ function verificarIntentoAnonimo() {
                         Ya usaste tu intento anónimo. Inicia sesión para continuar.
                     </div>
                 </div>
-
                 <form method="dialog" class="text-center" style="margin-top: -1rem;">
                     <button onclick="window.location.href='/login/'" class="primary">Iniciar sesión</button>
                 </form>
             </main>
         `;
-
         document.body.appendChild(modal);
         modal.showModal();
     }
