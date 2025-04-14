@@ -4,20 +4,47 @@ function shortcode_dashboard() {
     ob_start();
     ?>
     <section class="container">
-        <?php
-        render_resumen_general();
-        error_log('✅ render_resumen_general ejecutado');
+        <details data-seccion="resumen-general">
+            <summary>📌 Resumen general</summary>
+            <div class="contenido-seccion">Cargando...</div>
+        </details>
+        
+        <details data-seccion="progreso-categorias">
+            <summary>📊 Progreso por categoría</summary>
+            <div class="contenido-seccion">Cargando...</div>
+        </details>
 
-        render_progreso_por_categorias(); // ✅ nueva sección
-        render_publicaciones_ia();
-        render_medallas();
-        render_interacciones_sociales();
-        render_progreso_por_competencias();
-        render_evolucion_temporal();
-        ?>
+        <details data-seccion="publicaciones-ia">
+            <summary>📊 Comentarios por publicación IA</summary>
+            <div class="contenido-seccion">Cargando...</div>
+        </details>
+
+        <details data-seccion="progreso-competencias">
+            <summary>📐 Progreso por competencia</summary>
+            <div class="contenido-seccion">Cargando...</div>
+        </details>
+
+        <details data-seccion="medallas">
+            <summary>🏅 Medallas de participación</summary>
+            <div class="contenido-seccion">Cargando...</div>
+        </details>
+
+        <details data-seccion="interacciones-sociales">
+            <summary>💬 Interacciones sociales</summary>
+            <div class="contenido-seccion">Cargando...</div>
+        </details>
+
+        <details data-seccion="evolucion-temporal">
+            <summary>📈 Evolución temporal</summary>
+            <div class="contenido-seccion">Cargando...</div>
+        </details>
+
+        <details data-seccion="actividad-por-tipo">
+            <summary>🔍 Actividad por tipo de contenido</summary>
+            <div class="contenido-seccion">Cargando...</div>
+        </details>
     </section>
     <?php
-    error_log('🔚 Final del shortcode_dashboard() alcanzado.');
     return ob_get_clean();
 }
 add_shortcode('dashboard', 'shortcode_dashboard');

@@ -6,6 +6,9 @@ require_once __DIR__ . '/shortcode.php';
 // 🧠 Funciones que renderizan las secciones
 require_once __DIR__ . '/functions.php';
 
+// Funciones de ajax para cargar las secciones del dashboard
+require_once __DIR__ . '/ajax.php';
+
 // 📊 Funciones de estadísticas (consultas a la base de datos)
 require_once plugin_dir_path(__FILE__) . '/../utils/estadisticas-dashboard.php';
 

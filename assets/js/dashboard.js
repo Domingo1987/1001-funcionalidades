@@ -1,12 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-    animarContadores();
-    aplicarEstrellas();
-    renderizarProgresoPorCategoria();
-    renderizarInteraccionesIA();
-    renderizarEvolucionTemporal();
-    renderizarRadarCompetencias();
-    renderizarMedallas();
+  const detalleResumen = document.querySelector('details[data-seccion="resumen-general"]');
+
+  if (detalleResumen) {
+    detalleResumen.addEventListener('toggle', () => {
+      // Solo cargamos si se abre por primera vez
+      if (detalleResumen.open && !detalleResumen.dataset.cargado) {
+        const contenedor = detalleResumen.querySelector('.contenido-seccion');
+        contenedor.innerHTML = '<p class="text-muted">Cargando...</p>';
+
+        fetch(ajaxurl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            action: 'dashboard_cargar_seccion',
+            seccion: 'resumen-general'
+          })
+        })
+        .then(res => res.text())
+        .then(html => {
+          contenedor.innerHTML = html;
+          detalleResumen.dataset.cargado = 'true';
+
+          // ✅ Activamos la animación de contadores
+          animarContadores();
+
+          console.log('✅ Sección resumen-general cargada.');
+        })
+        .catch(err => {
+          contenedor.innerHTML = '<p class="text-danger">Error al cargar los datos.</p>';
+          console.error(err);
+        });
+      }
+    });
+  }
 });
+
 
 function animarContadores() {
     const contadores = document.querySelectorAll('.contador-animado');
@@ -28,12 +56,7 @@ function animarContadores() {
     });
 }
 
-function aplicarEstrellas() {
-    document.querySelectorAll('.estrellas').forEach(el => {
-        const promedio = parseFloat(el.dataset.promedio || 0);
-        el.style.setProperty('--estrella-promedio', promedio);
-    });
-}
+
 
 function renderizarProgresoPorCategoria() {
     // 🔍 Buscar el contenedor del gráfico y el loader
@@ -470,4 +493,3 @@ function renderizarMedallas() {
   
     
 }
-  /*<span class="nivel">${nivel}</span>*/

@@ -6,32 +6,35 @@ if (!defined('ABSPATH')) exit;
 require_once plugin_dir_path(__FILE__) . '/../utils/estadisticas-dashboard.php';
 
 // Módulos (secciones del dashboard)
-function render_resumen_general() {
+function renderizar_resumen_general() {
     error_log('➡️ Sección render_x cargada');
     include plugin_dir_path(__FILE__) . '/partes/resumen-general.php';
 }
 
-function render_progreso_por_categorias() {
-    include plugin_dir_path(__FILE__) . '/partes/progreso-categorias.php';
+function renderizar_actividad_por_tipo() {
+    include plugin_dir_path(__FILE__) . '/partes/actividad_por_tipo.php';
 }
 
-function render_publicaciones_ia() {
+function renderizar_progreso_categoria() {
+    include plugin_dir_path(__FILE__) . '/partes/progreso-categorias.php';
+}
+function renderizar_publicaciones_ia() {
     include plugin_dir_path(__FILE__) . '/partes/publicaciones-ia.php';
 }
 
-function render_medallas() {
+function renderizar_medallas() {
     include plugin_dir_path(__FILE__) . '/partes/medallas.php';
 }
 
-function render_interacciones_sociales() {
+function renderizar_interacciones_sociales() {
     include plugin_dir_path(__FILE__) . '/partes/interacciones-sociales.php';
 }
 
-function render_progreso_por_competencias() {
+function renderizar_progreso_competencias() {
     include plugin_dir_path(__FILE__) . '/partes/progreso-competencias.php';
 }
 
-function render_evolucion_temporal() {
+function renderizar_evolucion_temporal() {
     include plugin_dir_path(__FILE__) . '/partes/evolucion-temporal.php';
 }
 
