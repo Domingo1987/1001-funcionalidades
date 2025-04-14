@@ -4,7 +4,7 @@
 if (!defined('ABSPATH')) exit;
 
 // ID del usuario actual
-$user_id = get_current_user_id();
+//$user_id = get_current_user_id();
 
 // Simulaciones con funciones que luego se definirán en estadisticas-dashboard.php
 $problemas       = get_problemas_resueltos($user_id);
