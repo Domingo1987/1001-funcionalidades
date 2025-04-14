@@ -65,7 +65,7 @@ function obtener_problemas_practicos_usuario($user_id = null) {
     }
 
     // Tomar el año más reciente
-    $años = array_keys($$historico);
+    $años = array_keys($historico);
     rsort($años);
     $anio = $años[0];
 
