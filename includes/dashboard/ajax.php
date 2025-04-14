@@ -54,6 +54,8 @@ function dashboard_ajax_cargar_seccion() {
         }
     }
 
+    error_log("✅ AJAX dashboard_cargar_seccion ejecutado para $seccion");
+
     echo $html;
     wp_die();
 }

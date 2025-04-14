@@ -6,10 +6,14 @@ if (!defined('ABSPATH')) exit;
 require_once plugin_dir_path(__FILE__) . '/../utils/estadisticas-dashboard.php';
 
 // Módulos (secciones del dashboard)
-function renderizar_resumen_general() {
-    error_log('➡️ Sección render_x cargada');
+function renderizar_resumen_general($user_id) {
+    error_log("✅ Ejecutando renderizar_resumen_general para user $user_id");
+
+    ob_start();
     include plugin_dir_path(__FILE__) . '/partes/resumen-general.php';
+    return ob_get_clean();
 }
+
 
 function renderizar_actividad_por_tipo() {
     include plugin_dir_path(__FILE__) . '/partes/actividad_por_tipo.php';

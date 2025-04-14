@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
           contenedor.innerHTML = html;
           detalleResumen.dataset.cargado = 'true';
 
+          console.log('📦 HTML recibido para resumen-general:', html);
+
+
           // ✅ Activamos la animación de contadores
           animarContadores();
 
