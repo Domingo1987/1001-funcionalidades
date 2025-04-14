@@ -51,26 +51,26 @@ function obtener_problemas_practicos_usuario($user_id = null) {
 
     error_log("📥 Buscando problemas del usuario $user_id");
 
-    $json = get_user_meta($user_id, 'historico_academico', true);
-    if (!$json) {
+    $historico_json = get_user_meta($user_id, 'historico_academico', true);
+
+    if (!$historico_json) {
         error_log("❌ No se encontró el campo historico_academico");
         return [];
     }
 
-    $historial = json_decode($historico_json, true); // ya convierte bien en UTF-8 si el campo está bien
-
-    if (!$historial || !is_array($historial)) {
+    $historico = json_decode($historico_json, true);
+    if (!$historico) {
         error_log("❌ Error al decodificar JSON del historial académico");
         return [];
     }
 
     // Tomar el año más reciente
-    $años = array_keys($historial);
+    $años = array_keys($$historico);
     rsort($años);
     $anio = $años[0];
 
-    $curso = $historial[$anio]['curso'] ?? '';
-    $centro = $historial[$anio]['centro'] ?? '';
+    $curso = $historico[$anio]['curso'] ?? '';
+    $centro = $historico[$anio]['centro'] ?? '';
 
     error_log("🔎 Año: $anio | Curso: $curso | Centro: $centro");
 
