@@ -24,13 +24,8 @@ jQuery(document).ready(function($) {
         } else if (lang === 'java') {
             $('.problem-content-java').show();
         }
-
-        // ✅ Volver a aplicar resaltado de sintaxis
-        if (typeof SyntaxHighlighter !== 'undefined') {
-            SyntaxHighlighter.highlight();
-        }
     });
-
+    
     // Eliminar texto duplicado si existe
     $('.post-content').contents().each(function() {
         if (this.nodeType === 3 && this.nodeValue.trim() === "C | Python | Java") {
@@ -38,3 +33,5 @@ jQuery(document).ready(function($) {
         }
     });
 });
+
+

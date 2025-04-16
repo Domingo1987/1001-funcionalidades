@@ -49,15 +49,16 @@ function language_selector_process_content($content) {
 
     if (!empty($python_version)) {
         $output .= '<div class="problem-content-python" style="display:none;">';
-        $output .= '<h3 class="title">' . $python_version . '</h3>';
+        $output .= apply_filters('the_content', $python_version);
         $output .= '</div>';
     }
-
+    
     if (!empty($java_version)) {
         $output .= '<div class="problem-content-java" style="display:none;">';
-        $output .= '<h3 class="title">' . $java_version . '</h3>';
+        $output .= apply_filters('the_content', $java_version);
         $output .= '</div>';
     }
+    
 
     return $output;
 }
