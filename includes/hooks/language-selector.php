@@ -14,6 +14,11 @@ function language_selector_scripts() {
     $python_version = get_post_meta($post_id, 'problem_content_python', true);
     $java_version   = get_post_meta($post_id, 'problem_content_java', true);
 
+    error_log('PYTHON: ' . print_r($python_version, true));
+    error_log('PYTHON PROCESADO: ' . print_r(do_shortcode($python_version), true));
+
+    
+
     /*wp_localize_script('language-selector-script', 'lsData', array(
         'postId'        => $post_id,
         'pythonVersion' => wpautop($python_version),
