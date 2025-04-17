@@ -51,14 +51,16 @@ function language_selector_process_content($content) {
     remove_filter('the_content', 'language_selector_process_content', 20);
 
     if (!empty($python_version)) {
+        $python_version = apply_filters('the_content', html_entity_decode($python_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         $output .= '<div class="problem-content-python" style="display:none;">';
-        $output .= '<h3 class="title">' . $python_version . '</h3>';
+        $output .= $python_version;
         $output .= '</div>';
     }
 
     if (!empty($java_version)) {
+        $java_version = apply_filters('the_content', html_entity_decode($java_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         $output .= '<div class="problem-content-java" style="display:none;">';
-        $output .= '<h3 class="title">' . $java_version . '</h3>';
+        $output .= $java_version;
         $output .= '</div>';
     }
 
