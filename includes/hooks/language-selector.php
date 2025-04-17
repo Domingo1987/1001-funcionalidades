@@ -61,15 +61,18 @@ function language_selector_process_content($content) {
 
     if (!empty($python_version)) {
         $output .= '<div class="problem-content-python" style="display:none;">';
-        $output .= do_shortcode($python_version);
+        $output .= apply_filters('the_content', html_entity_decode($python_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         $output .= '</div>';
     }
 
     if (!empty($java_version)) {
         $output .= '<div class="problem-content-java" style="display:none;">';
-        $output .= do_shortcode($java_version);
+        $output .= apply_filters('the_content', html_entity_decode($java_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         $output .= '</div>';
     }
+
+    // Volvemos a añadir el filtro
+    add_filter('the_content', 'language_selector_process_content', 20);
 
     return $output;
 }
