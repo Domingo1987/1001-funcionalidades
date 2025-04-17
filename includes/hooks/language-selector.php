@@ -71,8 +71,6 @@ function language_selector_process_content($content) {
         $output .= '</div>';
     }
 
-    // Volvemos a añadir el filtro
-    add_filter('the_content', 'language_selector_process_content', 20);
 
     return $output;
 }
