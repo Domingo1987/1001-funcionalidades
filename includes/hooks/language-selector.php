@@ -3,20 +3,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// 🧠 Forzar que el plugin SyntaxHighlighter registre el shortcode [code] para el CPT 'problema'
-add_action('init', function () {
-    global $syntaxhighlighter;
-
-    if (
-        !shortcode_exists('code') &&
-        class_exists('SyntaxHighlighter') &&
-        method_exists('SyntaxHighlighter', 'setup')
-    ) {
-        $syntaxhighlighter = new SyntaxHighlighter();
-        $syntaxhighlighter->setup(); // Forzar que registre el shortcode [code]
-    }
-});
-
 // 🎯 Encolar scripts y estilos solo en posts individuales
 function language_selector_scripts() {
     if (!is_single() || get_post_type() !== 'problema') return;
@@ -28,9 +14,11 @@ function language_selector_scripts() {
     $python_version = get_post_meta($post_id, 'problem_content_python', true);
     $java_version   = get_post_meta($post_id, 'problem_content_java', true);
 
-    // Debug
-    error_log('PYTHON: ' . print_r($python_version, true));
-    error_log('PYTHON PROCESADO: ' . print_r(do_shortcode($python_version), true));
+    /*wp_localize_script('language-selector-script', 'lsData', array(
+        'postId'        => $post_id,
+        'pythonVersion' => wpautop($python_version),
+        'javaVersion'   => wpautop($java_version)
+    ));*/
 }
 add_action('wp_enqueue_scripts', 'language_selector_scripts');
 
@@ -59,18 +47,23 @@ function language_selector_process_content($content) {
     $output  = $selector_html;
     $output .= '<div class="problem-content-original">' . $content . '</div>';
 
+    // Quitamos temporalmente ESTE filtro para evitar el bucle infinito
+    remove_filter('the_content', 'language_selector_process_content', 20);
+
     if (!empty($python_version)) {
         $output .= '<div class="problem-content-python" style="display:none;">';
-        $output .= apply_filters('the_content', html_entity_decode($python_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        $output .= '<h3 class="title">' . $python_version . '</h3>';
         $output .= '</div>';
     }
 
     if (!empty($java_version)) {
         $output .= '<div class="problem-content-java" style="display:none;">';
-        $output .= apply_filters('the_content', html_entity_decode($java_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        $output .= '<h3 class="title">' . $java_version . '</h3>';
         $output .= '</div>';
     }
 
+    // Volvemos a añadir el filtro
+    add_filter('the_content', 'language_selector_process_content', 20);
 
     return $output;
 }
