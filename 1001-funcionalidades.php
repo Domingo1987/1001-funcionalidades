@@ -3,7 +3,7 @@
  * Plugin Name:       1001 Funcionalidades
  * Plugin URI:        https://1001problemas.com/
  * Description:       Conjunto de  funcionalidades personalizadas para el sitio 1001problemas.com: shortcodes, estadísticas de usuario, scripts interactivos, mejoras visuales y más.
- * Version:           7.3.0
+ * Version:           7.3.1
  * Requires at least: 5.5
  * Requires PHP:      7.4
  * Author:            Domingo Pérez
@@ -39,7 +39,7 @@ function cargar_recursos_1001_funcionalidades() {
     } */
 
     // Pico CSS (nuevo)
-    wp_enqueue_style('pico', 'https://unpkg.com/@picocss/pico@latest/css/pico.min.css', [], null);
+    //wp_enqueue_style('pico', 'https://unpkg.com/@picocss/pico@latest/css/pico.min.css', [], null);
     
 
     if (is_page('dashboard')) {
