@@ -17,20 +17,52 @@ $centros = $users1001_admin->get_all_centros();
 ?>
 
 <div class="container grid-lg">
-    <h1 class="text-bold">Gestionar Historial Académico</h1>
-
+    <h1 class="text-bold">👥 Gestionar Historial Académico</h1>
     <p class="text-gray">Selecciona estudiantes y asígnales curso, centro y año. Se agregará a su historial sin borrar entradas anteriores.</p>
 
     <form id="form-asignar-historial" class="form-horizontal">
 
-        <!-- Tabla de usuarios -->
+        <!-- 🔹 Selector de curso, centro, año y botón -->
+        <div class="columns col-gapless col-oneline mb-2">
+            <div class="column col-sm-12 col-md-3">
+                <label for="curso" class="form-label">📘 Curso:</label>
+                <select id="curso" name="curso" class="form-select" required>
+                    <option value="">Selecciona curso</option>
+                    <?php foreach ($cursos as $curso): ?>
+                        <option value="<?= esc_attr($curso); ?>"><?= esc_html($curso); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="column col-sm-12 col-md-4">
+                <label for="centro" class="form-label">🏫 Centro:</label>
+                <select id="centro" name="centro" class="form-select" required>
+                    <option value="">Selecciona centro</option>
+                    <?php foreach ($centros as $centro): ?>
+                        <option value="<?= esc_attr($centro); ?>"><?= esc_html($centro); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="column col-sm-6 col-md-2">
+                <label for="anio" class="form-label">📅 Año:</label>
+                <input type="number" id="anio" name="anio" class="form-input" value="<?= date('Y'); ?>" required>
+            </div>
+
+            <div class="column col-sm-6 col-md-3 d-flex flex-justify-end align-end">
+                <?php wp_nonce_field('asignar_historial', 'asignar_historial_nonce'); ?>
+                <button type="submit" class="btn btn-primary mt-2">✅ Asignar</button>
+            </div>
+        </div>
+
+        <!-- 📋 Tabla de usuarios -->
         <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
+            <table class="table table-striped table-hover table-scroll" style="width: 100%;">
+                <thead style="background-color: #32b643; color: #ffffff;">
                     <tr>
                         <th style="width: 40px;"><input type="checkbox" id="select-all"></th>
-                        <th>ID</th>
-                        <th>Nombre</th>
+                        <th>🆔 ID</th>
+                        <th>👤 Nombre</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,40 +77,6 @@ $centros = $users1001_admin->get_all_centros();
             </table>
         </div>
 
-        <h3 class="divider text-center">Datos a asignar</h3>
-
-        <!-- Campos del formulario -->
-        <div class="form-group">
-            <label for="curso" class="form-label">Curso:</label>
-            <select id="curso" name="curso" class="form-select" required>
-                <option value="">Selecciona curso</option>
-                <?php foreach ($cursos as $curso): ?>
-                    <option value="<?= esc_attr($curso); ?>"><?= esc_html($curso); ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="centro" class="form-label">Centro:</label>
-            <select id="centro" name="centro" class="form-select" required>
-                <option value="">Selecciona centro</option>
-                <?php foreach ($centros as $centro): ?>
-                    <option value="<?= esc_attr($centro); ?>"><?= esc_html($centro); ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="anio" class="form-label">Año:</label>
-            <input type="number" id="anio" name="anio" value="<?= date('Y'); ?>" class="form-input" required>
-        </div>
-
-        <?php wp_nonce_field('asignar_historial', 'asignar_historial_nonce'); ?>
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Asignar a seleccionados</button>
-        </div>
+        <div id="mensaje-historial" class="toast mt-2" style="display:none;"></div>
     </form>
-
-    <div id="mensaje-historial" class="toast" style="display:none; margin-top: 1rem;"></div>
 </div>
