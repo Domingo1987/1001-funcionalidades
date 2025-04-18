@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 
 // Obtener todos los cursos
 global $users1001_admin;
-$cursos = $users1001_admin->get_cursos();
+$cursos = $users1001_admin->get_all_cursos();
 
 
 ?>
