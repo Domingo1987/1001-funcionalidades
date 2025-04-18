@@ -11,14 +11,6 @@ class Admin {
 
     public function enqueue_styles($hook) {
         if (strpos($hook, 'users1001') !== false) {
-           /* wp_enqueue_style(
-                'users1001-admin',
-                FUNC_URL . 'assets/css/admin.css',
-                array(),
-                '1.0.0',
-                'all'
-            );*/
-
             // Incluir Spectre en todo el admin
             wp_enqueue_style(
                 'spectre-css',
@@ -60,6 +52,17 @@ class Admin {
             'dashicons-groups', 
             26
         );
+
+        // Nuevo submenu para "Gestión de Usuarios"
+        add_submenu_page(
+            'users1001-dashboard',
+            'Gestión de Usuarios',
+            'Gestión de Usuarios',
+            'manage_options',
+            'users1001-usuarios',
+            array($this, 'display_usuarios_page')
+        );
+        
         
         add_submenu_page(
             'users1001-dashboard',
@@ -84,6 +87,11 @@ class Admin {
         include_once FUNC_PATH . 'includes/users/admin/admin-dashboard.php';
     }
 
+    // Nuevo método para mostrar la página de gestión de usuarios
+    public function display_usuarios_page() {
+        include_once FUNC_PATH . 'includes/users/admin/admin-usuarios.php';
+    }    
+
     public function display_cursos_page() {
         include_once FUNC_PATH . 'includes/users/admin/admin-cursos.php';
     }
@@ -92,6 +100,7 @@ class Admin {
         include_once FUNC_PATH . 'includes/users/admin/admin-centros.php';
     }
 
+    /*
     public function add_curso_columns($columns) {
         $year = date('Y');
         
@@ -106,8 +115,8 @@ class Admin {
         }
         
         return $new_columns;
-    }
-
+    }*/
+/*
     public function display_curso_column_content($output, $column_name, $user_id) {
         $year = date('Y');
         
@@ -122,15 +131,15 @@ class Admin {
         }
         
         return $output;
-    }
-
+    }*/
+/*
     public function make_curso_columns_sortable($columns) {
         $year = date('Y');
         $columns['curso_' . $year] = 'curso_' . $year;
         $columns['centro_' . $year] = 'centro_' . $year;
         return $columns;
-    }
-
+    }*/
+/*
     public function add_curso_filters() {
         $year = date('Y');
         $screen = get_current_screen();
@@ -172,8 +181,8 @@ class Admin {
             );
         }
         echo '</select>';
-    }
-
+    }*/
+/*
     public function filter_users_by_curso($query) {
         global $pagenow;
         $year = date('Y');
@@ -202,8 +211,8 @@ class Admin {
                 $query->set('meta_query', $meta_query);
             }
         }
-    }
-
+    }*/
+/*
     public function add_curso_fields($user) {
         $year = date('Y');
         $historico = get_user_meta($user->ID, 'historico_academico', true);
@@ -333,8 +342,8 @@ class Admin {
         });
         </script>
         <?php
-    }
-
+    }*/
+/*
     public function save_curso_fields($user_id) {
         if (!current_user_can('edit_user', $user_id) || !isset($_POST['users1001_nonce']) || 
             !wp_verify_nonce($_POST['users1001_nonce'], 'save_curso_fields')) {
@@ -374,7 +383,7 @@ class Admin {
         // Guardar en formato JSON
         update_user_meta($user_id, 'historico_academico', json_encode($historico, JSON_UNESCAPED_UNICODE));
 
-    }
+    }*/
 
     public function get_all_cursos($year = null) {
         if (!$year) {
@@ -424,7 +433,7 @@ class Admin {
         return $centros;
     }
 
-    public function ajax_save_curso() {
+    public function ajax_guardar_curso() {
         // Verificar nonce
         if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'users1001_nonce')) {
             wp_send_json_error('Acceso no autorizado');
@@ -458,7 +467,7 @@ class Admin {
         ));
     }
 
-    public function ajax_delete_curso() {
+    public function ajax_eliminar_curso() {
         // Verificar nonce
         if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'users1001_nonce')) {
             wp_send_json_error('Acceso no autorizado');
@@ -494,7 +503,7 @@ class Admin {
         ));
     }
 
-    public function ajax_save_centro() {
+    public function ajax_guardar_centro() {
         // Verificar nonce
         if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'users1001_nonce')) {
             wp_send_json_error('Acceso no autorizado');
@@ -528,7 +537,7 @@ class Admin {
         ));
     }
 
-    public function ajax_delete_centro() {
+    public function ajax_eliminar_centro() {
         // Verificar nonce
         if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'users1001_nonce')) {
             wp_send_json_error('Acceso no autorizado');
@@ -563,4 +572,54 @@ class Admin {
             'centros' => $centros
         ));
     }
+
+    // Nueva función ajax para guardar el historial académico
+    public function ajax_guardar_historial_usuario() {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'asignar_historial')) {
+            wp_send_json_error('Nonce inválido');
+        }
+    
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Permiso denegado');
+        }
+    
+        $usuarios = $_POST['usuarios'] ?? array();
+        $curso = sanitize_text_field($_POST['curso'] ?? '');
+        $centro = sanitize_text_field($_POST['centro'] ?? '');
+        $anio = sanitize_text_field($_POST['anio'] ?? '');
+    
+        if (empty($usuarios) || empty($curso) || empty($centro) || empty($anio)) {
+            wp_send_json_error('Datos incompletos');
+        }
+    
+        foreach ($usuarios as $user_id) {
+            $user_id = intval($user_id);
+            $historial = get_user_meta($user_id, 'historico_academico', true);
+            $historial = !empty($historial) ? json_decode($historial, true) : array();
+    
+            if (!isset($historial[$anio])) {
+                $historial[$anio] = array();
+            }
+    
+            // Prevenir duplicados exactos
+            $ya_existe = false;
+            foreach ($historial[$anio] as $entry) {
+                if ($entry['curso'] === $curso && $entry['centro'] === $centro) {
+                    $ya_existe = true;
+                    break;
+                }
+            }
+    
+            if (!$ya_existe) {
+                $historial[$anio][] = array(
+                    'curso' => $curso,
+                    'centro' => $centro
+                );
+                update_user_meta($user_id, 'historico_academico', json_encode($historial, JSON_UNESCAPED_UNICODE));
+            }
+        }
+    
+        wp_send_json_success('Historial actualizado correctamente.');
+    }
+    
 }
