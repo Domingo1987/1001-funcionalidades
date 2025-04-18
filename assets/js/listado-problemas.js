@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.addEventListener('click', () => {
                 const cap = parseInt(btn.dataset.capitulo);
                 const url = cap > 0
-                    ? `https://pruebas.1001problemas.com/?problema_azar=1&capitulo=${cap}`
-                    : `https://pruebas.1001problemas.com/?problema_azar=1`;
+                    ? `https://1001problemas.com/?problema_azar=1&capitulo=${cap}`
+                    : `https://1001problemas.com/?problema_azar=1`;
                 sweetSorteoProblema(url);
             });
         });

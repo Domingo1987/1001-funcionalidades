@@ -114,7 +114,7 @@ function problema_azar() {
     if (!empty($posts_sin_comentarios)) {
         $post_id = $posts_sin_comentarios[array_rand($posts_sin_comentarios)];
         $num_problema = get_post_meta($post_id, 'num_problema', true);
-        $url = 'https://pruebas.1001problemas.com/problema-' . $num_problema;
+        $url = 'https://1001problemas.com/problema-' . $num_problema;
         wp_redirect($url);
         exit();
     } else {

@@ -43,7 +43,7 @@ function mostrar_modal_redireccion_login($retardo, $mensaje = '') {
             if (modal && typeof modal.showModal === 'function') {
                 modal.showModal();
                 setTimeout(() => {
-                    window.location.href = "https://pruebas.1001problemas.com/login/";
+                    window.location.href = "https://1001problemas.com/login/";
                 }, <?php echo intval($retardo); ?>);
             }
         });

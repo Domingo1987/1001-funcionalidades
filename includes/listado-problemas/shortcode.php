@@ -113,11 +113,11 @@ function problema_azar_shortcode($atts) {
 
     if ($num_problema) {
         //error_log('🎯 Redirigiendo a problema: ' . $num_problema);
-        wp_redirect("https://pruebas.1001problemas.com/problema/problema-$num_problema");
+        wp_redirect("https://1001problemas.com/problema/problema-$num_problema");
         exit;
     } else {
         //error_log('😢 No se encontró ningún problema. Redirigiendo a /felicitaciones');
-        wp_redirect('https://pruebas.1001problemas.com/felicitaciones');
+        wp_redirect('https://1001problemas.com/felicitaciones');
         exit;
     }
 
