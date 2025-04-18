@@ -24,18 +24,22 @@ if ($anio && $curso && $centro) {
 
         if (isset($historial[$anio])) {
             foreach ($historial[$anio] as $entrada) {
-                if ($entrada['curso'] === $curso && $entrada['centro'] === $centro) {
+                $coincideCurso = ($curso === '' || $curso === 'Todos' || $entrada['curso'] === $curso);
+                $coincideCentro = ($centro === '' || $centro === 'Todos' || $entrada['centro'] === $centro);
+        
+                if ($coincideCurso && $coincideCentro) {
                     $resultado[] = [
                         'id' => $user->ID,
                         'nombre' => $user->display_name,
                         'anio' => $anio,
-                        'curso' => $curso,
-                        'centro' => $centro
+                        'curso' => $entrada['curso'],
+                        'centro' => $entrada['centro']
                     ];
                     break;
                 }
             }
         }
+        
     }
 
     // ✅ Ordenar por nombre (alfabéticamente)
