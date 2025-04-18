@@ -16,8 +16,7 @@ $curso = isset($_GET['curso']) ? sanitize_text_field($_GET['curso']) : '';
 $centro = isset($_GET['centro']) ? sanitize_text_field($_GET['centro']) : '';
 
 $resultado = [];
-
-$usuarios = get_users(['role' => 'Estudiante']);
+$usuarios = get_users(['role' => 'estudiante']);
 
 foreach ($usuarios as $user) {
     $historial = get_user_meta($user->ID, 'historico_academico', true);
@@ -32,23 +31,26 @@ foreach ($usuarios as $user) {
 
                 if ($coincideAnio && $coincideCurso && $coincideCentro) {
                     $resultado[] = [
-                        'id'     => $user->ID,
+                        'id' => $user->ID,
                         'nombre' => $user->display_name,
-                        'anio'   => $anio_iterado,
-                        'curso'  => $entrada['curso'],
+                        'anio' => $anio_iterado,
+                        'curso' => $entrada['curso'],
                         'centro' => $entrada['centro']
                     ];
+                    break; // solo una coincidencia por usuario
                 }
             }
         }
     }
 }
 
-// ✅ Ordenar por nombre alfabéticamente
+// Ordenar alfabéticamente por nombre
 usort($resultado, function($a, $b) {
     return strcmp($a['nombre'], $b['nombre']);
 });
 
+// Mostrar en consola
+echo '<script>console.log("📊 Resultado filtrado:", ' . json_encode($resultado) . ');</script>';
 
 
 ?>
