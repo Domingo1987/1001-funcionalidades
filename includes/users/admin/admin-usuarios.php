@@ -15,13 +15,25 @@ $cursos = $users1001_admin->get_all_cursos();
 $centros = $users1001_admin->get_all_centros();
 
 // 🔢 Paginación
+// Variables de paginación
 $usuarios_por_pagina = 50;
-$total_usuarios = count($usuarios);
-$total_paginas = ceil($total_usuarios / $usuarios_por_pagina);
 $pagina_actual = isset($_GET['pagina']) ? max(1, intval($_GET['pagina'])) : 1;
-$inicio = ($pagina_actual - 1) * $usuarios_por_pagina;
-$usuarios_pagina = array_slice($usuarios, $inicio, $usuarios_por_pagina);
-$columnas = array_chunk($usuarios_pagina, ceil(count($usuarios_pagina) / 2));
+$offset = ($pagina_actual - 1) * $usuarios_por_pagina;
+
+$usuarios_args = [
+    'role'    => 'estudiante',
+    'number'  => $usuarios_por_pagina,
+    'offset'  => $offset,
+    'orderby' => 'display_name',
+    'order'   => 'ASC'
+];
+
+$usuarios = get_users($usuarios_args);
+$total_usuarios = count(get_users(['role' => 'estudiante']));
+$total_paginas = ceil($total_usuarios / $usuarios_por_pagina);
+$page_slug = 'users1001-usuarios';
+$current_url = admin_url('admin.php?page=' . $page_slug);
+
 ?>
 
 <div class="container grid-lg">
@@ -29,7 +41,6 @@ $columnas = array_chunk($usuarios_pagina, ceil(count($usuarios_pagina) / 2));
     <p class="text-gray">Selecciona estudiantes y asígnales curso, centro y año. Se agregará a su historial sin borrar entradas anteriores.</p>
 
     <form id="form-asignar-historial" class="form-horizontal">
-        <!-- 🔹 Selector de curso, centro, año y botón -->
         <div class="columns col-gapless col-oneline mb-2">
             <div class="column col-sm-12 col-md-3">
                 <label for="curso" class="form-label">📘 Curso:</label>
@@ -62,23 +73,22 @@ $columnas = array_chunk($usuarios_pagina, ceil(count($usuarios_pagina) / 2));
             </div>
         </div>
 
-        <!-- 📋 Tabla en columnas -->
         <div class="columns">
-            <?php foreach ($columnas as $col): ?>
+            <?php foreach (array_chunk($usuarios, ceil(count($usuarios)/2)) as $columna): ?>
                 <div class="column col-6">
-                    <table class="table table-striped table-hover table-scroll">
-                        <thead style="background-color: #32b643; color: white;">
+                    <table class="table table-striped table-hover">
+                        <thead style="background-color: #32b643; color: #ffffff;">
                             <tr>
-                                <th class="text-center"><input type="checkbox" class="select-col"></th>
-                                <th class="text-center">🆔 ID</th>
+                                <th class="text-center" style="width:40px;"><input type="checkbox" id="select-all"></th>
+                                <th>🆔 ID</th>
                                 <th>👤 Nombre</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($col as $user): ?>
+                            <?php foreach ($columna as $user): ?>
                                 <tr>
-                                    <td class="text-center"><input type="checkbox" class="user-checkbox" name="usuarios[]" value="<?= esc_attr($user->ID); ?>"></td>
-                                    <td class="text-center"><?= esc_html($user->ID); ?></td>
+                                    <td><input type="checkbox" class="user-checkbox" name="usuarios[]" value="<?= esc_attr($user->ID); ?>"></td>
+                                    <td><?= esc_html($user->ID); ?></td>
                                     <td><?= esc_html($user->display_name); ?></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -89,20 +99,27 @@ $columnas = array_chunk($usuarios_pagina, ceil(count($usuarios_pagina) / 2));
         </div>
 
         <div id="mensaje-historial" class="toast mt-2" style="display:none;"></div>
-    </form>
 
-    <!-- 🔁 Paginación -->
-    <ul class="pagination mt-2">
-        <li class="page-item <?= ($pagina_actual == 1) ? 'disabled' : '' ?>">
-            <a href="?pagina=<?= max(1, $pagina_actual - 1); ?>">« Prev</a>
-        </li>
-        <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
-            <li class="page-item <?= ($i == $pagina_actual) ? 'active' : '' ?>">
-                <a href="?pagina=<?= $i; ?>"><?= $i; ?></a>
-            </li>
-        <?php endfor; ?>
-        <li class="page-item <?= ($pagina_actual == $total_paginas) ? 'disabled' : '' ?>">
-            <a href="?pagina=<?= min($total_paginas, $pagina_actual + 1); ?>">Next »</a>
-        </li>
-    </ul>
+        <?php if ($total_paginas > 1): ?>
+        <ul class="pagination mt-2">
+            <?php if ($pagina_actual > 1): ?>
+                <li class="page-item">
+                    <a class="page-link" href="<?= $current_url . '&pagina=' . ($pagina_actual - 1); ?>">« Prev</a>
+                </li>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                <li class="page-item <?= $i == $pagina_actual ? 'active' : ''; ?>">
+                    <a class="page-link" href="<?= $current_url . '&pagina=' . $i; ?>"><?= $i; ?></a>
+                </li>
+            <?php endfor; ?>
+
+            <?php if ($pagina_actual < $total_paginas): ?>
+                <li class="page-item">
+                    <a class="page-link" href="<?= $current_url . '&pagina=' . ($pagina_actual + 1); ?>">Next »</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+        <?php endif; ?>
+    </form>
 </div>
