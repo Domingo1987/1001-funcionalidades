@@ -12,7 +12,7 @@ if (is_admin()) {
 
     //$admin = new Admin();
 
-    add_action('admin_menu', [$$users1001_admin, 'add_plugin_admin_menu']);
+    add_action('admin_menu', [$users1001_admin, 'add_plugin_admin_menu']);
     add_action('admin_enqueue_scripts', [$users1001_admin, 'enqueue_scripts']);
     add_action('admin_enqueue_scripts', [$users1001_admin, 'enqueue_styles']);
 
