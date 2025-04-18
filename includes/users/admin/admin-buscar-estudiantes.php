@@ -16,7 +16,7 @@ $curso = isset($_GET['curso']) ? sanitize_text_field($_GET['curso']) : '';
 $centro = isset($_GET['centro']) ? sanitize_text_field($_GET['centro']) : '';
 
 $resultado = [];
-if ($anio && $centro) {
+if ($anio) {
     $usuarios = get_users(['role' => 'estudiante']);
     
     foreach ($usuarios as $user) {
@@ -93,7 +93,7 @@ echo '<script>console.log("📊 Resultado filtrado:", ' . json_encode($resultado
         </div>
     </form>
 
-    <?php if ($anio && $curso && $centro): ?>
+    <?php if ($anio): ?>
         <h3 class="mt-2">👥 Resultados</h3>
         <?php if (!empty($resultado)): ?>
             <table class="table table-striped table-hover">
