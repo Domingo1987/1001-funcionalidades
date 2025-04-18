@@ -25,6 +25,8 @@ if ($anio && $curso && $centro) {
 
         if (isset($historial[$anio])) {
             foreach ($historial[$anio] as $entrada) {
+                echo '<script>console.log("📘 Historial curso esperado: ' . esc_js($curso) . '");</script>';
+                echo '<script>console.log("📗 Curso en historial:", ' . json_encode($entrada['curso']) . ');</script>';
                 if (($entrada['curso'] === $curso || $curso === 'Todos') 
                     && ($entrada['centro'] === $centro || $centro === 'Todos')) {
                     $resultado[] = [
