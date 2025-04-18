@@ -30,16 +30,16 @@ function dashboard_ajax_cargar_seccion() {
     require_once FUNC_PATH . 'includes/dashboard/functions.php';
     require_once FUNC_PATH . 'includes/utils/estadisticas-dashboard.php';
 
-    error_log("📂 Includes cargados correctamente");
+    //error_log("📂 Includes cargados correctamente");
     
     $func = "renderizar_" . str_replace('-', '_', $seccion);
-    error_log("🧪 Intentando ejecutar $func para user $user_id");
+    //error_log("🧪 Intentando ejecutar $func para user $user_id");
 
     $transient_key = "dashboard_{$seccion}_{$user_id}";
     $html = get_transient($transient_key);
 
     if ($html === false) {
-        error_log("🆕 Transient NO encontrado, generando nuevo para $seccion ($user_id)");
+        //error_log("🆕 Transient NO encontrado, generando nuevo para $seccion ($user_id)");
 
         if (function_exists($func)) {
             $html = $func($user_id);
@@ -49,7 +49,7 @@ function dashboard_ajax_cargar_seccion() {
 
         }
     } else {
-        error_log("🟢 Transient encontrado para $seccion ($user_id)");
+        //error_log("🟢 Transient encontrado para $seccion ($user_id)");
     }
 
     echo $html;
