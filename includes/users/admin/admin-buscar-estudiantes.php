@@ -17,7 +17,7 @@ $centro = isset($_GET['centro']) ? sanitize_text_field($_GET['centro']) : '';
 
 $resultado = [];
 
-$usuarios = get_users(['role' => 'estudiante']);
+$usuarios = get_users(['role' => 'Estudiante']);
 
 foreach ($usuarios as $user) {
     $historial = get_user_meta($user->ID, 'historico_academico', true);
