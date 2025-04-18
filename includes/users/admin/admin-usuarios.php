@@ -123,3 +123,62 @@ $current_url = admin_url('admin.php?page=' . $page_slug);
         <?php endif; ?>
     </form>
 </div>
+
+<script>
+jQuery(document).ready(function($) {
+    console.log('📘 JS de Gestión de Usuarios cargado');
+
+    // 🔹 Seleccionar todos los checkboxes
+    $(document).on('change', '#select-all', function() {
+        $('.user-checkbox').prop('checked', this.checked);
+    });
+
+    // 🔹 Enviar formulario de asignación de historial
+    $('#form-asignar-historial').on('submit', function(e) {
+        e.preventDefault();
+
+        const userIds = $('.user-checkbox:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+        const curso = $('#curso').val();
+        const centro = $('#centro').val();
+        const anio = $('#anio').val();
+        const nonce = $('#asignar_historial_nonce').val();
+
+        console.log('📝 Enviando historial para:', userIds);
+
+        if (userIds.length === 0 || !curso || !centro || !anio) {
+            alert('Completa todos los campos y selecciona al menos un estudiante.');
+            return;
+        }
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'guardar_historial_usuario',
+                usuarios: userIds,
+                curso: curso,
+                centro: centro,
+                anio: anio,
+                nonce: nonce
+            },
+            success: function(response) {
+                console.log('✅ Respuesta servidor:', response);
+                const mensaje = $('#mensaje-historial');
+
+                if (response.success) {
+                    mensaje.removeClass('error').addClass('toast-success').html('<p>' + response.data + '</p>').fadeIn();
+                } else {
+                    mensaje.removeClass('toast-success').addClass('toast-error').html('<p>' + response.data + '</p>').fadeIn();
+                }
+            },
+            error: function(err) {
+                console.error('🚨 Error AJAX:', err);
+                $('#mensaje-historial').removeClass('toast-success').addClass('toast-error').html('<p>Error al procesar la solicitud.</p>').fadeIn();
+            }
+        });
+    });
+});
+</script>
