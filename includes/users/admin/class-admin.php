@@ -11,8 +11,6 @@ class Admin {
 
     public function enqueue_styles($hook) {
         if (strpos($hook, 'users1001') !== false) {
-            error_log('🎨 enqueue_styles ejecutado para: ' . $hook);
-
             // Incluir Spectre en todo el admin
             wp_enqueue_style(
                 'spectre-css',
@@ -25,23 +23,23 @@ class Admin {
 
     public function enqueue_scripts($hook) {
         if (strpos($hook, 'users1001') !== false) {
-            error_log('📦 enqueue_scripts ejecutado para: ' . $hook);
-    
             wp_enqueue_script(
                 'users1001-admin',
                 FUNC_URL . 'assets/js/admin.js',
                 array('jquery'),
-                filemtime(FUNC_PATH . 'assets/js/admin.js'),
-                true
+                '1.0.0',
+                false
             );
     
+            // Pasar variables al script
             wp_localize_script('users1001-admin', 'users1001_vars', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('users1001_nonce')
             ));
+
+            
         }
     }
-    
 
 
     public function add_plugin_admin_menu() {
