@@ -16,37 +16,40 @@ $curso = isset($_GET['curso']) ? sanitize_text_field($_GET['curso']) : '';
 $centro = isset($_GET['centro']) ? sanitize_text_field($_GET['centro']) : '';
 
 $resultado = [];
-if ($anio && $curso && $centro) {
-    $usuarios = get_users(['role' => 'estudiante']);
-    foreach ($usuarios as $user) {
-        $historial = get_user_meta($user->ID, 'historico_academico', true);
-        $historial = json_decode($historial, true);
 
-        if (isset($historial[$anio])) {
-            foreach ($historial[$anio] as $entrada) {
+$usuarios = get_users(['role' => 'estudiante']);
+
+foreach ($usuarios as $user) {
+    $historial = get_user_meta($user->ID, 'historico_academico', true);
+    $historial = json_decode($historial, true);
+
+    if (is_array($historial)) {
+        foreach ($historial as $anio_iterado => $entradas) {
+            foreach ($entradas as $entrada) {
+                $coincideAnio = ($anio === '' || $anio === 'Todos' || $anio_iterado === $anio);
                 $coincideCurso = ($curso === '' || $curso === 'Todos' || $entrada['curso'] === $curso);
                 $coincideCentro = ($centro === '' || $centro === 'Todos' || $entrada['centro'] === $centro);
-        
-                if ($coincideCurso && $coincideCentro) {
+
+                if ($coincideAnio && $coincideCurso && $coincideCentro) {
                     $resultado[] = [
-                        'id' => $user->ID,
+                        'id'     => $user->ID,
                         'nombre' => $user->display_name,
-                        'anio' => $anio,
-                        'curso' => $entrada['curso'],
+                        'anio'   => $anio_iterado,
+                        'curso'  => $entrada['curso'],
                         'centro' => $entrada['centro']
                     ];
-                    break;
                 }
             }
         }
-        
     }
-
-    // ✅ Ordenar por nombre (alfabéticamente)
-    usort($resultado, function($a, $b) {
-        return strcmp($a['nombre'], $b['nombre']);
-    });
 }
+
+// ✅ Ordenar por nombre alfabéticamente
+usort($resultado, function($a, $b) {
+    return strcmp($a['nombre'], $b['nombre']);
+});
+
+
 
 ?>
 
