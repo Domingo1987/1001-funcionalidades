@@ -21,5 +21,5 @@ if (is_admin()) {
     add_action('wp_ajax_guardar_curso', [$users1001_admin, 'ajax_guardar_curso']);
     add_action('wp_ajax_eliminar_curso', [$users1001_admin, 'ajax_eliminar_curso']);
     add_action('wp_ajax_guardar_centro', [$users1001_admin, 'ajax_guardar_centro']);
-    add_action('wp_ajax_eliminar_centro', [$users1001_adminn, 'ajax_eliminar_centro']);
+    add_action('wp_ajax_eliminar_centro', [$users1001_admin, 'ajax_eliminar_centro']);
 }
