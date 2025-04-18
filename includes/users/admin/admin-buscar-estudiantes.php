@@ -16,7 +16,7 @@ $curso = isset($_GET['curso']) ? sanitize_text_field($_GET['curso']) : '';
 $centro = isset($_GET['centro']) ? sanitize_text_field($_GET['centro']) : '';
 
 $resultado = [];
-if ($anio && $curso && $centro) {
+if ($anio && $centro) {
     $usuarios = get_users(['role' => 'estudiante']);
     
     foreach ($usuarios as $user) {
