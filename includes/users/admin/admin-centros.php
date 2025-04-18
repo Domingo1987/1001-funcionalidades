@@ -4,8 +4,10 @@ if (!defined('ABSPATH')) {
 }
 
 // Obtener todos los centros
-$admin = new Admin();
-$centros = $admin->get_all_centros();
+global $users1001_admin;
+$centros = $users1001_admin->get_all_centros();
+
+
 ?>
 
 <div class="wrap">

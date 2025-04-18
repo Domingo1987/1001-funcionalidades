@@ -10,8 +10,9 @@ if (!current_user_can('manage_options')) {
 
 $usuarios = get_users(['role' => 'Estudiante']);
 
-$cursos = get_all_cursos(); // función ya existente
-$centros = get_all_centros(); // función ya existente
+global $users1001_admin;
+$cursos = $users1001_admin->get_all_cursos();
+$centros = $users1001_admin->get_all_centros();
 
 ?>
 

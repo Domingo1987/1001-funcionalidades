@@ -4,8 +4,10 @@ if (!defined('ABSPATH')) {
 }
 
 // Obtener todos los cursos
-$admin = new Admin();
-$cursos = $admin->get_all_cursos();
+global $users1001_admin;
+$cursos = $users1001_admin->get_cursos();
+
+
 ?>
 
 <div class="wrap">
