@@ -16,33 +16,38 @@ $curso = isset($_GET['curso']) ? sanitize_text_field($_GET['curso']) : '';
 $centro = isset($_GET['centro']) ? sanitize_text_field($_GET['centro']) : '';
 
 $resultado = [];
-if ($anio && $curso && $centro) {
-    $usuarios = get_users(['role' => 'estudiante']);
-    foreach ($usuarios as $user) {
-        $historial = get_user_meta($user->ID, 'historico_academico', true);
-        $historial = json_decode($historial, true);
+$usuarios = get_users(['role' => 'estudiante']);
 
-        if (isset($historial[$anio])) {
-            foreach ($historial[$anio] as $entrada) {
-                if ($entrada['curso'] === $curso && $entrada['centro'] === $centro) {
+foreach ($usuarios as $user) {
+    $historial = get_user_meta($user->ID, 'historico_academico', true);
+    $historial = json_decode($historial, true);
+
+    if (is_array($historial)) {
+        foreach ($historial as $anio_iterado => $entradas) {
+            foreach ($entradas as $entrada) {
+                $coincideAnio = ($anio === '' || $anio === 'Todos' || $anio_iterado === $anio);
+                $coincideCurso = ($curso === '' || $curso === 'Todos' || $entrada['curso'] === $curso);
+                $coincideCentro = ($centro === '' || $centro === 'Todos' || $entrada['centro'] === $centro);
+
+                if ($coincideAnio && $coincideCurso && $coincideCentro) {
                     $resultado[] = [
                         'id' => $user->ID,
                         'nombre' => $user->display_name,
-                        'anio' => $anio,
-                        'curso' => $curso,
-                        'centro' => $centro
+                        'anio' => $anio_iterado,
+                        'curso' => $entrada['curso'],
+                        'centro' => $entrada['centro']
                     ];
-                    break;
+                    break; // Evita duplicados
                 }
             }
         }
     }
-
-    // ✅ Ordenar por nombre (alfabéticamente)
-    usort($resultado, function($a, $b) {
-        return strcmp($a['nombre'], $b['nombre']);
-    });
 }
+
+// Ordenar por nombre
+usort($resultado, function($a, $b) {
+    return strcmp($a['nombre'], $b['nombre']);
+});
 
 // Mostrar en consola
 echo '<script>console.log("📊 Resultado filtrado:", ' . json_encode($resultado) . ');</script>';
