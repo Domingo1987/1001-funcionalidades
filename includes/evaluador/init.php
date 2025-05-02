@@ -26,7 +26,7 @@ add_action('wp_enqueue_scripts', function () {
             'evaluador-js',
             FUNC_URL . 'assets/js/evaluador.js',
             [],
-            '2.0',
+            '2.1',
             true
         );
     }
