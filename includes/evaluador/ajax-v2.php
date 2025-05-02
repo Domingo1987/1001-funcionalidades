@@ -15,9 +15,10 @@ function evaluar_problema(WP_REST_Request $request) {
     $user_id = sanitize_text_field($request->get_param('user_id3'));
     $problema_id = intval($request->get_param('problema_id'));
 
-    if (empty($user_id) || empty($problema_id)) {
+    if (empty($user_id) || !isset($problema_id)) {
         return new WP_REST_Response(['error' => 'Faltan datos obligatorios.'], 400);
     }
+    
 
     // Generar mensaje con contexto enriquecido
     $user_message = construir_mensaje_v2($problema, $solucion, $user_id, $problema_id);
