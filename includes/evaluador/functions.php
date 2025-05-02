@@ -156,16 +156,11 @@ function construir_mensaje_v2($problema_texto, $solucion_actual, $user_id, $prob
         }
     }
 
-    $rubrica_texto = "Rúbrica de evaluación:\n";
-    foreach ($criterios_def as $c) {
-        $rubrica_texto .= "- {$c['criterio_nombre']} (máx {$c['puntaje_maximo']}): {$c['descripcion']}\n";
-    }
+    
 
     $mensaje = <<<TXT
 Estudiante: ID $user_id
 Problema: $problema_texto
-
-$rubrica_texto
 
 $historial_texto
 
