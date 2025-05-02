@@ -104,8 +104,11 @@ function obtener_problemas_practicos_usuario($user_id = null) {
     rsort($años);
     $anio = $años[0];
 
-    $curso = $historico[$anio]['curso'] ?? '';
-    $centro = $historico[$anio]['centro'] ?? '';
+    // Tomar el primer curso registrado en ese año
+    $curso_data = $historico[$anio][0] ?? null;
+
+    $curso = $curso_data['curso'] ?? '';
+    $centro = $curso_data['centro'] ?? '';
 
     error_log("🔎 Año: $anio | Curso: $curso | Centro: $centro");
 
@@ -133,6 +136,7 @@ function obtener_problemas_practicos_usuario($user_id = null) {
     error_log("✅ Se encontraron " . count($resultados) . " problemas para mostrar");
     return $resultados;
 }
+
 
 // Construir mensaje para IA (v2)
 function construir_mensaje_v2($problema_texto, $solucion_actual, $user_id, $problema_id) {
