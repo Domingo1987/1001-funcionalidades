@@ -1,9 +1,14 @@
 <?php
 // Función principal para gestionar el flujo completo con OpenAI
-function getChatGPTResponse($message, $user_id3) {
+// Función principal para gestionar el flujo completo con OpenAI
+function getChatGPTResponse($message, $user_id3, $assistant_id = null) {
     $api_key = OPENAI_API_KEY;
-    $assistant_id = 'asst_v1JSBmPrzHS7bR4WDXbSF9J0';
     $api_url = 'https://api.openai.com/v1';
+
+    // Asistente por defecto si no se pasa uno
+    if (empty($assistant_id)) {
+        $assistant_id = 'asst_v1JSBmPrzHS7bR4WDXbSF9J0'; // ID por defecto (v1)
+    }
 
     $thread_res = get_user_meta($user_id3, 'thread_res', true);
 
@@ -24,12 +29,12 @@ function getChatGPTResponse($message, $user_id3) {
     $response_url = "$api_url/threads/$thread_res/messages";
     $response = getChatGPTMessage($api_key, $response_url, $add_msg_res);
     if (empty($response)) {
-        // Reintento
         $response = getChatGPTMessage($api_key, $response_url, $add_msg_res);
     }
 
     return $response;
 }
+
 
 // Crear un hilo nuevo
 function CreateThread($api_key, $url) {

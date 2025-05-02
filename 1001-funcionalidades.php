@@ -3,7 +3,7 @@
  * Plugin Name:       1001 Funcionalidades
  * Plugin URI:        https://1001problemas.com/
  * Description:       Conjunto de  funcionalidades personalizadas para el sitio 1001problemas.com: shortcodes, estadísticas de usuario, scripts interactivos, mejoras visuales y más.
- * Version:           7.8.4
+ * Version:           8.0.0
  * Requires at least: 5.5
  * Requires PHP:      7.4
  * Author:            Domingo Pérez
@@ -91,10 +91,3 @@ require_once FUNC_PATH  . 'includes/users/init.php';
 
 // 🧠 UTILS
 require_once FUNC_PATH . 'includes/utils/modales.php';
-
-
-
-
-
-
-
