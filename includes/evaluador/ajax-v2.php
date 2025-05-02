@@ -2,7 +2,7 @@
 
 // Endpoint REST para evaluar el problema con IA (versión con mejoras internas)
 add_action('rest_api_init', function () {
-    register_rest_route('evaluador/v2', '/evaluar', array(
+    register_rest_route('evaluador/v1', '/evaluar', array(
         'methods' => 'POST',
         'callback' => 'evaluar_problema',
         'permission_callback' => '__return_true',
