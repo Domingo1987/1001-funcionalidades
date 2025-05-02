@@ -102,23 +102,58 @@ document.addEventListener('DOMContentLoaded', function () {
         resultadoEvaluacion.innerHTML = '';
 
         data.criterios.forEach(function (criterio, index) {
+            let colorFondo = '';
+            let icono = '';
+            let etiqueta = '';
+
+            switch (criterio.tipo_comparacion) {
+                case 'mejora':
+                    colorFondo = '#e6fce6'; // verde claro
+                    icono = '⬆️';
+                    etiqueta = 'Mejora';
+                    break;
+                case 'igual':
+                    colorFondo = '#f0f0f0'; // gris
+                    icono = '➖';
+                    etiqueta = 'Sin cambios';
+                    break;
+                case 'retroceso':
+                    colorFondo = '#ffe5e5'; // rojo claro
+                    icono = '⬇️';
+                    etiqueta = 'Retroceso';
+                    break;
+                case 'nuevo':
+                default:
+                    colorFondo = '#e5f1ff'; // celeste
+                    icono = '🆕';
+                    etiqueta = 'Primera entrega';
+                    break;
+            }
+
+
+
             resultadoEvaluacion.innerHTML += `
-                <div class="evaluador-criterio">
-                    <div class="evaluador-titulo">Criterio ${index + 1}: ${criterio.criterio}</div>
-                    <div class="evaluador-form-group">
-                        <div class="evaluador-subtitulo">Puntaje Asignado</div>
-                        <div class="evaluador-puntaje">${criterio.puntaje_asignado} / ${criterio.puntaje_maximo}</div>
-                    </div>
-                    <div class="evaluador-form-group">
-                        <div class="evaluador-subtitulo">Justificación</div>
-                        <div class="evaluador-texto">${criterio.justificacion}</div>
-                    </div>
-                    <div class="evaluador-form-group">
-                        <div class="evaluador-subtitulo">Retroalimentación</div>
-                        <div class="evaluador-texto">${criterio.retroalimentacion}</div>
-                    </div>
+            <div class="evaluador-criterio" style="background-color: ${colorFondo}">
+                <div class="evaluador-titulo">${icono} Criterio ${index + 1}: ${criterio.criterio}</div>
+                <div class="evaluador-form-group">
+                    <div class="evaluador-subtitulo">Puntaje Asignado</div>
+                    <div class="evaluador-puntaje">${criterio.puntaje_asignado} / ${criterio.puntaje_maximo}</div>
                 </div>
-            `;
+                <div class="evaluador-form-group">
+                    <div class="evaluador-subtitulo">Justificación</div>
+                    <div class="evaluador-texto">${criterio.justificacion}</div>
+                </div>
+                <div class="evaluador-form-group">
+                    <div class="evaluador-subtitulo">Retroalimentación</div>
+                    <div class="evaluador-texto">${criterio.retroalimentacion}</div>
+                </div>
+                <div class="evaluador-form-group">
+                    <div class="evaluador-subtitulo">Evaluación respecto a anteriores</div>
+                    <div class="evaluador-texto"><em>${etiqueta}</em></div>
+                </div>
+            </div>
+        `;
+
         });
 
         if (data.total_puntos !== undefined) {
