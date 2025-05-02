@@ -2,7 +2,7 @@
 
 // Endpoint REST para evaluar el problema con IA (versión con mejoras internas)
 add_action('rest_api_init', function () {
-    register_rest_route('evaluador/v1', '/evaluar', array(
+    register_rest_route('evaluador/v2', '/evaluar', array(
         'methods' => 'POST',
         'callback' => 'evaluar_problema',
         'permission_callback' => '__return_true',
@@ -23,7 +23,7 @@ function evaluar_problema(WP_REST_Request $request) {
     $user_message = construir_mensaje_v2($problema, $solucion, $user_id, $problema_id);
 
     // Usar un assistant mejorado (con ID específico para este flujo)
-    $assistant_response = getChatGPTResponse($user_message, $user_id, 'asst_tuAssistantID_V2'); // Reemplazar ID
+    $assistant_response = getChatGPTResponse($user_message, $user_id); // Reemplazar ID
 
     if (!$assistant_response) {
         return new WP_REST_Response(['error' => 'No se recibió respuesta del asistente.'], 500);
@@ -36,7 +36,7 @@ function evaluar_problema(WP_REST_Request $request) {
         $criterios = $assistant_response_data['criterios'] ?? [];
 
         // Reutiliza misma función de guardado
-        $evaluacion_id = guardar_evaluacion_en_bd($problema, $solucion, $total_puntos, $user_id, $criterios, $problema_id);
+        $evaluacion_id = guardar_evaluacion_en_bd_v2($problema, $solucion, $total_puntos, $user_id, $criterios, $problema_id);
 
         return new WP_REST_Response($assistant_response_data, 200);
     } else {

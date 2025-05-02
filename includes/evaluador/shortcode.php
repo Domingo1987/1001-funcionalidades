@@ -51,14 +51,37 @@ function evaluador_problemas_shortcode() {
                 <textarea id="solucion" name="solucion" required><?= esc_textarea($solucion) ?></textarea>
             </div>
 
+            <!-- 🔒 ID oculto del problema (si fue seleccionado de la lista) -->
+            <input type="hidden" name="problema_id" id="problema_id" value="0" />
             <input type="hidden" name="user_id3" value="<?= esc_attr($user_id); ?>" />
 
             <button type="submit" id="evaluarBoton" class="evaluador-button">Evaluar</button>
             <button type="button" id="subirOtro" class="evaluador-button" style="display:none;">Subir Otro Problema</button>
         </form>
 
+        <!-- Resultado detallado por criterio -->
         <div id="resultadoEvaluacion" class="evaluador-resultado"></div>
+
+        <!-- Retroalimentación comparativa final -->
+        <div id="evaluacionComparativaFinal" class="evaluador-retro-final" style="margin-top: 2rem;"></div>
+
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const selector = document.getElementById('desafioSeleccionado');
+            const problemaIdInput = document.getElementById('problema_id');
+
+            if (selector && problemaIdInput) {
+                selector.addEventListener('change', function () {
+                    const selected = selector.options[selector.selectedIndex];
+                    const id = selected.dataset.id || 0;
+                    problemaIdInput.value = id;
+                });
+            }
+        });
+    </script>
+
     <?php
     return ob_get_clean();
 }

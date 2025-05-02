@@ -50,15 +50,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const problema = document.getElementById('problema').value;
         const solucion = document.getElementById('solucion').value.trim();
         const user_id3 = document.querySelector('input[name="user_id3"]').value;
+        const problema_id = document.querySelector('input[name="problema_id"]')?.value || 0;
 
         evaluarBoton.disabled = true;
         resultadoEvaluacion.innerHTML = '<p class="evaluador-evaluando">Evaluando...</p>';
 
         try {
-            const response = await fetch('/wp-json/evaluador/v1/evaluar', {
+            //const response = await fetch('/wp-json/evaluador/v1/evaluar', {
+            const response = await fetch('/wp-json/evaluador/v2/evaluar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ problema, solucion, user_id3 })
+                body: JSON.stringify({ problema, solucion, user_id3, problema_id })
             });
 
             if (!response.ok) throw new Error('Error en la solicitud: ' + response.statusText);
@@ -116,6 +118,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (data.total_puntos !== undefined) {
             resultadoEvaluacion.innerHTML += `<div class="evaluador-total-puntos">Total de puntos: <strong>${data.total_puntos} / 24</strong></div>`;
+        }
+
+        // ⬇️ Aquí se agrega lo nuevo
+        const evaluacionComparativa = document.getElementById('evaluacionComparativaFinal');
+        if (data.evaluacion_general) {
+            evaluacionComparativa.innerHTML = `
+                <div class="evaluador-comparativa-final">
+                    <h4>📊 Evaluación comparativa</h4>
+                    <p>${data.evaluacion_general}</p>
+                </div>
+            `;
+        } else {
+            evaluacionComparativa.innerHTML = '';
         }
     }
 
