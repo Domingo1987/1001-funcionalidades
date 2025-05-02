@@ -11,7 +11,7 @@ function shortcode_listar_problemas($atts = []) {
     ob_start();
     ?>
 
-    <div data-theme="pico">
+    <div>
         <div id="contenedor-problemas" class="grid-problemas" data-categoria="<?= esc_attr($atts['categoria']) ?>"></div>
 
         <div id="cargando-problemas" style="text-align:center; margin:20px; display:none;">
@@ -36,7 +36,7 @@ add_shortcode('listar_problemas', 'shortcode_listar_problemas');
 function shortcode_barra_problemas() {
     ob_start();
     ?>
-    <div data-theme="pico">
+    <div>
         <section id="barra-problemas" class="barra-problemas" style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 1rem;">
             <button data-capitulo="0" class="btn-azar btn-cap0 contrast" aria-label="Elegir un problema al azar de todo el libro" style="padding: 0.5rem 1rem;">🎲 Aleatorio</button>
             <?php
