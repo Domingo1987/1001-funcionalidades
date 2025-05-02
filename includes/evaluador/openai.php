@@ -32,6 +32,8 @@ function getChatGPTResponse($message, $user_id3, $assistant_id = null) {
         $response = getChatGPTMessage($api_key, $response_url, $add_msg_res);
     }
 
+    write_log("✅ Respuesta final del assistant:\n" . print_r($assistantResponse, true));
+
     return $response;
 }
 
