@@ -39,9 +39,10 @@ function evaluador_problemas_shortcode() {
                 <select id="desafioSeleccionado" name="desafioSeleccionado">
                     <option value="">-- Elegí un desafío --</option>
                     <?php foreach ($problemasDisponibles as $item): ?>
-                        <option value="<?= esc_attr($item->descripcion); ?>">
+                        <option value="<?= esc_attr($item->descripcion); ?>" data-id="<?= esc_attr($item->id); ?>">
                             <?= esc_html($item->nombre); ?>
                         </option>
+
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -69,7 +70,7 @@ function evaluador_problemas_shortcode() {
         <div id="resultadoEvaluacion" class="evaluador-resultado"></div>
 
         <!-- Retroalimentación comparativa final -->
-        <div id="evaluacionComparativaFinal" class="evaluador-retro-final" style="margin-top: 2rem;"></div>
+        <div id="evaluacionComparativaFinal" class="evaluador-retro-final"></div>
 
     </div>
 

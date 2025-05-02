@@ -120,20 +120,19 @@ document.addEventListener('DOMContentLoaded', function () {
             resultadoEvaluacion.innerHTML += `<div class="evaluador-total-puntos">Total de puntos: <strong>${data.total_puntos} / 24</strong></div>`;
         }
 
-        // ⬇️ Aquí se agrega lo nuevo
+        // ⬇️ Insertar evaluación comparativa final
         const evaluacionComparativa = document.getElementById('evaluacionComparativaFinal');
-        
         const comparativa = data.evaluacion_general || data.mejoras_o_retrocesos || null;
 
-        if (comparativa) {
-            evaluacionComparativa.innerHTML = `
-                <div class="evaluador-comparativa-final">
+        if (evaluacionComparativa) {
+            if (comparativa) {
+                evaluacionComparativa.innerHTML = `
                     <h4>📊 Evaluación comparativa</h4>
                     <p>${comparativa}</p>
-                </div>
-            `;
-        } else {
-            evaluacionComparativa.innerHTML = '';
+                `;
+            } else {
+                evaluacionComparativa.innerHTML = '';
+            }
         }
 
     }
