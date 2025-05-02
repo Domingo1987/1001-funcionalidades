@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         try {
             //const response = await fetch('/wp-json/evaluador/v1/evaluar', {
-            const response = await fetch('/wp-json/evaluador/v1/evaluar', {
+            const response = await fetch('/wp-json/evaluador/v2/evaluar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ problema, solucion, user_id3, problema_id })
