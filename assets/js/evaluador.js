@@ -66,6 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) throw new Error('Error en la solicitud: ' + response.statusText);
 
             const data = await response.json();
+            console.log("🔍 Problema:", problema_id);
+            console.log("🔍 Evaluación recibida:", data);
+            console.log("📊 Evaluación general:", data.evaluacion_general || data.mejoras_o_retrocesos || "No hay evaluación comparativa.");
+            
+
 
             if (data && data.criterios) {
                 mostrarEvaluacion(data);
@@ -121,15 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // ⬇️ Insertar evaluación comparativa final
-        const comparativa = data.evaluacion_general || data.mejoras_o_retrocesos || null;
-        if (comparativa) {
+        if (data.evaluacion_general) {
             resultadoEvaluacion.innerHTML += `
-                <div class="evaluador-criterio">
-                    <div class="evaluador-titulo">📊 Evaluación Comparativa</div>
-                    <div class="evaluador-form-group">
-                        <div class="evaluador-subtitulo">Retroalimentación final</div>
-                        <div class="evaluador-texto">${comparativa}</div>
-                    </div>
+                <div class="evaluador-criterio" style="margin-top: 2rem;">
+                    <div class="evaluador-titulo">📊 Evaluación comparativa</div>
+                    <div class="evaluador-texto">${data.evaluacion_general}</div>
                 </div>
             `;
         }
