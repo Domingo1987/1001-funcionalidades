@@ -121,18 +121,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // ⬇️ Insertar evaluación comparativa final
-        const evaluacionComparativa = document.getElementById('evaluacionComparativaFinal');
         const comparativa = data.evaluacion_general || data.mejoras_o_retrocesos || null;
-
-        if (evaluacionComparativa) {
-            if (comparativa) {
-                evaluacionComparativa.innerHTML = `
-                    <h4>📊 Evaluación comparativa</h4>
-                    <p>${comparativa}</p>
-                `;
-            } else {
-                evaluacionComparativa.innerHTML = '';
-            }
+        if (comparativa) {
+            resultadoEvaluacion.innerHTML += `
+                <div class="evaluador-criterio">
+                    <div class="evaluador-titulo">📊 Evaluación Comparativa</div>
+                    <div class="evaluador-form-group">
+                        <div class="evaluador-subtitulo">Retroalimentación final</div>
+                        <div class="evaluador-texto">${comparativa}</div>
+                    </div>
+                </div>
+            `;
         }
 
     }

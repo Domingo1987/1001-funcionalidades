@@ -183,36 +183,3 @@ body.evaluador-body {
     color: #ff0000;
     font-weight: bold;
 }
-
-.evaluador-comparativa-final {
-    background-color: rgba(255, 255, 255, 1.0);
-    padding: 1.5rem;
-    border-left: 4px solid #3333f8;
-    border-radius: 8px;
-    margin-top: 2rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.evaluador-comparativa-final h4 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #3333f8;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 5px;
-}
-
-.evaluador-comparativa-final p {
-    font-size: 16px;
-    color: #000000;
-    background-color: #f5f5f5;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #e0e0e0;
-    white-space: pre-wrap;
-}
-

@@ -69,9 +69,6 @@ function evaluador_problemas_shortcode() {
         <!-- Resultado detallado por criterio -->
         <div id="resultadoEvaluacion" class="evaluador-resultado"></div>
 
-        <!-- Retroalimentación comparativa final -->
-        <div id="evaluacionComparativaFinal" class="evaluador-retro-final"></div>
-
     </div>
 
     <script>
