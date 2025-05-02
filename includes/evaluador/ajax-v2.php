@@ -24,7 +24,7 @@ function evaluar_problema(WP_REST_Request $request) {
     $user_message = construir_mensaje_v2($problema, $solucion, $user_id, $problema_id);
 
     // Usar un assistant mejorado (con ID específico para este flujo)
-    $assistant_response = getChatGPTResponse($user_message, $user_id, 'asst_v1JSBmPrzHS7bR4WDXbSF9J0'); // Reemplazar ID
+    $assistant_response = getChatGPTResponse($user_message, $user_id, 'asst_VXs944mC76BdpI5z7fgjF7Pi'); // Reemplazar ID
     write_log("🧪 Assistant devuelve: " . $assistant_response);
 
 

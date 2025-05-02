@@ -14,6 +14,12 @@ function evaluador_problemas_shortcode() {
 
     $problemasDisponibles = obtener_problemas_practicos_usuario($user_id);
 
+    // 🐞 Debug: mostrar cantidad y listado
+    error_log("🧪 Usuario $user_id tiene disponibles " . count($problemasDisponibles) . " problemas:");
+    foreach ($problemasDisponibles as $p) {
+        error_log("🧩 ID {$p->id} → " . $p->descripcion);
+    }
+
     ob_start();
     ?>
     <div class="evaluador-problemas-container">

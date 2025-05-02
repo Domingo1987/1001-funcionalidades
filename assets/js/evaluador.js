@@ -122,16 +122,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // ⬇️ Aquí se agrega lo nuevo
         const evaluacionComparativa = document.getElementById('evaluacionComparativaFinal');
-        if (data.evaluacion_general) {
+        
+        const comparativa = data.evaluacion_general || data.mejoras_o_retrocesos || null;
+
+        if (comparativa) {
             evaluacionComparativa.innerHTML = `
                 <div class="evaluador-comparativa-final">
                     <h4>📊 Evaluación comparativa</h4>
-                    <p>${data.evaluacion_general}</p>
+                    <p>${comparativa}</p>
                 </div>
             `;
         } else {
             evaluacionComparativa.innerHTML = '';
         }
+
     }
 
     function resetForm() {
