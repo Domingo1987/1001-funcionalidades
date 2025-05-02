@@ -20,13 +20,13 @@ add_action('wp_enqueue_scripts', function () {
             'evaluador-css',
             FUNC_URL . 'assets/css/evaluador.css',
             [],
-            '1.0'
+            '1.1'
         );
         wp_enqueue_script(
             'evaluador-js',
             FUNC_URL . 'assets/js/evaluador.js',
             [],
-            '1.0',
+            '2.0',
             true
         );
     }
